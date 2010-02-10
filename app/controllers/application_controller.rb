@@ -7,4 +7,13 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+  private
+    def require_fedora
+      Fedora::Repository.register(FEDORA_URL,  session[:user])
+      return true
+    end
+    def require_solr
+      ActiveFedora::SolrService.register(SOLR_URL)
+    end
+  
 end
