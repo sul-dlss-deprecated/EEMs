@@ -8,3 +8,11 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+
+require 'spec/rake/verify_rcov'
+
+
+RCov::VerifyTask.new(:verify_rcov => 'spec:rcov') do |t|
+  t.threshold = 77.6
+  t.index_html = 'coverage/index.html'
+end
