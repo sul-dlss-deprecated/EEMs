@@ -11,7 +11,7 @@ require 'tasks/rails'
 
 require 'spec/rake/verify_rcov'
 
-
+#Call this from the command line with: rake verify_rcov
 RCov::VerifyTask.new(:verify_rcov => 'spec:rcov') do |t|
   t.threshold = 77.6
   t.index_html = 'coverage/index.html'
