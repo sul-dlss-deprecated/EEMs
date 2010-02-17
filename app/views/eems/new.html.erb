@@ -1,0 +1,17 @@
+<!-- This will render the form needed to create an Eem 
+     Manually create the params sent to controller on submit?-->
+<h1>New Eem</h1>
+
+<% form_tag(:action => :create) do %>
+  <p>
+    Content<br />
+    <%= text_field_tag 'eem[contentdoc]' %>
+  </p>
+  <p>
+    Copyright<br />
+    <%= text_field_tag 'eem[copyrightdoc]' %>
+  </p>
+  <p>
+    <%= submit_tag 'Create EEM' %>
+  </p>
+<% end %>

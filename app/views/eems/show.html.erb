@@ -1,0 +1,10 @@
+<!-- @af_obj.fields[:name][:values].first -->
+
+<% @eem.fields.each_pair do |field, value| %>
+	<% unless(value[:values].first.nil?)%>
+		<p>
+		<b><%= field.to_s %>:</b><br/>
+		<%= value[:values].first %><br/>
+		<p>
+	<% end %>
+<% end %>
