@@ -25,9 +25,11 @@ describe Eem do
     props_ds = @eem.datastreams['eemsProperties']
     props_ds.document_values = ['mydocument']
     props_ds.copyrightdate_append('10-22-10')
+    props_ds.contentdoc_values = ['http://mydoc.com']
     
-    props_ds.to_xml.should =~ /<document order='1'>mydocument<\/document>/
-    props_ds.to_xml.should =~ /<copyrightdate>10-22-10<\/copyrightdate>/
+    xml = props_ds.to_xml
+    xml.should =~ /<document order='1'>mydocument<\/document>/
+    xml.should =~ /<copyrightdate>10-22-10<\/copyrightdate>/
   end
   
   it "should initialize properties from a rails param hash" do
@@ -40,11 +42,13 @@ describe Eem do
       :language => 'English',
       :notify => 'some@email.com',
       :paymentaccount => 'aaaaaa-aa-aaaaaa',
+      :paymentammount => '123.00',
       :paymentunit => 'dollars',
       :selectorname => 'Bob Smith',
       :selectorsunetid => 'bsmith',
       :sourcetitle => 'title',
-      :sourceurl => 'http://something.org/papers'
+      :sourceurl => 'http://something.org/papers',
+      :submitted => 'sometimestamp'
     }
     
     eem = Eem.from_params(@submitted_eem)
