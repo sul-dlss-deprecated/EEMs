@@ -55,4 +55,7 @@ describe Eem do
     props = eem.datastreams['eemsProperties']
     props.creator_values = ['Pdf author']
   end
+  
+  #it "should handle a file that isn't retreived via HTTP GET'"
+  
 end
