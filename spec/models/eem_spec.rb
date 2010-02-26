@@ -53,7 +53,7 @@ describe Eem do
     
     eem = Eem.from_params(@submitted_eem)
     props = eem.datastreams['eemsProperties']
-    props.creator_values = ['Pdf author']
+    props.creator_values.should == ['Pdf author']
   end
   
   #it "should handle a file that isn't retreived via HTTP GET'"
