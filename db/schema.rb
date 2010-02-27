@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100227011147) do
+ActiveRecord::Schema.define(:version => 20100227030213) do
 
   create_table "content_files", :force => true do |t|
     t.string   "url"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20100227011147) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "filepath"
+    t.string   "part_pid"
   end
 
   create_table "delayed_jobs", :force => true do |t|

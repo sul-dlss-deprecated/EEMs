@@ -1,7 +1,6 @@
 module Dor
   class DownloadJob < Struct.new(:content_file_id)
     
-    #TODO figure out workspace directory
     #TODO figure out if it isn't an http GET
     #TODO what if the filename is different than the last part of the URL path?
     def perform
@@ -16,8 +15,11 @@ module Dor
           true
         end
       end
+      
+      part = Part.find(cf.part_pid)
+      part.create_content_datastream
+      part.download_done
     end
-    
     
   end
 end

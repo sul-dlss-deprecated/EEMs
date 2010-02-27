@@ -56,5 +56,10 @@ class Part < ActiveFedora::Base
       parents(:response_format => :id_array)[0]
     end
   end
-
+  
+  def download_done
+    props_ds = datastreams['properties']
+    props_ds.done_values= ['true']
+    props_ds.save
+  end
 end
