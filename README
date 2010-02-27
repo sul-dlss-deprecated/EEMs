@@ -3,10 +3,11 @@
 	create Eem
 		(could be refactored out to PartCreation module, then included in Eems and Parts controllers)
 		create Part
-			-set :done to false
+		-add relationship to parent Eem
 		create ContentFile
+			set url and filepath
 		create DownloadJob
-	redirect to EemsController.show
+	redirect to EemsController.download_progress
 
 Part
 	properties
@@ -15,8 +16,10 @@ Part
 		:content_file_id
 		:size?
 	
+	-:done initialized to false
+	
 	content Datastream -no fedora checksum?
-		-points to workspace/eems-druid/content.pdf (we can create this even if the job isn't done)
+		-points to workspace/eems-druid/content.pdf
 
 	
 -EemsController.show

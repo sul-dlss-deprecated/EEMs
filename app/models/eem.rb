@@ -1,6 +1,9 @@
 require "active_fedora"
 
 class Eem < ActiveFedora::Base
+  
+  has_relationship "parts", :is_part_of, :inbound => true #content files
+  
   has_metadata :name => 'eemsProperties', :type => ActiveFedora::MetadataDatastream do |m|
     m.field "contentdoc", :string, :xml_node => 'document', :element_attrs => {:type => 'content', :order => '1'}
     m.field "copyrightdoc", :string, :element_attrs => {:order => '1'}

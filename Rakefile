@@ -17,9 +17,14 @@ rescue LoadError
   STDERR.puts "Run `rake gems:install` to install delayed_job"
 end
 
+task :clean do
+  puts 'Cleaning old coverage.data'
+  FileUtils.rm('coverage.data') if(File.exists? 'coverage.data')
+end
+
 #Call this from the command line with: rake verify_rcov
-RCov::VerifyTask.new(:verify_rcov => 'spec:rcov') do |t|
-  t.threshold = 79.8
+RCov::VerifyTask.new(:verify_rcov => ['clean','spec:rcov']) do |t|
+  t.threshold = 86.3
   t.index_html = 'coverage/index.html'
 end
 
