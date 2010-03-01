@@ -24,36 +24,34 @@ describe Eem do
   it "should have get and set properties" do
     props_ds = @eem.datastreams['eemsProperties']
     props_ds.document_values = ['mydocument']
-    props_ds.copyrightdate_append('10-22-10')
-    props_ds.contentdoc_values = ['http://mydoc.com']
+    props_ds.copyrightDate_append('10-22-10')
     
     xml = props_ds.to_xml
     xml.should =~ /<document order='1'>mydocument<\/document>/
-    xml.should =~ /<copyrightdate>10-22-10<\/copyrightdate>/
+    xml.should =~ /<copyrightDate>10-22-10<\/copyrightDate>/
   end
   
   it "should initialize properties from a rails param hash" do
     @submitted_eem = {
-      :contentdoc => 'http://www.site.com/some.pdf',
-      :copyrightdoc => 'http://www.site.com/cright.pdf',
-      :copyrightdate => '1/1/10',
-      :copyrightstatus => 'pending',
-      :creator => 'Pdf author',
+      :copyrightDate => '1/1/10',
+      :copyrightStatus => 'pending',
+      :creatorOrg => 'text from creator field',
+      :creatorPerson => 'creator person',
       :language => 'English',
+      :note => 'text of note',
       :notify => 'some@email.com',
-      :paymentaccount => 'aaaaaa-aa-aaaaaa',
-      :paymentammount => '123.00',
-      :paymentunit => 'dollars',
-      :selectorname => 'Bob Smith',
-      :selectorsunetid => 'bsmith',
-      :sourcetitle => 'title',
-      :sourceurl => 'http://something.org/papers',
+      :paymentStatus => 'free|paid',
+      :paymentFund => 'BIOLOGY',
+      :selectorName => 'Bob Smith',
+      :selectorSunetid => 'bsmith',
+      :sourceTitle => 'title',
+      :sourceUrl => 'http://something.org/papers',
       :submitted => 'sometimestamp'
     }
     
     eem = Eem.from_params(@submitted_eem)
     props = eem.datastreams['eemsProperties']
-    props.creator_values.should == ['Pdf author']
+    props.creatorPerson_values.should == ['creator person']
   end
   
   #it "should handle a file that isn't retreived via HTTP GET'"
