@@ -3,6 +3,7 @@ module Dor
     
     #TODO figure out if it isn't an http GET
     #TODO what if the filename is different than the last part of the URL path?
+    #TODO if job fails, dj retries perform?  Should test if file exists
     def perform
       cf = ContentFile.find(content_file_id)
       Curl::Easy.download(cf.url, cf.filepath) do |curl|

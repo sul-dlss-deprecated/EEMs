@@ -9,24 +9,25 @@ describe "Eems show page" do
   
   it "should render the fields of an Eem" do
     @eem_params = {
-      :contentdoc => 'http://www.site.com/some.pdf',
-      :copyrightdoc => 'http://www.site.com/cright.pdf',
-      :copyrightdate => '1/1/10',
-      :copyrightstatus => 'pending',
-      :creator => 'Pdf author',
+      :copyrightDate => '1/1/10',
+      :copyrightStatus => 'pending',
+      :creatorOrg => 'text from creator field',
+      :creatorPerson => 'creator person',
       :language => 'English',
+      :note => 'text of note',
       :notify => 'some@email.com',
-      :paymentaccount => 'aaaaaa-aa-aaaaaa',
-      :paymentunit => 'dollars',
-      :selectorname => 'Bob Smith',
-      :selectorsunetid => 'bsmith',
-      :sourcetitle => 'title',
-      :sourceurl => 'http://something.org/papers'
+      :paymentStatus => 'free|paid',
+      :paymentFund => 'BIOLOGY',
+      :selectorName => 'Bob Smith',
+      :selectorSunetid => 'bsmith',
+      :sourceTitle => 'title',
+      :sourceUrl => 'http://something.org/papers',
+      :submitted => 'sometimestamp'
     }
     assigns[:eem] = Eem.from_params(@eem_params)
     
     render "eems/show.html.erb"
     
-    response.body.should =~ /Pdf author/
+    response.body.should =~ /creator person/
   end
 end

@@ -10,7 +10,7 @@ describe Dor::DownloadJob do
   end
   
   describe "perform" do
-    it "should download the content file using Curl and update progress percentage" do
+    it "should download the content file using Curl and update progress percentage and set the Part as download_done" do
       cf = ContentFile.new
       cf.url = 'http://server.com/a.pdf'
       cf.filepath = File.join(SULAIR::WORKSPACE_DIR, 'druid:123', 'a.pdf')
