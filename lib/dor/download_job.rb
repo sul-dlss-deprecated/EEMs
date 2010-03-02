@@ -1,3 +1,8 @@
+require 'curl'
+
+ActiveFedora::SolrService.register(SOLR_URL)
+Fedora::Repository.register(FEDORA_URL)
+
 module Dor
   class DownloadJob < Struct.new(:content_file_id)
     
@@ -20,6 +25,13 @@ module Dor
       part = Part.find(cf.part_pid)
       part.create_content_datastream
       part.download_done
+    rescue Exception => e
+      msg = e.message
+      unless(e.backtrace.nil?)
+        msg << "\n\n" << e.backtrace.join("\n")
+      end
+      Rails.logger.error("DownloadJob Failed: " + msg)
+      raise e
     end
     
   end
