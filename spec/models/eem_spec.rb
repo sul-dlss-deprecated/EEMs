@@ -23,11 +23,11 @@ describe Eem do
   
   it "should have get and set properties" do
     props_ds = @eem.datastreams['eemsProperties']
-    props_ds.document_values = ['mydocument']
+    props_ds.note_values = ['a note to myself']
     props_ds.copyrightDate_append('10-22-10')
     
     xml = props_ds.to_xml
-    xml.should =~ /<document order='1'>mydocument<\/document>/
+    xml.should =~ /<note>a note to myself<\/note>/
     xml.should =~ /<copyrightDate>10-22-10<\/copyrightDate>/
   end
   

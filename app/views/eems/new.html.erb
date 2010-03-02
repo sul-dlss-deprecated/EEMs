@@ -4,12 +4,16 @@
 
 <% form_tag(:action => :create) do %>
   <p>
-    Content<br />
-    <%= text_field_tag 'eem[contentdoc]' %>
+    Content Url<br />
+    <%= text_field_tag 'contentUrl' %>
   </p>
   <p>
-    Copyright<br />
-    <%= text_field_tag 'eem[copyrightdoc]' %>
+    Note<br />
+    <%= text_field_tag 'eem[note]' %>
+  </p>
+  <p>
+    Payment Status<br />
+    <%= text_field_tag 'eem[paymentStatus]' %>
   </p>
   <p>
     <%= submit_tag 'Create EEM' %>

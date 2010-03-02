@@ -2,10 +2,23 @@
 	receive params from form
 	create Eem
 		(could be refactored out to PartCreation module, then included in Eems and Parts controllers)
-		create Part
-		-add relationship to parent Eem
 		create ContentFile
 			set url and filepath
+			create_table "content_files", :force => true do |t|
+		    t.string   "url"
+		    t.integer  "percent_done"
+		    t.string   "path"
+		    t.datetime "created_at"
+		    t.datetime "updated_at"
+		    t.string   "filepath"
+		    t.string   "part_pid"
+		  end
+		create Part
+		-add relationship to parent Eem
+		m.field "url", :string
+	    m.field "done", :string
+	    m.field "content_file_id", :string
+
 		create DownloadJob
 	redirect to EemsController.download_progress
 
