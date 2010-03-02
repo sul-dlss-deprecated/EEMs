@@ -4,6 +4,7 @@ class ContentFilesController < ApplicationController
   def show
     pdone = {'percent_done' => @cf.percent_done.to_s}   
     render :json => pdone.to_json
+    #render :text => @cf.percent_done.to_s
   end
 
   private

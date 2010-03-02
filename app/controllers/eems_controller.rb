@@ -22,13 +22,18 @@ class EemsController < ApplicationController
     cf = ContentFile.new
     cf.url = params[:contentUrl]
     filename = params[:contentUrl].split(/\?/).first.split(/\//).last
+    FileUtils.mkdir(File.join(SULAIR::WORKSPACE_DIR, eem.pid)) unless (File.exists?(File.join(SULAIR::WORKSPACE_DIR, eem.pid)))
     cf.filepath = File.join(SULAIR::WORKSPACE_DIR, eem.pid, filename)
     cf.save
     
     part = Part.from_params(:url => params[:contentUrl], :content_file_id => cf.id)
+    part.add_relationship(:is_part_of, eem)
     part.save
     cf.part_pid = part.pid
     cf.save
+    
+    job = Dor::DownloadJob.new(cf.id)
+    Delayed::Job.enqueue(job)
     
     redirect_to :action => 'show', :id => eem.pid
   end

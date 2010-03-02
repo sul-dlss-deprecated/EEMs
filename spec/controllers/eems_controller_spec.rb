@@ -49,10 +49,15 @@ describe EemsController do
       
       Part.should_receive(:new).and_return(@part)
       
+      job = Dor::DownloadJob.new(@cf.id)
+      Dor::DownloadJob.should_receive(:new).with(@cf.id).and_return(job)
+      Delayed::Job.should_receive(:enqueue).with(job)
+      
       post "create", :eem => @eems_params, :contentUrl => @content_url
+      
     end
     
-    it "should create a new Eem from the params hash" do
+    it "should create a new Eem from the params hash and create the DelayedJob to do the download" do
      
       response.should redirect_to(:action => 'show', :id => @eem.pid)
     end
@@ -71,6 +76,10 @@ describe EemsController do
     
     it "should set the ContentFile's part_pid to the created Part's pid" do
       @cf.part_pid.should == 'part:345'
+    end
+    
+    it "should set the eem as the parent pid for the created part" do
+      @part.parent_pid.should == @eem.pid
     end
     
   end
