@@ -9,7 +9,6 @@ class Eem < ActiveFedora::Base
     m.field "copyrightStatus", :string
     m.field "creatorOrg", :string
     m.field "creatorPerson", :string
-    m.field "document", :string, :element_attrs => {:order => '1'} #can I change attribute values?
     m.field "language", :string
     m.field "note", :string
     m.field "notify", :string

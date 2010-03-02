@@ -19,6 +19,17 @@ class EemsController < ApplicationController
     eem = Eem.from_params(params[:eem])
     eem.save
     
+    cf = ContentFile.new
+    cf.url = params[:contentUrl]
+    filename = params[:contentUrl].split(/\?/).first.split(/\//).last
+    cf.filepath = File.join(SULAIR::WORKSPACE_DIR, eem.pid, filename)
+    cf.save
+    
+    part = Part.from_params(:url => params[:contentUrl], :content_file_id => cf.id)
+    part.save
+    cf.part_pid = part.pid
+    cf.save
+    
     redirect_to :action => 'show', :id => eem.pid
   end
   
