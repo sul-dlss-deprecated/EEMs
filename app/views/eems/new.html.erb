@@ -1,21 +1,82 @@
 <!-- This will render the form needed to create an Eem 
      Manually create the params sent to controller on submit?-->
-<h1>New Eem</h1>
 
-<% form_tag(:action => :create) do %>
-  <p>
-    Content Url<br />
-    <%= text_field_tag 'contentUrl' %>
-  </p>
-  <p>
-    Note<br />
-    <%= eems_text_field_tag :note %>
-  </p>
-  <p>
-    Payment Status<br />
-    <%= eems_text_field_tag :paymentStatus %>
-  </p>
-  <p>
-    <%= submit_tag 'Create EEM' %>
-  </p>
+<% form_tag({:action => :create}, :id => 'eems-new-form-widget') do %>
+  <dl>
+    <dt>Found on this site:</dt>
+    <dd><%= eems_text_field_tag :sourceUrl %></dd>
+
+    <dt style="width: 325px">Language:</dt>
+    <dd>
+      <%= select_tag 'eem[language]', 
+        "<option>Arabic</option>
+        <option>Chinese</option>
+        <option selected='selected'>English</option>
+        <option>French</option>
+        <option>German</option>
+        <option>Hebrew</option>
+        <option>Italian</option>
+        <option>Japanese</option>
+        <option>Korean</option>
+        <option>Russian</option>
+        <option>Spanish</option>
+        <option>Other</option>"
+      %>
+    </dd>
+
+    <dt>Title of work:</dt>
+    <dd><%= eems_text_field_tag :sourceTitle, '', {:size => 41} %></dd>
+
+    <dt>Created by:</dt>
+    <dd>
+      <%= eems_text_field_tag :selectorName, '', {:size => 24} %> &nbsp; 
+      <%= select_tag 'eem[creatorOrg]', "<option>organization</option><option>person</option>" %> 
+    </dd>
+
+    <dt>Direct link to PDF:</dt>
+    <dd><%= text_field_tag :contentUrl, '', {:size => 41} %></dd>
+
+    <dt style="width: 0px"></dt>
+    <dd><%= text_area_tag 'eem[note]', nil, :rows => 5, :cols => 56 %></dd>
+
+    <dt>Copyright:</dt>
+    <dd>
+        <%= select_tag 'eem[copyrightStatus]',
+          "<option>(select)</option>
+          <option>cleared for public access</option>
+          <option>cleared for Stanford access</option>
+          <option>sent request, wait for response</option>
+          <option>sent request, assume OK on...</option>
+          ", :style => 'width: 200px'              
+        %>         
+    </dd>
+
+    <dt>Purchase:</dt>
+    <dd>
+      <%= select_tag 'eem[paymentStatus]',
+        "<option>free</option>
+        <option>on fund...</option>"
+      %>         
+    </dd>
+
+    <dt></dt>
+    <dd>
+      <%= check_box_tag 'eem[notify]', '' %>
+      <%= label_tag 'eem[notify]', 'Notify original requestor' %>
+      &nbsp;
+      <%= eems_text_field_tag :selectorSunetid, '', {:size => 16} %>
+    </dd>
+
+      <dt></dt>
+      <dd>
+        <%= check_box_tag 'eem[printedVersionSubmitted]', '' %>
+        <%= label_tag 'eem[printedVersionSubmitted]', 'Printed version will also be submitted' %>
+      </dd>
+    </dl>
+
+  </dl>
+
+  <div id="submit-buttons">
+    <%= submit_tag 'Save to dashboard' %>
+  </div>
 <% end %>

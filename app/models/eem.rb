@@ -18,6 +18,7 @@ class Eem < ActiveFedora::Base
     m.field "selectorSunetid", :string
     m.field "sourceTitle", :string
     m.field "sourceUrl", :string
+    m.field "printedVersionSubmitted", :string
     m.field "submitted", :string
   end
   
