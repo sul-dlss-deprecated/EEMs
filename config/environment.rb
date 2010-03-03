@@ -21,7 +21,13 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   
   config.gem 'delayed_job'
-
+  config.gem 'curb'
+  config.gem 'active-fedora', :version => '1.0.7'
+  config.gem 'ruby-fedora', :version => '1.0.7'
+  #config.gem 'rspec-rails', :version => '1.3.2'
+  #config.gem 'rspec', :version => '1.3.0'
+  config.gem 'json'
+  
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
