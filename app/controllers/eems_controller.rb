@@ -35,7 +35,13 @@ class EemsController < ApplicationController
     job = Dor::DownloadJob.new(cf.id)
     Delayed::Job.enqueue(job)
     
-    redirect_to :action => 'show', :id => eem.pid
+    resp = {
+      'eem_pid' => eem.pid,
+      'part_pid' => part.pid,
+      'content_file_id' => cf.id
+    }
+    
+    render :json => resp.to_json
   end
   
   # Taken from Salt project
