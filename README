@@ -20,7 +20,12 @@
 	    m.field "content_file_id", :string
 
 		create DownloadJob
-	redirect to EemsController.download_progress
+		returns json
+		{
+			eems_pid => 'druid:123'
+			part_pid => 'druid:345
+			content_file_id => 23
+		}
 
 Part
 	properties
@@ -34,26 +39,21 @@ Part
 	content Datastream -no fedora checksum?
 		-points to workspace/eems-druid/content.pdf
 
-	
+###3/4/10 next thing to do	
 -EemsController.show
+	-assigns @eem @parts[]
 	-render Eem detail page
-	-check done flag of any part
-	-If part not done
-		-progress box queries ContentFile controller /contentfiles/:id/status
 	
-	-if 100 but not done
-		-calls PartsController.update_attributes(part_druid, :done, 'true')
-		-re-render part/page with part details
-	-if error
-		-display error....
-		-do we retry?
-			-display button to retry - calls /contentfiles/:id/retry
+	
 	
 -ContentFileController/:id => #show
 	-calls ContentFile.percent_done
 	-returns json
+	-should return < 0 if there's an error
 
 #Need to grab druids from Suri
+Dashboard
+	-Blacklight base
 
 HOLD
 If request from bookmark tool

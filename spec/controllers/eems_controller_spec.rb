@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'json'
 
 describe EemsController do
   before(:all) do
@@ -59,7 +60,7 @@ describe EemsController do
     
     it "should create a new Eem from the params hash and create the DelayedJob to do the download" do
      
-      response.should redirect_to(:action => 'show', :id => @eem.pid)
+
     end
     
     it "should create a ContentFile object from the url" do
@@ -80,6 +81,15 @@ describe EemsController do
     
     it "should set the eem as the parent pid for the created part" do
       @part.parent_pid.should == @eem.pid
+    end
+    
+    it "should return json with the eem pid, content file id, and part pid" do
+      json = JSON.parse(response.body)
+      json.should == {
+        'eem_pid' => 'pid:123',
+        'part_pid' => 'part:345',
+        'content_file_id' => 1
+        }
     end
     
   end
