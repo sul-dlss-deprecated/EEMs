@@ -97,11 +97,15 @@ describe EemsController do
   describe "#show" do
     it "should find an Eem and render the show page" do
       @eem = Eem.new(:pid => 'pid:123')
+      @part = Part.new()
+      @part.add_relationship(:is_part_of, @eem)
       Eem.should_receive(:find).with('pid:123').and_return(@eem)
+      @eem.should_receive(:parts).and_return([@part])
       
       get "show", :id => 'pid:123'
       
       assigns[:eem].should == @eem
+      assigns[:parts].should == [@part]
     end
   end
 end

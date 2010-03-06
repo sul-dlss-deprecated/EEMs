@@ -7,12 +7,12 @@ describe EemsHelper do
       html =<<-EOF
       <p>
           <%= text_field_tag 'eem[note]' %>
-          <input id="eem_note" name="eem[note]" type="text" />
+          <input id="eem_note" name="eem[note]" type="text" value=""/>
       </p>
       EOF
       
       out = helper.eems_text_field_tag(:note)
-      out.should =~ /<input id=\"eem_note\" name=\"eem\[note\]\" type=\"text\" \/>/
+      out.should =~ /<input id=\"eem_note\" name=\"eem\[note\]\" type=\"text\" value=\"\" \/>/
       
     end
   end
