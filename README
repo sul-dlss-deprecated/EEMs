@@ -55,11 +55,8 @@ Part
 Dashboard
 	-Blacklight base
 
-HOLD
-If request from bookmark tool
--render small progress box
-	-page has javascript to query ContentFile controller for status
-	-keeps querying for status until 100 or error
+#error handling if DownloadJob fails
+-retry?
 
 
 #HOLD Needed for addtional files when Eems is already created

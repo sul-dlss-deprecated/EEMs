@@ -5,6 +5,7 @@ class EemsController < ApplicationController
   #GET /eems/{:id}
   def show
     @eem = Eem.find(params[:id])
+    @parts = @eem.parts
   end
   
   #GET /eems/new
