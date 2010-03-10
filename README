@@ -63,3 +63,13 @@ Dashboard
 PartsController.create
 	-creates child object
 	-sets :done to false
+	
+	
+####Blacklight
+-clone blacklight into vendor/plugins/blacklight
+-follow super_template
+-copy blacklight config into app level
+-modify routes file
+-modify environment.rb
+-application helper
+-modify application controller
