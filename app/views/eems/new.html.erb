@@ -1,10 +1,11 @@
 <!-- This will render the form needed to create an Eem 
      Manually create the params sent to controller on submit?-->
+<!-- form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do -->
 
-<% form_tag({:action => :create}, :id => 'eems-new-form-widget') do %>
+<% form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do %>    
   <dl>
     <dt>Found on this site:</dt>
-    <dd><%= eems_text_field_tag :sourceUrl %></dd>
+    <dd><%= eems_text_field_tag :sourceUrl, 'http://www.ntsb.gov/Publictn/Pub_list.htm', {:size => 41, :name => 'sourceUrl'} %></dd>
 
     <dt style="width: 325px">Language:</dt>
     <dd>
@@ -25,16 +26,16 @@
     </dd>
 
     <dt>Title of work:</dt>
-    <dd><%= eems_text_field_tag :sourceTitle, '', {:size => 41} %></dd>
+    <dd><%= eems_text_field_tag :sourceTitle, 'AAR-99/01', {:size => 41} %></dd>
 
     <dt>Created by:</dt>
     <dd>
-      <%= eems_text_field_tag :selectorName, '', {:size => 24} %> &nbsp; 
+      <%= eems_text_field_tag :selectorName, 'JD', {:size => 24} %> &nbsp; 
       <%= select_tag 'eem[creatorOrg]', "<option>organization</option><option>person</option>" %> 
     </dd>
 
     <dt>Direct link to PDF:</dt>
-    <dd><%= text_field_tag :contentUrl, '', {:size => 41} %></dd>
+    <dd><%= text_field_tag :contentUrl, 'http://www.ntsb.gov/Publictn/1999/AAR9901.pdf', {:size => 41} %></dd>
 
     <dt style="width: 0px"></dt>
     <dd><%= text_area_tag 'eem[note]', nil, :rows => 5, :cols => 56 %></dd>
@@ -77,6 +78,20 @@
   </dl>
 
   <div id="submit-buttons">
-    <%= submit_tag 'Save to dashboard' %>
+    <input type="submit" value="Save to dashboard"/>
   </div>
+
 <% end %>
+
+<div id="eems-upload-progress" style="display: none;">
+  Your selection is being uploaded, please wait... <br>
+  <div style="float: left; width: 40px;" id="percent_done"></div>      
+  <div style="float: left;width: 200px; height: 10px; background-color: #aaa; margin-top: 4px;">
+    <img id="progress_bar" src="../images/progress_bar.png" style="width: 0px, height: 10px;" />    
+  </div>      
+</div>
+
+<div id="eems-details-link" style="display: none; clear: left;">
+    <a href="" id="details-link">Detail view</a>
+</div>
+
