@@ -52,14 +52,14 @@ Blacklight.configure(:shared) do |config|
 
   # solr field values given special treatment in the show (single result) view
   config[:show] = {
-    :html_title => "sourceUrl_field",
+    :html_title => "sourceTitle_field",
     :heading => "sourceUrl_field",
     :display_type => "format"
   }
 
   # solr fld values given special treatment in the index (search results) view
   config[:index] = {
-    :show_link => "language_field",
+    :show_link => "sourceTitle_field",
     :num_per_page => 10,
     :record_display_type => "format"
   }
@@ -68,22 +68,16 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:facet] = {
     :field_names => [
-      "active_fedora_model_field",
-      "pub_date",
-      "subject_topic_facet",
-      "language_facet",
-      "lc_1letter_facet",
-      "subject_geo_facet",
-      "subject_era_facet"
+      "language_field",
+      "selectorName_field",
+      "paymentStatus_field",
+      "copyrightStatus_field"
     ],
     :labels => {
-      "active_fedora_model_field"              => "Model",
-      "pub_date"            => "Publication Year",
-      "subject_topic_facet" => "Topic",
-      "language_facet"      => "Language",
-      "lc_1letter_facet"    => "Call Number",
-      "subject_era_facet"   => "Era",
-      "subject_geo_facet"   => "Region"
+      "language_field"            => "Language",
+      "selectorName_field" => "Selector",
+      "paymentStatus_field" => "Payment Status",
+      "copyrightStatus_field" => "Copyright Status"
     }
   }
 
@@ -92,25 +86,13 @@ Blacklight.configure(:shared) do |config|
   config[:index_fields] = {
     :field_names => [
       "id",
-      "title_vern_display",
-      "author_display",
-      "author_vern_display",
-      "format",
-      "language_facet",
-      "published_display",
-      "published_vern_display",
-      "lc_callnum_display"
+      "sourceTitle_field",
+      "copyrightStatus_field"
     ],
     :labels => {
-      "id"           => "Id:",
-      "title_vern_display"      => "Title:",
-      "author_display"          => "Author:",
-      "author_vern_display"     => "Author:",
-      "format"                  => "Format:",
-      "language_facet"          => "Language:",
-      "published_display"       => "Published:",
-      "published_vern_display"  => "Published:",
-      "lc_callnum_display"      => "Call number:"
+      "id"                      => "Id:",
+      "sourceTitle_field"      => "Title:",
+      "copyrightStatus_field"   => "Copyright:"
     }
   }
 
@@ -119,37 +101,16 @@ Blacklight.configure(:shared) do |config|
   config[:show_fields] = {
     :field_names => [
       "id",
-      "title_vern_display",
-      "subtitle_display",
-      "subtitle_vern_display",
-      "author_display",
-      "author_vern_display",
-      "format",
-      "url_fulltext_display",
-      "url_suppl_display",
-      "material_type_display",
-      "language_facet",
-      "published_display",
-      "published_vern_display",
-      "lc_callnum_display",
-      "isbn_t"
+      "sourceTitle_field",
+      "sourceUrl_field",
+      "note_field"
+      
     ],
     :labels => {
       "id"           => "Id:",
-      "title_vern_display"      => "Title:",
-      "subtitle_display"        => "Subtitle:",
-      "subtitle_vern_display"   => "Subtitle:",
-      "author_display"          => "Author:",
-      "author_vern_display"     => "Author:",
-      "format"                  => "Format:",
-      "url_fulltext_display"    => "URL:",
-      "url_suppl_display"       => "More Information:",
-      "material_type_display"   => "Physical description:",
-      "language_facet"          => "Language:",
-      "published_display"       => "Published:",
-      "published_vern_display"  => "Published:",
-      "lc_callnum_display"      => "Call number:",
-      "isbn_t"                  => "ISBN:"
+      "sourceTitle_field"      => "Title:",
+      "sourceUrl_field"        => "Direct link to PDF:",
+      "note_field"   => "Note:"
     }
   }
 
