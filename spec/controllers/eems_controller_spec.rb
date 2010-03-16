@@ -35,7 +35,7 @@ describe EemsController do
       
       @content_url = 'http://something.org/papers/a.pdf'
       @eem = Eem.new(:pid => 'pid:123')
-      @eem.set_properties(@eems_params.symbolize_keys)
+      @eem.set_properties(@eems_params.stringify_keys)
       @eem.should_receive(:save)
 
       Eem.should_receive(:from_params).with(@eems_params).and_return(@eem)

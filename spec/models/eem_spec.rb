@@ -50,10 +50,11 @@ describe Eem do
         :submitted => 'sometimestamp'
       })
       
+      
     end
     
     it "should initialize an eem with a creator type of person" do
-      eem = Eem.from_params(@submitted_eem.symbolize_keys)
+      eem = Eem.from_params(@submitted_eem.stringify_keys)
       props = eem.datastreams['eemsProperties']
       props.creatorPerson_values.should == ['Joe Bob']
       props.creatorOrg_values.should == []
@@ -63,7 +64,7 @@ describe Eem do
       @submitted_eem[:creatorType] = 'organization'
       @submitted_eem[:creatorName] = 'US Geological Survey'
       
-      eem = Eem.from_params(@submitted_eem.symbolize_keys)
+      eem = Eem.from_params(@submitted_eem.stringify_keys)
       props = eem.datastreams['eemsProperties']
       props.creatorPerson_values.should == []
       props.creatorOrg_values.should == ['US Geological Survey']

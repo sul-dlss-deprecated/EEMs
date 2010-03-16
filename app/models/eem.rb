@@ -38,13 +38,13 @@ class Eem < ActiveFedora::Base
     
     params_hash.each_pair do |field, value|
       case field
-      when :creatorType
+      when 'creatorType'
         if(value =~ /person/)
-          props.creatorPerson_values = [params_hash[:creatorName]]
+          props.creatorPerson_values = [params_hash['creatorName']]
         else
-          props.creatorOrg_values = [params_hash[:creatorName]]
+          props.creatorOrg_values = [params_hash['creatorName']]
         end
-      when :creatorName
+      when 'creatorName'
         #skip
       else
         eval("props.#{field.to_s}_values = [#{value.inspect}]")
