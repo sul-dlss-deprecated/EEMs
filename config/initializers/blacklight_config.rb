@@ -69,13 +69,15 @@ Blacklight.configure(:shared) do |config|
   config[:facet] = {
     :field_names => [
       "language_field",
-      "selectorName_field",
+      "creatorOrg_field",
+      "creatorPerson_field",
       "paymentStatus_field",
       "copyrightStatus_field"
     ],
     :labels => {
       "language_field"            => "Language",
-      "selectorName_field" => "Selector",
+      "creatorOrg_field"     => "Creator- Organization",
+      "creatorPerson_field"  => "Creator- Person",
       "paymentStatus_field" => "Payment Status",
       "copyrightStatus_field" => "Copyright Status"
     }
