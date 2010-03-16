@@ -19,8 +19,8 @@ describe EemsController do
         {
           :copyrightDate => '1/1/10',
           :copyrightStatus => 'pending',
-          :creatorOrg => 'text from creator field',
-          :creatorPerson => 'creator person',
+          :creatorName => 'Joe Bob',
+          :creatorType => 'person',
           :language => 'English',
           :note => 'text of note',
           :notify => 'some@email.com',
@@ -35,7 +35,7 @@ describe EemsController do
       
       @content_url = 'http://something.org/papers/a.pdf'
       @eem = Eem.new(:pid => 'pid:123')
-      @eem.set_properties(@eems_params)
+      @eem.set_properties(@eems_params.symbolize_keys)
       @eem.should_receive(:save)
 
       Eem.should_receive(:from_params).with(@eems_params).and_return(@eem)

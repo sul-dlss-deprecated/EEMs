@@ -37,7 +37,18 @@ class Eem < ActiveFedora::Base
     props = datastreams['eemsProperties']
     
     params_hash.each_pair do |field, value|
-      eval("props.#{field.to_s}_values = [#{value.inspect}]")
+      case field
+      when :creatorType
+        if(value =~ /person/)
+          props.creatorPerson_values = [params_hash[:creatorName]]
+        else
+          props.creatorOrg_values = [params_hash[:creatorName]]
+        end
+      when :creatorName
+        #skip
+      else
+        eval("props.#{field.to_s}_values = [#{value.inspect}]")
+      end
     end
   end
   

@@ -17,17 +17,18 @@ class EemsController < ApplicationController
   #Handles submit from /eems/new
   #Assume we receive the standard Rails hash of all the form params
   def create
-    eem = Eem.from_params(params[:eem])
+    params_symbolized = params.symbolize_keys
+    eem = Eem.from_params(params_symbolized[:eem])
     eem.save
     
     cf = ContentFile.new
-    cf.url = params[:contentUrl]
-    filename = params[:contentUrl].split(/\?/).first.split(/\//).last
+    cf.url = params_symbolized[:contentUrl]
+    filename = params_symbolized[:contentUrl].split(/\?/).first.split(/\//).last
     FileUtils.mkdir(File.join(SULAIR::WORKSPACE_DIR, eem.pid)) unless (File.exists?(File.join(SULAIR::WORKSPACE_DIR, eem.pid)))
     cf.filepath = File.join(SULAIR::WORKSPACE_DIR, eem.pid, filename)
     cf.save
     
-    part = Part.from_params(:url => params[:contentUrl], :content_file_id => cf.id)
+    part = Part.from_params(:url => params_symbolized[:contentUrl], :content_file_id => cf.id)
     part.add_relationship(:is_part_of, eem)
     part.save
     cf.part_pid = part.pid
