@@ -47,7 +47,6 @@ describe Part do
       @part.stub!(:save)
       @part.add_relationship(:is_part_of, @eem)
       
-      @part.should_receive(:save)
       @part.create_content_datastream
     end
     
