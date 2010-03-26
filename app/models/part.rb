@@ -41,7 +41,7 @@ class Part < ActiveFedora::Base
     filename = props_ds.url_values.first.split(/\?/).first.split(/\//).last
     mime_type = MIME::Types.type_for(filename).to_s
     
-    url = WORKSPACE_URL + '/' + parent_pid + '/' + filename
+    url = 'https://eems-dev.stanford.edu/workspace' + '/' + parent_pid + '/' + filename
     
     #TODO what if more than one content file? add_content_datastream?
     attrs = {:dsID => 'content', :dsLocation => url, 
@@ -49,6 +49,7 @@ class Part < ActiveFedora::Base
     ds = ActiveFedora::Datastream.new(attrs)
     ds.control_group = 'E'
     add_datastream(ds)
+    ds.save
   end
   
   def parent_pid
