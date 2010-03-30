@@ -1,6 +1,7 @@
 require "active_fedora"
+require "lyber_core"
 
-class Eem < ActiveFedora::Base
+class Eem < Dor::Base
   
   has_relationship "parts", :is_part_of, :inbound => true #content files
   
