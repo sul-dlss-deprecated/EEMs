@@ -9,9 +9,9 @@
 #   
 #   content Datastream
 #     -points to workspace/eems-druid/content.pdf (we can create this even if the job isn't done)
+require 'lyber_core'
 
-
-class Part < ActiveFedora::Base
+class Part < Dor::Base
   
   has_relationship "parents", :is_part_of #relationship between content file and parent Eem
   

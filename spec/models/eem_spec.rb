@@ -15,6 +15,7 @@ describe Eem do
   
   it "should be a kind of ActiveFedora::Base" do
     @eem.should be_kind_of(ActiveFedora::Base)
+    @eem.should be_kind_of(Dor::Base)
   end
   
   it "should have a eemsProperties datastream" do
