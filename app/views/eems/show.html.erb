@@ -1,10 +1,35 @@
 <!-- @af_obj.fields[:name][:values].first -->
 
-<% @eem.fields.each_pair do |field, value| %>
-	<% unless(value[:values].first.nil?)%>
-		<p>
-		<b><%= field.to_s %>:</b><br/>
-		<%= value[:values].first %><br/>
-		<p>
-	<% end %>
-<% end %>
+
+<div id="sidebar">               
+    <h3>Status</h3> 
+    <br><br>
+    <h3>Acquisitions actions</h3> 
+    <ul id="acquisitions_actions">
+      <li><a href="#">Send to metadata</a></li>    
+      <li><a href="#">Mark as duplicate</a></li>    
+      <li><a href="#">Close request</a></li>    
+      <li><a href="#">Question/comment to selector</a></li>    
+    </ul>
+</div>
+<div id="results">
+    <h1 class="mainTitle"><%= @eem.fields[:sourceTitle][:values].first %></h1>
+    
+    <dl class="details">
+      <dt>PURL :</dt><dd></dd>
+      <dt>Found at this site :</dt><dd><%= @eem.fields[:sourceUrl][:values].first %></dd>
+      <dt>Language :</dt><dd><%= @eem.fields[:language][:values].first %></dd>
+      <dt>Created by :</dt><dd><%= @eem.fields[:creatorPerson][:values].first %></dd>
+      <dt>Direct link to PDF :</dt><dd></dd>
+      <dt>Local copy of PDF :</dt><dd></dd>
+      <dt>Citation/comments :</dt><dd><%= @eem.fields[:note][:values].first %></dd>
+      <dt>Copyright :</dt><dd><%= @eem.fields[:copyrightStatus][:values].first %></dd>
+      <dt>Correspondence :</dt><dd></dd>
+      <dt>Purchase :</dt><dd><%= @eem.fields[:paymentStatus][:values].first %></dd>
+      <dt>Notifications :</dt><dd></dd>
+    </dl>
+    
+    <div id="action_log">  
+      <h3>Action log</h3>   
+    </div>
+</div>
