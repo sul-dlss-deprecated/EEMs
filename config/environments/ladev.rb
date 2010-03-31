@@ -24,3 +24,11 @@ KEY_PASS = ***REMOVED***
 module Sulair
   WORKSPACE_URL = 'https://eems-dev.stanford.edu/workspace'
 end
+
+module Dor
+  MINT_SURI_IDS = true
+  SURI_URL = 'http://lyberservices-dev.stanford.edu:8080'
+  ID_NAMESPACE = 'druid'
+  SURI_USER = ***REMOVED***
+  SURI_PASSWORD = ***REMOVED***
+end

@@ -9,6 +9,8 @@ class ContentFilesController < ApplicationController
 
   private
   def find_model
-    @cf = ContentFile.find(params[:id]) if params[:id]
+    ContentFile.uncached do
+      @cf = ContentFile.find(params[:id]) if params[:id]
+    end
   end
 end
