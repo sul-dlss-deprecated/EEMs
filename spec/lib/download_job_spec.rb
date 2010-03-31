@@ -6,7 +6,7 @@ describe Dor::DownloadJob do
   before(:all) do
     ActiveFedora::SolrService.register(SOLR_URL)
     Fedora::Repository.register(FEDORA_URL)
-    Fedora::Repository.stubs(:instance).returns(stub('frepo').as_null_object)
+    Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
   end
   
   describe "perform" do
