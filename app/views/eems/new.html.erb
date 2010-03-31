@@ -5,7 +5,7 @@
 <% form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do %>    
   <dl>
     <dt>Found on this site:</dt>
-    <dd><%= eems_text_field_tag :sourceUrl, 'http://www.ntsb.gov/Publictn/Pub_list.htm', {:size => 41, :name => 'sourceUrl'} %></dd>
+    <dd><%= eems_text_field_tag :sourceUrl, 'http://www.dfg.ca.gov/wildlife/wap/report.html', {:size => 41, :name => 'eem[sourceUrl]'} %></dd>
 
     <dt style="width: 325px">Language:</dt>
     <dd>
@@ -26,19 +26,19 @@
     </dd>
 
     <dt>Title of work:</dt>
-    <dd><%= eems_text_field_tag :sourceTitle, 'AAR-99/01', {:size => 41} %></dd>
+    <dd><%= eems_text_field_tag :sourceTitle, 'California Wildlife Action Plan Report', {:size => 41} %></dd>
 
     <dt>Created by:</dt>
     <dd>
-      <%= eems_text_field_tag :creatorName, 'JD', {:size => 24} %> &nbsp; 
+      <%= eems_text_field_tag :creatorName, 'Department of Fish and Game', {:size => 24} %> &nbsp; 
       <%= select_tag 'eem[creatorType]', "<option>organization</option><option>person</option>" %> 
     </dd>
 
     <dt>Direct link to PDF:</dt>
-    <dd><%= text_field_tag :contentUrl, 'http://www.ntsb.gov/Publictn/1999/AAR9901.pdf', {:size => 41} %></dd>
+    <dd><%= text_field_tag :contentUrl, 'http://www.dfg.ca.gov/wildlife/WAP/docs/report/full-report.pdf', {:size => 41, :name => 'contentUrl'} %></dd>
 
     <dt style="width: 0px"></dt>
-    <dd><%= text_area_tag 'eem[note]', nil, :rows => 5, :cols => 56 %></dd>
+    <dd><%= text_area_tag 'eem[note]', 'Report is available as a large single file (18 MB) as one PDF file or as individual sections', :rows => 5, :cols => 56 %></dd>
 
     <dt>Copyright:</dt>
     <dd>
@@ -48,8 +48,9 @@
           <option>cleared for Stanford access</option>
           <option>sent request, wait for response</option>
           <option>sent request, assume OK on...</option>
-          ", :style => 'width: 200px'              
-        %>         
+          ", :style => 'width: 170px'              
+        %>
+        <%= eems_text_field_tag :copyrightDate, '', {:size => 10, :id => 'eems-copyright-date'} %>         
     </dd>
 
     <dt>Purchase:</dt>
@@ -84,7 +85,8 @@
 <% end %>
 
 <div id="eems-upload-progress" style="display: none;">
-  Your selection is being uploaded, please wait... <br>
+  <div id="upload-progress-text">Your selection is being uploaded, please wait... </div>
+  <div id="upload-complete-text" style="display:none;">Upload complete!</div>
   <div style="float: left; width: 40px;" id="percent_done"></div>      
   <div style="float: left;width: 200px; height: 10px; background-color: #aaa; margin-top: 4px;">
     <img id="progress_bar" src="../images/progress_bar.png" style="width: 0px, height: 10px;" />    
@@ -92,6 +94,6 @@
 </div>
 
 <div id="eems-details-link" style="display: none; clear: left;">
-    <a href="" id="details-link">Detail view</a>
+    <a href="" id="details-link" target="_blank">Detail view</a>
 </div>
 
