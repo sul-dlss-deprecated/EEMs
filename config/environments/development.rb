@@ -18,6 +18,20 @@ config.action_mailer.raise_delivery_errors = false
 
 FEDORA_URL = 'http://***REMOVED***@127.0.0.1:8080/fedora'
 
-module SULAIR
+module Sulair
   WORKSPACE_URL = 'http://localhost:3000/workspace'
 end
+
+module Dor
+  MINT_SURI_IDS = true
+  SURI_URL = 'http://lyberservices-dev.stanford.edu:8080'
+  ID_NAMESPACE = 'druid'
+  SURI_USER = ***REMOVED***
+  SURI_PASSWORD = ***REMOVED***
+end
+
+# Dor::SuriService::MINT_SURI_IDS = true
+# Dor::SuriService::SURI_URL = 'http://lyberservices-dev.stanford.edu:8080'
+# Dor::SuriService::ID_NAMESPACE = 'druid'
+# Dor::SuriService::SURI_USER = ***REMOVED***
+# Dor::SuriService::SURI_PASSWORD = ***REMOVED***

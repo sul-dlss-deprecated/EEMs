@@ -31,9 +31,10 @@ config.gem 'rspec-rails', :version => '>= 1.3.2', :lib => false unless File.dire
 
 FEDORA_URL = 'http://***REMOVED***@127.0.0.1:8080/fedora'
 
-module SULAIR
+module Sulair
   WORKSPACE_URL = "https://eems-unit.stanford.edu/workspace"
 end
 
-
-Dor::MINT_SURI_IDS = false
+module Dor
+  MINT_SURI_IDS = false
+end

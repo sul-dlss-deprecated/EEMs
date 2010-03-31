@@ -1,10 +1,11 @@
+require 'dor/download_job'
 
-module SULAIR
+module Sulair
   WORKSPACE_DIR = File.join(RAILS_ROOT, 'workspace')
   
 end
 
-unless(File.exists?(SULAIR::WORKSPACE_DIR))
-  FileUtils.mkdir(SULAIR::WORKSPACE_DIR)
-  FileUtils.ln_s(SULAIR::WORKSPACE_DIR, File.join(RAILS_ROOT, 'public', 'workspace'))
+unless(File.exists?(Sulair::WORKSPACE_DIR))
+  FileUtils.mkdir(Sulair::WORKSPACE_DIR)
+  FileUtils.ln_s(Sulair::WORKSPACE_DIR, File.join(RAILS_ROOT, 'public', 'workspace'))
 end
