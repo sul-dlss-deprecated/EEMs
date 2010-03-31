@@ -66,7 +66,7 @@ describe EemsController do
     it "should create a ContentFile object from the url" do
 
       @cf.url.should == @content_url
-      @cf.filepath.should == File.join(SULAIR::WORKSPACE_DIR, 'pid:123', 'a.pdf')
+      @cf.filepath.should == File.join(Sulair::WORKSPACE_DIR, 'pid:123', 'a.pdf')
     end
     
     it "should create a Part object from the ContentFile and url" do

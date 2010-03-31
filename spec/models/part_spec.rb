@@ -54,7 +54,7 @@ describe Part do
     #TODO might have to change for files that aren't retrieved with GET
     it "should create the content datastream using the url it already contains and save it" do
       content_ds = @part.datastreams['content']
-      content_ds[:dsLocation].should == SULAIR::WORKSPACE_URL + '/druid:123/a.pdf'
+      content_ds[:dsLocation].should == Sulair::WORKSPACE_URL + '/druid:123/a.pdf'
       #TODO verify other ds properties
     end
     
@@ -65,7 +65,7 @@ describe Part do
        @part.create_content_datastream
        
        content_ds = @part.datastreams['content']
-       content_ds[:dsLocation].should == SULAIR::WORKSPACE_URL + '/druid:123/a.pdf'
+       content_ds[:dsLocation].should == Sulair::WORKSPACE_URL + '/druid:123/a.pdf'
     end
   end
   

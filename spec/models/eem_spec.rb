@@ -34,7 +34,7 @@ describe Eem do
   
   describe "creator initialization" do
     before(:each) do
-      @submitted_eem = HashWithIndifferentAccess.new ({
+      @submitted_eem = HashWithIndifferentAccess.new({
         :copyrightDate => '1/1/10',
         :copyrightStatus => 'pending',
         :creatorName => 'Joe Bob',
