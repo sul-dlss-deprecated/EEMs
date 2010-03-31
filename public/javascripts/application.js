@@ -38,8 +38,10 @@ $(document).ready(function() {
       }
 
       if (parseInt(data.percent_done) == 100) {
-	    clearTimeout(timeoutId);
+	    $('#upload-progress-text').hide();
+	    $('#upload-complete-text').show();
 	    $('#eems-details-link').show();
+	    clearTimeout(timeoutId);
 	    return;
       }
 	  
