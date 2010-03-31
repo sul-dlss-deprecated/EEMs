@@ -87,14 +87,16 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:index_fields] = {
     :field_names => [
-      "id",
-      "sourceTitle_field",
+      "creatorOrg_field",
+      "submitted", 
+      "selectorName_field", 
       "copyrightStatus_field"
     ],
     :labels => {
-      "id"                      => "Id:",
-      "sourceTitle_field"      => "Title:",
-      "copyrightStatus_field"   => "Copyright:"
+      "copyrightStatus_field"  => "Copyright", 
+      "selectorName_field"     => "Selector", 
+      "creatorOrg_field"       => "Source",
+      "submitted"              => "Date Requested"
     }
   }
 
@@ -109,10 +111,10 @@ Blacklight.configure(:shared) do |config|
       
     ],
     :labels => {
-      "id"           => "Id:",
-      "sourceTitle_field"      => "Title:",
-      "sourceUrl_field"        => "Direct link to PDF:",
-      "note_field"   => "Note:"
+      "id" => "Id:",
+      "sourceTitle_field" => "Title:",
+      "sourceUrl_field" => "Direct link to PDF:",
+      "note_field" => "Note:"
     }
   }
 

@@ -6,6 +6,7 @@ class EemsController < ApplicationController
   def show
     @eem = Eem.find(params[:id])
     @parts = @eem.parts
+    render :layout => "eems_show"
   end
   
   #GET /eems/new
