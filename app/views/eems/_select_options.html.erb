@@ -1,0 +1,38 @@
+<% 
+  list_options = {
+    'language' => [
+      {'Arabic' => 'Arabic'}, {'Chinese' => 'Chinese'}, {'English' => 'English'}, {'French' => 'French'}, 
+      {'German' => 'German'}, {'Hebrew' => 'Hebrew'}, {'Italian' => 'Italian'}, {'Japanese' => 'Japanese'}, 
+      {'Korean' => 'Korean'}, {'Russian' => 'Russian'}, {'Spanish' => 'Spanish'}, {'Other' => 'Other'}
+    ],
+    'creatorType' => [
+      {'organization' => 'organization'}, {'person' => 'person'}    
+    ],  
+    'copyrightStatus' => [
+      {'Cleared for public access' => 'Cleared for public access'},  
+      {'Cleared for Stanford access' => 'Cleared for Stanford access'}, 
+      {'Sent request, wait for response' => 'Sent request, wait for response'}, 
+      {'Sent request, assume Ok on' => 'Sent request, assume Ok on...'}
+    ],
+    'paymentStatus' => [
+      {'Free' => 'Free'},  
+      {'Paid' => 'On fund...'}
+    ]
+  }
+%>
+
+<select name="eem[<%= field %>]" id="eem_<%= field %>">
+    
+<% list_options["#{field.to_s}"].each { |status| %>
+  <% status.each { |value, label| %>    
+  
+    <% if (selected == value) %>
+      <option value="<%= value %>" selected="selected"><%= label %></option>
+    <% else %>   
+      <option value="<%= value %>"><%= label %></option>
+    <% end %> 
+    
+  <% } %>    
+<% } %>
+
+</select>

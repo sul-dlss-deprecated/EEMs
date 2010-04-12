@@ -1,0 +1,17 @@
+<% label = 'Notify original requestor: '%>
+
+<% if (print_eems_field('notify') == 'true')%>
+  <%= check_box_tag 'eem[notify]', 'true', true %>
+  <%= label_tag 'eem[notify]', label %>   
+  <%= mail_to print_eems_field('selectorSunetid'), nil, :id => 'link_selectorSunetid' %>
+  <%= eems_text_field_tag :selectorSunetid, '', {:size => 16, :id => 'input_selectorSunetid', :style => 'display: none;'} %>    
+  <%= link_to 'edit', '#', :id => 'edit_selectorSunetid', :class => 'edit_link'%>
+<% else %>
+  <%= check_box_tag 'eem[notify]', 'true' %>
+  <%= label_tag 'eem[notify]', label %>      
+  <%= link_to nil, nil, :id => 'link_selectorSunetid', :style => 'display: none;' %>
+  <%= eems_text_field_tag :selectorSunetid, '', {:size => 16, :id => 'input_selectorSunetid', :style => 'display: none;'} %>  
+  <%= link_to 'edit', '#', :id => 'edit_selectorSunetid', :class => 'edit_link', :style => 'display: none;'%>
+<% end %>
+
+

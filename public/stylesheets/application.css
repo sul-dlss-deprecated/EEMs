@@ -20,6 +20,10 @@ body {
 
 #hd {border-bottom: 0px dotted #ccc;}
 
+#documents { background-color: #fff; }
+a:link, a:visited, a:active {border-bottom: 0px dotted #aaa; color: #2e4f81; }
+#sortAndPerPage { background-color: #fff;}
+
 .yui-t2 {  	
   background-image: none; 
   width: 1024px;
@@ -47,11 +51,11 @@ table#searchResults tr#searchResultsHeader {
   background-color: #aaa;
 }
 
-table#searchResults tr#searchResultsRow1 {
-  background-color: #eee;
+table#searchResults tr.searchResultsRow1 {
+  background-color: #ebebeb;
 }
 
-table#searchResults tr#searchResultsRow2 {
+table#searchResults tr.searchResultsRow2 {
   background-color: #fafafa;
 }
 
