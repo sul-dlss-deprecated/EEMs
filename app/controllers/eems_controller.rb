@@ -60,14 +60,18 @@ class EemsController < ApplicationController
     @eem = Eem.find(params[:id])
     attrs = unescape_keys(params[:eem])
     logger.debug("attributes submitted: #{attrs.inspect}")
-    @eem.update_indexed_attributes(attrs)
+    ###@eem.update_indexed_attributes(attrs)
+    @eem.update_attributes(attrs)
     @eem.save
-    response = attrs.keys.map{|x| escape_keys({x=>attrs[x].values})}
+    
+    ###response = attrs.keys.map{|x| escape_keys({x=>attrs[x].values})}
+    response = {'eem' => attrs}
     logger.debug("returning #{response.inspect}")
-    respond_to do |want| 
-      want.js {
-        render :json=> response.pop
-      }
-    end
+    render :json => response
+    ###respond_to do |want| 
+      ###want.js {
+        ###render :json=> response.pop
+      ###}
+    ###end
   end
 end

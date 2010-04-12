@@ -5,9 +5,8 @@
   <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
     <title><%= h(@page_title || application_name) %></title>
-    <%= stylesheet_link_tag 'site' %>
-    <script type="text/javascript" src="/javascripts/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="/javascripts/application.js"></script>
+    <%= javascript_include_tag 'jquery-1.4.2.min.js', 'datepicker.packed.js', 'jquery.autocomplete.js', 'browser-widget.js' %>
+    <%= stylesheet_link_tag 'site', 'datepicker', 'jquery.autocomplete.css' %>
   </head>
   
   <body>        

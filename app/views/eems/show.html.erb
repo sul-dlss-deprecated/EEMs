@@ -6,10 +6,36 @@
     <br><br>
     <h3>Acquisitions actions</h3> 
     <ul id="acquisitions_actions">
-      <li><a href="#">Send to metadata</a></li>    
-      <li><a href="#">Mark as duplicate</a></li>    
-      <li><a href="#">Close request</a></li>    
-      <li><a href="#">Question/comment to selector</a></li>    
+      <li class="list_style_show">
+        <%= link_to 'Send to acquisitions',  '#', {:id => 'link_send_to_acquisitions'} %> 
+        <div class="comment_formlet" id="formlet_send_to_acquisitions">
+          <textarea id="text_send_to_acquistions" rows="5" cols="28"></textarea>
+          <div style="text-align: right; padding-right: 8px;">
+            <%= link_to 'Send', '#', :id => 'sent_to_acquisitions_ok', :class => 'sidebar_button'%>
+            <%= link_to 'Cancel', '#', :id => 'sent_to_acquisitions_cancel' %>
+          </div>
+        </div>    
+      </li>    
+      <li class="list_style_show">
+        <%= link_to 'Delete this selection',  '#', {:id => 'link_delete_this_selection'} %> 
+        <div class="comment_formlet" id="formlet_delete_this_selection">
+          <textarea id="text_delete_this_selection" rows="5" cols="28"></textarea>
+          <div style="text-align: right; padding-right: 8px;">
+            <%= link_to 'Confirm', '#', :id => 'delete_this_selection_ok', :class => 'sidebar_button'%>
+            <%= link_to 'Cancel', '#', :id => 'delete_this_selection_cancel' %>
+          </div>
+        </div>    
+      </li>    
+      <li class="list_style_show">
+        <%= link_to 'Question/comment to selector',  '#', {:id => 'link_comment_to_selector'} %> 
+        <div class="comment_formlet" id="formlet_comment_to_selector">
+          <textarea id="text_comment_to_selector" rows="5" cols="28"></textarea>
+          <div style="text-align: right; padding-right: 8px;">
+            <%= link_to 'Send', '#', :id => 'comment_to_selector_ok', :class => 'sidebar_button'%>
+            <%= link_to 'Cancel', '#', :id => 'comment_to_selector_cancel' %>
+          </div>
+        </div>    
+      </li>    
     </ul>
 </div>
 <div id="results">
@@ -17,16 +43,55 @@
     
     <dl class="details">
       <dt>PURL :</dt><dd></dd>
-      <dt>Found at this site :</dt><dd><%= @eem.fields[:sourceUrl][:values].first %></dd>
-      <dt>Language :</dt><dd><%= @eem.fields[:language][:values].first %></dd>
-      <dt>Created by :</dt><dd><%= @eem.fields[:creatorPerson][:values].first %></dd>
-      <dt>Direct link to PDF :</dt><dd></dd>
-      <dt>Local copy of PDF :</dt><dd></dd>
-      <dt>Citation/comments :</dt><dd><%= @eem.fields[:note][:values].first %></dd>
-      <dt>Copyright :</dt><dd><%= @eem.fields[:copyrightStatus][:values].first %></dd>
+      <dt>Found at this site :</dt>
+      <dd>
+        <%= link_to print_eems_field('sourceUrl'),  print_eems_field('sourceUrl'), {:id => 'link_sourceUrl', :target => '_blank'} %> 
+        <%= eems_text_field_tag :sourceUrl, '', {:size => 40, :id => 'input_sourceUrl', :name => 'eem[sourceUrl]', :style => 'display: none;'} %>
+        <%= link_to 'edit', '#', :id => 'edit_sourceUrl', :class => 'edit_link'%>
+      </dd>
+        
+      <dt>Language :</dt>
+      <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :selected => print_eems_field('language')} %></dd>
+      
+      <dt>Created by :</dt>
+      <dd>
+        <div id="text_creatorName" title="Click to edit"><%= get_creator_name() %></div>
+        <%= text_field_tag "creatorName", get_creator(), {:size => 30, :style => "display: none", :id => 'input_creatorName'} %>
+        <%= render :partial => 'eems/select_options', :locals => {:field => 'creatorType', :selected => get_creator_type()} %> 
+      </dd>
+      
+      <dt>Direct link to PDF :</dt>
+      <dd>
+        <%= link_to print_parts_field('url'),  print_parts_field('url'), {:id => 'link_url', :target => '_blank'} %> 
+      </dd>
+      
+      <dt>Local copy of PDF :</dt>
+      <dd>
+        <%= link_to get_local_filename(),  get_local_file_path(), {:id => 'link_local_file'} %>               
+      </dd>
+      
+      <dt>Citation/comments :</dt>
+      <dd>
+        <div id="text_note" title="Click to edit"><%= print_eems_field('note') %></div>
+        <textarea id="input_note" rows="5" cols="60" style="display: none;"><%= print_eems_field('note') %></textarea>
+      </dd>      
+      
+      <dt>Copyright :</dt>
+      <dd>
+        <%= render :partial => 'eems/select_options', :locals => {:field => 'copyrightStatus', :selected => print_eems_field('copyrightStatus')} %> 
+        <%= render :partial => 'eems/copyright_datepicker' %>     
+      </dd>
+      
       <dt>Correspondence :</dt><dd></dd>
-      <dt>Purchase :</dt><dd><%= @eem.fields[:paymentStatus][:values].first %></dd>
-      <dt>Notifications :</dt><dd></dd>
+      
+      <dt>Purchase :</dt>
+      <dd>
+        <%= render :partial => 'eems/select_options', :locals => {:field => 'paymentStatus', :selected => print_eems_field('paymentStatus')} %>
+        <%= render :partial => 'eems/payment_fund' %>     
+      </dd>
+      
+      <dt>Notifications :</dt>
+      <dd><%= render :partial => 'eems/notifications' %></dd>
     </dl>
     
     <div id="action_log">  

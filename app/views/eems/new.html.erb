@@ -1,6 +1,5 @@
 <!-- This will render the form needed to create an Eem 
      Manually create the params sent to controller on submit?-->
-<!-- form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do -->
 
 <% form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do %>    
   <dl>
@@ -8,30 +7,15 @@
     <dd><%= eems_text_field_tag :sourceUrl, 'http://www.dfg.ca.gov/wildlife/wap/report.html', {:size => 41, :name => 'eem[sourceUrl]'} %></dd>
 
     <dt style="width: 325px">Language:</dt>
-    <dd>
-      <%= select_tag 'eem[language]', 
-        "<option>Arabic</option>
-        <option>Chinese</option>
-        <option selected='selected'>English</option>
-        <option>French</option>
-        <option>German</option>
-        <option>Hebrew</option>
-        <option>Italian</option>
-        <option>Japanese</option>
-        <option>Korean</option>
-        <option>Russian</option>
-        <option>Spanish</option>
-        <option>Other</option>"
-      %>
-    </dd>
-
+    <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :selected => ''} %></dd>
+    
     <dt>Title of work:</dt>
     <dd><%= eems_text_field_tag :sourceTitle, 'California Wildlife Action Plan Report', {:size => 41} %></dd>
 
     <dt>Created by:</dt>
     <dd>
       <%= eems_text_field_tag :creatorName, 'Department of Fish and Game', {:size => 24} %> &nbsp; 
-      <%= select_tag 'eem[creatorType]', "<option>organization</option><option>person</option>" %> 
+      <%= render :partial => 'eems/select_options', :locals => {:field => 'creatorType', :selected => ''} %>
     </dd>
 
     <dt>Direct link to PDF:</dt>
@@ -42,31 +26,22 @@
 
     <dt>Copyright:</dt>
     <dd>
-        <%= select_tag 'eem[copyrightStatus]',
-          "<option>(select)</option>
-          <option>cleared for public access</option>
-          <option>cleared for Stanford access</option>
-          <option>sent request, wait for response</option>
-          <option>sent request, assume OK on...</option>
-          ", :style => 'width: 170px'              
-        %>
-        <%= eems_text_field_tag :copyrightDate, '', {:size => 10, :id => 'eems-copyright-date'} %>         
+      <%= render :partial => 'eems/select_options', :locals => {:field => 'copyrightStatus', :selected => ''} %>
+      <%= eems_text_field_tag :copyrightDate, '', {:size => 10, :id => 'eems_copyright_date', :class => 'marginLeft_14px', :style => 'display: none;'} %>         
     </dd>
 
     <dt>Purchase:</dt>
     <dd>
-      <%= select_tag 'eem[paymentStatus]',
-        "<option>free</option>
-        <option>on fund...</option>"
-      %>         
+      <%= render :partial => 'eems/select_options', :locals => {:field => 'paymentStatus', :selected => ''} %>      
+      <%= eems_text_field_tag :paymentFund, '', {:size => 25, :id => 'eems_payment_fund', :class => 'marginLeft_14px', :style => 'display: none;'} %>         
     </dd>
 
     <dt></dt>
     <dd>
-      <%= check_box_tag 'eem[notify]', '' %>
+      <%= check_box_tag 'eem[notify]', 'true' %>
       <%= label_tag 'eem[notify]', 'Notify original requestor' %>
       &nbsp;
-      <%= eems_text_field_tag :selectorSunetid, '', {:size => 16} %>
+      <%= eems_text_field_tag :selectorSunetid, '', {:size => 16, :style => 'display: none;'} %>
     </dd>
 
       <dt></dt>
