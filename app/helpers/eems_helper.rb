@@ -18,8 +18,11 @@ module EemsHelper
 
   # Get value for a given eem part field
   def print_parts_field(name, msg = '') 
-    value = eval("@parts[0].datastreams['properties'].#{name.to_s}_values.first")
     
+    if (!@parts.nil?)
+      value = eval("@parts[0].datastreams['properties'].#{name.to_s}_values.first")
+    end
+  
     if (value.nil? || value.empty?)
       value = msg
     end
@@ -61,7 +64,10 @@ module EemsHelper
   # Get locally saved filename 
   def get_local_filename
     value = ''
-    file_url = @parts[0].datastreams['properties'].url_values.first
+    
+    if (!@parts.nil?)
+      file_url = @parts[0].datastreams['properties'].url_values.first
+    end
     
     if (!file_url.nil? && !file_url.empty?)
       value = file_url.split(/\?/).first.split(/\//).last

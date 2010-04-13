@@ -39,7 +39,7 @@
     </ul>
 </div>
 <div id="results">
-    <h1 class="mainTitle"><%= @eem.fields[:sourceTitle][:values].first %></h1>
+    <h1 class="mainTitle"><%= print_eems_field('sourceTitle') %></h1>
     
     <dl class="details">
       <dt>PURL :</dt><dd></dd>
@@ -56,7 +56,7 @@
       <dt>Created by :</dt>
       <dd>
         <div id="text_creatorName" title="Click to edit"><%= get_creator_name() %></div>
-        <%= text_field_tag "creatorName", get_creator(), {:size => 30, :style => "display: none", :id => 'input_creatorName'} %>
+        <%= text_field_tag "creatorName", get_creator_name(), {:size => 30, :style => "display: none", :id => 'input_creatorName'} %>
         <%= render :partial => 'eems/select_options', :locals => {:field => 'creatorType', :selected => get_creator_type()} %> 
       </dd>
       
