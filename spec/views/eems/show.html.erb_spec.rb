@@ -7,6 +7,16 @@ describe "Eems show page" do
     Fedora::Repository.stubs(:instance).returns(stub('frepo').as_null_object)
   end
   
+  before(:each) do
+    @parts_params = {
+      :url => 'http://somesite.com/a.pdf',
+      :content_file_id => 12
+    }
+    
+    @p = Part.new(:pid => 'my:pid123')
+    @p.stub!(:save)
+  end
+
   it "should render the fields of an Eem" do
     @eem_params = {
       :copyrightDate => '1/1/10',
@@ -20,14 +30,23 @@ describe "Eems show page" do
       :paymentFund => 'BIOLOGY',
       :selectorName => 'Bob Smith',
       :selectorSunetid => 'bsmith',
-      :sourceTitle => 'title',
+      :sourceTitle => 'some title for the eem',
       :sourceUrl => 'http://something.org/papers',
       :submitted => 'sometimestamp'
     }
-    assigns[:eem] = Eem.from_params(@eem_params)
+
+		eem = Eem.from_params(@eem_params)
+		eem.stub!(:save)
+
+		part = Part.from_params(@parts_params)
+		part.stub!(:save)
+    part.add_relationship(:is_part_of, @eem)
+
+    assigns[:eem] = eem
     
     render "eems/show.html.erb"
     
-    response.body.should =~ /creator person/
+    response.body.should =~ /<h1 class=\"mainTitle\">some title for the eem<\/h1>/i
+    response.body.should =~ /<option value=\"person\" selected=\"selected\">person<\/option>/i
   end
 end
