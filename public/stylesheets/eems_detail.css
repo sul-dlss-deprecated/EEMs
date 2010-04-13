@@ -33,24 +33,29 @@ h3 {
   border: 0px solid #fff;
   margin: 58px auto 20px auto;
   top: 0;
-  width: 1024px;
+  width: 1014px;
   padding-bottom: 20px;
 }
 
 #sidebar, #actions {
   background-color: #fff;
-  border: 1px solid #cdccc8;
   float: left;
-  padding: 18px;
-  width: 250px;
+  padding: 0 10px;
+  width: 260px;
+}
+
+#resultsBox {
+  overflow: auto;
+  background-color: #fff;	
+  border: 1px solid #cdccc8;
+  padding: 20px 10px;
 }
 
 #results {
   background-color: #fff;
-  border: 1px solid #cdccc8;
+  border-left: 1px solid #cdccc8;
   float: left;
-  margin-left: 15px;
-  padding: 20px;
+  padding: 0 20px;
   width: 660px;
 }
 

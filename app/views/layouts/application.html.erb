@@ -18,34 +18,34 @@
   <% else %>
     <body>
   <% end %>
-      <div id="logo"></div>
-	  <div id="doc4" class="yui-t2">
-	    
-	    <div id="hd">
-        <div class="yui-g">
-          <div class="yui-u first">
+  <div id="logo"></div>
+  <div id="doc4" class="yui-t2">
+
+      <div id="hd">
+          <div class="yui-g">
+              <div class="yui-u first">
+              </div>
           </div>
-        </div>
       </div>
-	    
-	    <div id="bd">
-      	
-      	<div id="yui-main">
-          <div class="yui-b">
-            <%= render :partial=>'/flash_msg' %>
-            <%= yield %>
+
+      <div id="bd">
+
+          <div id="yui-main">
+              <div class="yui-b">
+                  <%= render :partial=>'/flash_msg' %>
+                  <%= yield %>
+              </div>
           </div>
-        </div>
-        
-        <div class="yui-b"><%= sidebar_items.join('') %></div>
-        
-	    </div>
-	    
-	    <div id="ft"></div>
-	    
-	  </div>
-    <div id="lightboxContainer" style="display:none;">
-    </div>
+
+          <div class="yui-b"><%= sidebar_items.join('') %></div>
+
+      </div>
+
+      <div id="ft"></div>
+
+  </div>
+  <div id="lightboxContainer" style="display:none;">
+  </div>
   </body>
   
 </html>

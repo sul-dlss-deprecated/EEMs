@@ -1,13 +1,43 @@
 /* ------- blacklight ------- */
 
-html { background-color: #f6f2e6; }
-
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, blockquote, pre,
+abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li, 
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+	
 body {
   background: #f6f2e6 url('/images/bgTopBar_1x48.png') repeat-x;
-  line-height: 1;
+  line-height: 1.6;
   padding-top: 58px;
   font-family: "lucida grande",tahoma,Arial,Helvetica,sans-serif;
+  color: #000;
 }
+
+body, html, textarea {
+  font-family: "lucida grande",tahoma,Arial,Helvetica,sans-serif;
+  font-size: 11px;
+  line-height: 1.6;    
+}
+
+input, textarea, select, form, dl, dt, dd, textarea {
+  font-family: "lucida grande",tahoma,Arial,Helvetica,sans-serif;
+  font-size: 11px;
+  line-height: 1.6;    
+}
+
 
 #logo {
   position: absolute;
@@ -61,3 +91,99 @@ table#searchResults tr.searchResultsRow2 {
 
 .searchResultsDropDown { width: 15px; }
 .searchResultsTitle { width: 200px; }
+
+/* details page */
+#details_container {
+  margin: -50px 0 0 -230px;	
+  width: 870px;
+  padding: 10px;
+}
+
+h1.mainTitle {
+  position: relative;
+  top: 0;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2px 0;
+  color: #9b0100;
+}
+
+h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 2px 0;
+  color: #999;	
+}
+
+
+dl.details {
+  padding: 10px 0;
+  overflow: auto;
+} 
+  
+dl.details dt {
+  color: #58535A;
+  clear: both;
+  float: left;
+  margin-right: 5px;
+  text-align: right;
+  width: 140px;  
+  padding: 3px 0;
+} 
+  
+dl.details dd {
+  float: left;
+  width: 380px;
+  padding: 3px 0;
+}
+
+ul#acquisitions_actions {
+  padding: 5px 0 5px 15px;	
+}
+
+ul#acquisitions_actions li {
+  padding: 4px 0;	
+}
+
+ul#acquisitions_actions textarea {
+  height: auto;
+  width: auto;	
+  margin-bottom: 4px;
+}
+
+.list_style_show {
+  list-style-image: url('/images/icon_list_show.png');			
+}
+
+.list_style_hide {
+  list-style-image: url('/images/icon_list_hide.png');			
+}
+
+.comment_formlet {
+  border: 1px solid #ccc;
+  margin: 5px 0;
+  overflow: auto;
+  padding: 5px;
+  display: none;	
+}
+
+div#action_log {
+  float: clear;
+  margin: 10px 0 0 0;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+.sidebar_button {
+  background-color: #eee;
+  border: 1px solid #aaa;	
+  margin-right: 5px;
+  padding: 1px 5px;		
+}
+
+a.edit_link, a.sidebar_button {
+  overflow: auto;	
+  color: #333;
+  cursor: pointer;	
+  text-decoration: none	;	
+}
