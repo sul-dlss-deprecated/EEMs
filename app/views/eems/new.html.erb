@@ -4,25 +4,25 @@
 <% form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do %>    
   <dl>
     <dt>Found on this site:</dt>
-    <dd><%= eems_text_field_tag :sourceUrl, 'http://www.dfg.ca.gov/wildlife/wap/report.html', {:size => 41, :name => 'eem[sourceUrl]'} %></dd>
+    <dd><%= eems_text_field_tag :sourceUrl, '', {:size => 41, :name => 'eem[sourceUrl]'} %></dd>
 
     <dt style="width: 325px">Language:</dt>
-    <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :selected => ''} %></dd>
+    <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :selected => 'English'} %></dd>
     
     <dt>Title of work:</dt>
-    <dd><%= eems_text_field_tag :sourceTitle, 'California Wildlife Action Plan Report', {:size => 41} %></dd>
+    <dd><%= eems_text_field_tag :sourceTitle, '', {:size => 41} %></dd>
 
     <dt>Created by:</dt>
     <dd>
-      <%= eems_text_field_tag :creatorName, 'Department of Fish and Game', {:size => 24} %> &nbsp; 
+      <%= eems_text_field_tag :creatorName, '', {:size => 24} %> &nbsp; 
       <%= render :partial => 'eems/select_options', :locals => {:field => 'creatorType', :selected => ''} %>
     </dd>
 
     <dt>Direct link to PDF:</dt>
-    <dd><%= text_field_tag :contentUrl, 'http://www.dfg.ca.gov/wildlife/WAP/docs/report/full-report.pdf', {:size => 41, :name => 'contentUrl'} %></dd>
+    <dd><%= text_field_tag :contentUrl, '', {:size => 41, :name => 'contentUrl'} %></dd>
 
     <dt style="width: 0px"></dt>
-    <dd><%= text_area_tag 'eem[note]', 'Report is available as a large single file (18 MB) as one PDF file or as individual sections', :rows => 5, :cols => 56 %></dd>
+    <dd><%= text_area_tag 'eem[note]', '', :rows => 5, :cols => 56 %></dd>
 
     <dt>Copyright:</dt>
     <dd>
