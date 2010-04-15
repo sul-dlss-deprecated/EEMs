@@ -8,7 +8,7 @@ var EEMsWidget = {
     return 500;
   },  
   
-  showPopOver : function(){        
+  showPopOver : function(baseUrl){        
     if (document.getElementById('popup') != null) {
       document.getElementById('popup').style.display='inline';
       return;
@@ -73,9 +73,7 @@ var EEMsWidget = {
     iframeForm.style.borderWidth = 0;
     iframeForm.id = 'iframeForm';
     iframeForm.name = 'iframeForm';
-    //iframeForm.src = 'http://www.stanford.edu/~jchris/EEMs/content_iframe.html';
-    iframeForm.src = 'http://localhost:3000/eems/new';
-    //iframeForm.src = 'http://webmail.stanford.edu/';
+    iframeForm.src = baseUrl + '/eems/new?referrer=' + parent.location.href;
 
     popup_content.appendChild(divPopupTitle);
     popup_content.appendChild(iframeForm);
@@ -83,19 +81,10 @@ var EEMsWidget = {
     popup.appendChild(popup_content);
     
     document.getElementsByTagName('body')[0].appendChild(popup);
-    //alert(parent.location.href);
 
     this.updateIframe();
   },
 
   updateIframe: function() {
-    //alert(window.frames['iframeForm'].contentWindow.document.forms.length);
-    //if (window.frames['iframeForm'].document != null) {
-      //alert(window.frames['iframeForm'].document.form_widget.elements['sourceUrl'].value);
-      //= document.location.href;
-    //}
-    //for (i = 0; i < window.frames['iframeForm'].document.forms.length; i++) {
-      //alert(i);
-    //}
   }
 }
