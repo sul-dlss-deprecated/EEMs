@@ -117,7 +117,7 @@ describe EemsController do
       end
 
       it "should redirect to /login and pass the referrer" do
-        response.should redirect_to('/login&referrer=http://someurl.com')
+        response.should redirect_to('/login?referrer=http://someurl.com')
       end
     end
     

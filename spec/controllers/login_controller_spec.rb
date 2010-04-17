@@ -8,6 +8,8 @@ describe LoginController do
 
     it "should handle the /login path" do
       params_from(:get, '/login').should == {:controller => 'login', :action => 'new'}
+      params_from(:get, '/login?referrer=http://google.com').should ==  {:controller => 'login', :action => 'new',
+                                                                        :referrer => 'http://google.com'}
     end
     
 
