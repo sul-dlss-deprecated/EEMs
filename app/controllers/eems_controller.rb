@@ -79,7 +79,7 @@ class EemsController < ApplicationController
   protected
   def user_required
     if(session[:user].blank?)
-      redirect_to '/login' + '&referrer=' + params[:referrer]
+      redirect_to '/login' + '?referrer=' + params[:referrer]
       return false
     end
     true
