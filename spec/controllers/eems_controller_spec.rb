@@ -54,7 +54,9 @@ describe EemsController do
       Dor::DownloadJob.should_receive(:new).with(@cf.id).and_return(job)
       Delayed::Job.should_receive(:enqueue).with(job)
       
-      session[:user] = 'somesunetid'
+      session[:user_id] = 'somesunetid'
+      stub_user = stub('stub_user')
+      EemsUser.stub!(:find).with('somesunetid').and_return(stub_user)
       post "create", :eem => @eems_params, :contentUrl => @content_url
       
     end
@@ -102,7 +104,9 @@ describe EemsController do
       @part.add_relationship(:is_part_of, @eem)
       Eem.should_receive(:find).with('pid:123').and_return(@eem)
       @eem.should_receive(:parts).and_return([@part])
-      session[:user] = 'somesunetid'
+      session[:user_id] = 'somesunetid'
+      stub_user = stub('stub_user')
+      EemsUser.stub!(:find).with('somesunetid').and_return(stub_user)
       get "show", :id => 'pid:123'
       
       assigns[:eem].should == @eem
@@ -123,9 +127,27 @@ describe EemsController do
     
     describe "with user" do
       it "should return true" do
-        session[:user] = 'somesunetid'
+        session[:user_id] = 'somesunetid'
         controller.send(:user_required).should be_true
       end
+    end
+  end
+  
+  
+  describe "authorized_user filter" do
+    it "should store an EemsUser in the session" do
+      session[:user_id] = 'wmene'
+      controller.send(:authorized_user).should be_true
+      session[:user].sunetid.should == 'wmene'
+    end
+    
+    it "should return a 401 unauthorized error if the sunetid is not authorized" do
+      session[:user_id] = 'joeblow'
+      controller.should_receive(:user_required).and_return(true)
+      get "show", :id => 'pid:123'
+      
+      response.body.should =~ /unauthorized/
+      response.status.should == '401 Unauthorized'
     end
   end
   

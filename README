@@ -104,3 +104,8 @@ PartsController.create
 	-if unauthorized, redirect to unauthorized
 	-if authorized, render widget normally
 	-See salt
+	
+#User object
+-sunetid
+-display name
+-Intially configured in /config/users.yml

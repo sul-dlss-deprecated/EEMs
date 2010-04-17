@@ -2,6 +2,7 @@ class EemsController < ApplicationController
   before_filter :require_fedora
   before_filter :require_solr
   before_filter :user_required
+  before_filter :authorized_user
   
   #GET /eems/{:id}
   def show
@@ -78,10 +79,22 @@ class EemsController < ApplicationController
   
   protected
   def user_required
-    if(session[:user].blank?)
+    if(session[:user_id].blank?)
       redirect_to '/login' + '?referrer=' + params[:referrer]
       return false
     end
     true
   end
+  
+  def authorized_user
+    user = EemsUser.find(session[:user_id])
+    if(user)
+      session[:user] = user
+      return true
+    else
+      render :status => 401, :text => "You are unauthorized to use this application"
+      return false
+    end
+  end
+  
 end
