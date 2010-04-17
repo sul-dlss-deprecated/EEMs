@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
         request.env['WEBAUTH_USER']=params[:wau]
       end
     end
-    session[:user]=request.env['WEBAUTH_USER'] unless request.env['WEBAUTH_USER'].blank?
+    session[:user_id]=request.env['WEBAUTH_USER'] unless request.env['WEBAUTH_USER'].blank?
   end
 
   # Scrub sensitive parameters from your log

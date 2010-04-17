@@ -30,10 +30,10 @@ describe LoginController do
     
     it "should redirect to session[:referrer]" do
       session[:referrer] = 'http://cnn.com'
-      get 'webauth', :wau => 'usersunetid'
+      get 'webauth', :wau => 'wmene'
       
       response.should redirect_to('http://cnn.com')
-      session[:user].should == 'usersunetid'
+      session[:user_id].should == 'wmene'
     end
   end
 
