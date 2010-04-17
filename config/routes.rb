@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.login "login", :controller => 'login', :action => 'new'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   Blacklight::Routes.build map
   
@@ -42,6 +44,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :eems
   map.resources :content_files
+
   
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

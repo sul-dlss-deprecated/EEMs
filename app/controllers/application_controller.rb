@@ -3,8 +3,22 @@ require 'vendor/plugins/blacklight/app/controllers/application_controller.rb'
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  
+  before_filter :set_current_user
+  
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  
+  protected
+  def set_current_user
+    unless Rails.env =~ /production/ 
+      if params[:wau]
+        logger.warn("Setting WEBAUTH_USER in dev mode!")
+        request.env['WEBAUTH_USER']=params[:wau]
+      end
+    end
+    session[:user]=request.env['WEBAUTH_USER'] unless request.env['WEBAUTH_USER'].blank?
+  end
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
