@@ -15,6 +15,10 @@ class EemsUser
     @first_name + ' ' + @last_name
   end
   
+  def display_name_lf
+    @last_name + ', ' + @first_name
+  end
+  
   def EemsUser.find(sunetid)
     unless(@@all_users)
       @@all_users = YAML::load_file(File.join(RAILS_ROOT, "config", "users.yml"))

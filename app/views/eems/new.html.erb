@@ -1,7 +1,9 @@
 <!-- This will render the form needed to create an Eem 
      Manually create the params sent to controller on submit?-->
 
-<% form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do %>    
+<% form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do %>
+<%= hidden_field_tag 'eem[selectorSunetid]', "#{@user.sunetid}"%>
+<%= hidden_field_tag 'eem[selectorName]', "#{@user.display_name_lf}"%>   
   <dl>
     <dt>Found on this site:</dt>
     <dd><%= eems_text_field_tag :sourceUrl, '', {:size => 41, :name => 'eem[sourceUrl]'} %></dd>
@@ -41,7 +43,7 @@
       <%= check_box_tag 'eem[notify]', 'true' %>
       <%= label_tag 'eem[notify]', 'Notify original requestor' %>
       &nbsp;
-      <%= eems_text_field_tag :selectorSunetid, '', {:size => 16, :style => 'display: none;'} %>
+      <%= eems_text_field_tag :notify, '', {:size => 16, :style => 'display: none;'} %>
     </dd>
 
       <dt></dt>
