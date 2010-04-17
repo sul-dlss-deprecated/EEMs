@@ -13,7 +13,8 @@ class EemsController < ApplicationController
   
   #GET /eems/new
   #render the page to create a new Eem
-  def new   
+  def new
+    @user = EemsUser.find(session[:user_id])   
   end
   
   #POST /eems
@@ -89,7 +90,6 @@ class EemsController < ApplicationController
   def authorized_user
     user = EemsUser.find(session[:user_id])
     if(user)
-      session[:user] = user
       return true
     else
       render :status => 401, :text => "You are unauthorized to use this application"
