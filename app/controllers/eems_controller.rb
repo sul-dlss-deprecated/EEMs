@@ -1,6 +1,7 @@
 class EemsController < ApplicationController
   before_filter :require_fedora
   before_filter :require_solr
+  before_filter :user_required
   
   #GET /eems/{:id}
   def show
@@ -73,5 +74,14 @@ class EemsController < ApplicationController
         ###render :json=> response.pop
       ###}
     ###end
+  end
+  
+  protected
+  def user_required
+    if(session[:user].blank?)
+      redirect_to '/login' + '&referrer=' + params[:referrer]
+      return false
+    end
+    true
   end
 end

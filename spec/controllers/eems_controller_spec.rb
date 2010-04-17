@@ -54,6 +54,7 @@ describe EemsController do
       Dor::DownloadJob.should_receive(:new).with(@cf.id).and_return(job)
       Delayed::Job.should_receive(:enqueue).with(job)
       
+      session[:user] = 'somesunetid'
       post "create", :eem => @eems_params, :contentUrl => @content_url
       
     end
@@ -101,11 +102,32 @@ describe EemsController do
       @part.add_relationship(:is_part_of, @eem)
       Eem.should_receive(:find).with('pid:123').and_return(@eem)
       @eem.should_receive(:parts).and_return([@part])
-      
+      session[:user] = 'somesunetid'
       get "show", :id => 'pid:123'
       
       assigns[:eem].should == @eem
       assigns[:parts].should == [@part]
     end
   end
+  
+  describe "user_required filter" do
+    describe "with no user" do
+      before(:each) do
+        get "show", :id => 'dontcare', :referrer => "http://someurl.com"
+      end
+
+      it "should redirect to /login and pass the referrer" do
+        response.should redirect_to('/login&referrer=http://someurl.com')
+      end
+    end
+    
+    describe "with user" do
+      it "should return true" do
+        session[:user] = 'somesunetid'
+        controller.send(:user_required).should be_true
+      end
+    end
+  end
+  
+  
 end

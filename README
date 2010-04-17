@@ -73,3 +73,34 @@ PartsController.create
 -modify environment.rb
 -application helper
 -modify application controller
+
+# Webauth
+-Assume user is on cnn.com and presses buton
+-Button press sends request to /eems/new&referrer=cnn.com
+-EemsController#new
+	:before_filter :user_check (session[:user].exists?)
+	:user_check fails redirects to /login&referrer=cnn.com
+-LoginController#new
+	Stores session[:referrer] = params[:referrer]
+	Renders the following inside widget:
+    "You must login before using the tool please click link to Login" -> link to /login/webauth
+/login/webauth -> protected by webauth in apache
+-LoginController#webauth
+	-called after user has logged into webauth
+	-session[:user] = req.env['WEBAUTH_USER']
+	-redirect to session[:referrer]
+	***Might be weird for users who have already webauthed
+	***Can we set session[:user] without redirecting to /login/webauth
+	***Need webauth-ldap for sudisplaynamelf attribute
+	***We can force login to avoid single-sign on issue
+	***However, if session expires, but webauth app token still valid
+	****User browsing cnn.com presses button
+	****User is redirected back to cnn.com but without button
+	****Expire app token sooner? Use http://github.com/lukeredpath/session-timeout plugin and make sure
+	    app webauth token and session token are in sync?
+	****Maybe not an issue since by default, rails sessions do not expire (should double check)
+-User clicks button again
+	:user_check && :role_check
+	-if unauthorized, redirect to unauthorized
+	-if authorized, render widget normally
+	-See salt
