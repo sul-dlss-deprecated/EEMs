@@ -5,7 +5,7 @@ describe EemsController do
   before(:all) do
     ActiveFedora::SolrService.register(SOLR_URL)
     Fedora::Repository.register(FEDORA_URL)
-    Fedora::Repository.stubs(:instance).returns(stub('frepo').as_null_object)
+    Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
   end
   
   it "should be restful" do
@@ -55,8 +55,7 @@ describe EemsController do
       Delayed::Job.should_receive(:enqueue).with(job)
       
       session[:user_id] = 'somesunetid'
-      stub_user = stub('stub_user')
-      EemsUser.stub!(:find).with('somesunetid').and_return(stub_user)
+      EemsUser.stub!(:valid?).with('somesunetid').and_return(true)
       post "create", :eem => @eems_params, :contentUrl => @content_url
       
     end
@@ -105,8 +104,7 @@ describe EemsController do
       Eem.should_receive(:find).with('pid:123').and_return(@eem)
       @eem.should_receive(:parts).and_return([@part])
       session[:user_id] = 'somesunetid'
-      stub_user = stub('stub_user')
-      EemsUser.stub!(:find).with('somesunetid').and_return(stub_user)
+      EemsUser.stub!(:valid?).with('somesunetid').and_return(true)
       get "show", :id => 'pid:123'
       
       assigns[:eem].should == @eem
@@ -135,10 +133,9 @@ describe EemsController do
   
   
   describe "authorized_user filter" do
-    it "should store an EemsUser in the session" do
+    it "should validate that session[:user_id] is authorized" do
       session[:user_id] = 'wmene'
       controller.send(:authorized_user).should be_true
-      session[:user].sunetid.should == 'wmene'
     end
     
     it "should return a 401 unauthorized error if the sunetid is not authorized" do

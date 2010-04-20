@@ -88,8 +88,7 @@ class EemsController < ApplicationController
   end
   
   def authorized_user
-    user = EemsUser.find(session[:user_id])
-    if(user)
+    if(EemsUser.valid?(session[:user_id]))
       return true
     else
       render :status => 401, :text => "You are unauthorized to use this application"

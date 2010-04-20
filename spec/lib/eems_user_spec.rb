@@ -18,4 +18,14 @@ describe EemsUser do
     end
   end
   
+  describe "#valid?" do
+    it "should return true if the passed in sunetid is a valid id" do
+      EemsUser.valid?('wmene').should be_true
+    end
+    
+    it "should return false if the passed in sunetid is not a valid id" do
+      EemsUser.valid?('joeschmoe').should_not be_true
+    end
+  end
+
 end
