@@ -20,13 +20,23 @@ class EemsUser
   end
     
   def EemsUser.find(sunetid)
-    unless(@@all_users)
-      @@all_users = YAML::load_file(File.join(RAILS_ROOT, "config", "users.yml"))
-    end
+    load_config
     
     u = @@all_users[sunetid]
     return EemsUser.new(u['first_name'], u['last_name'], sunetid) if(u)
     nil
   end
   
+  def EemsUser.valid?(sunetid)
+    load_config
+    
+    return @@all_users.member?(sunetid)
+  end
+  
+  protected
+  def EemsUser.load_config
+    unless(@@all_users)
+      @@all_users = YAML::load_file(File.join(RAILS_ROOT, "config", "users.yml"))
+    end
+  end
 end

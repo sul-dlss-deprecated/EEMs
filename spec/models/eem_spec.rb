@@ -5,10 +5,10 @@ describe Eem do
   before(:all) do
     ActiveFedora::SolrService.register(SOLR_URL)
     Fedora::Repository.register(FEDORA_URL)
-    Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
   end
   
   before(:each) do
+    Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
     @eem = Eem.new(:pid => 'my:pid123')
     @eem.stub!(:save)
   end
