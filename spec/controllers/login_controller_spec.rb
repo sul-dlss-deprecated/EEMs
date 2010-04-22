@@ -13,14 +13,6 @@ describe LoginController do
     end
     
 
-
-    it "should store the referrer param in the session" do
-      get 'new', :referrer => 'http://cnn.com'
-      
-      session[:referrer].should == 'http://cnn.com'
-
-    end
-
   end
   
   describe "#webauth" do
@@ -28,9 +20,8 @@ describe LoginController do
       params_from(:get, '/login/webauth').should == {:controller => 'login', :action => 'webauth'}
     end
     
-    it "should redirect to session[:referrer]" do
-      session[:referrer] = 'http://cnn.com'
-      get 'webauth', :wau => 'wmene'
+    it "should redirect to params[:referrer]" do
+      get 'webauth', :wau => 'wmene', :referrer => 'http://cnn.com'
       
       response.should redirect_to('http://cnn.com')
       session[:user_id].should == 'wmene'
