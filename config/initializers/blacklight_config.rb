@@ -68,18 +68,18 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:facet] = {
     :field_names => [
-      "language_field",
-      "creatorOrg_field",
-      "creatorPerson_field",
-      "paymentStatus_field",
-      "copyrightStatus_field"
+      "language_facet",
+      "creatorOrg_facet",
+      "creatorPerson_facet",
+      "paymentStatus_facet",
+      "copyrightStatus_facet"
     ],
     :labels => {
-      "language_field"            => "Language",
-      "creatorOrg_field"     => "Creator- Organization",
-      "creatorPerson_field"  => "Creator- Person",
-      "paymentStatus_field" => "Payment Status",
-      "copyrightStatus_field" => "Copyright Status"
+      "language_facet"            => "Language",
+      "creatorOrg_facet"     => "Creator- Organization",
+      "creatorPerson_facet"  => "Creator- Person",
+      "paymentStatus_facet" => "Payment Status",
+      "copyrightStatus_facet" => "Copyright Status"
     }
   }
 
