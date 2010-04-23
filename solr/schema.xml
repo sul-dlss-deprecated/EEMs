@@ -225,6 +225,7 @@
  <copyField source="*_date" dest="date"/>
  <copyField source="*_text" dest="text"/>
  <copyField source="*_facet" dest="text"/>
+ <copyField source="*_field" dest="*_facet"/>
 
  <!-- Similarity is the scoring routine for each document vs. a query.
       A custom similarity may be specified here, but the default is fine
