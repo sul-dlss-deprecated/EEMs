@@ -29,7 +29,7 @@
   <!-- Used to specify an alternate directory to hold all index data
        other than the default ./data under the Solr home.
        If replication is in use, this should match the replication configuration. -->
-  <dataDir>${solr.data.dir:./solr/data}</dataDir>
+  <dataDir>/home/lyberadmin/solr/data</dataDir>
 
 
   <indexDefaults>
@@ -145,11 +145,11 @@
     <!-- Perform a <commit/> automatically under certain conditions:
          maxDocs - number of updates since last commit is greater than this
          maxTime - oldest uncommited update (in ms) is this long ago
+     -->
     <autoCommit> 
-      <maxDocs>10000</maxDocs>
-      <maxTime>1000</maxTime> 
+      <maxDocs>1</maxDocs>
+      <maxTime>1</maxTime> 
     </autoCommit>
-    -->
 
     <!-- The RunExecutableListener executes an external command.
          exe - the name of the executable to run
