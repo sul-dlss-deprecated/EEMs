@@ -1,5 +1,0 @@
-<% if (print_eems_field('copyrightStatus') == 'Sent request, assume Ok on')%>
-  <%= eems_text_field_tag :copyrightDate, print_eems_field('copyrightDate'), {:size => 10, :id => 'copyright_date', :class => 'marginLeft_14px'} %>             
-<% else %>  
-  <%= eems_text_field_tag :copyrightDate, '', {:size => 10, :id => 'copyright_date', :class => 'marginLeft_14px', :style => 'display: none;'} %>             
-<% end %>    
