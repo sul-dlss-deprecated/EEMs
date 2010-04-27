@@ -17,7 +17,7 @@ describe EemsController do
     before(:each) do
       @eems_params = HashWithIndifferentAccess.new(
         {
-          :copyrightDate => '1/1/10',
+          :copyrightStatusDate => '1/1/10',
           :copyrightStatus => 'pending',
           :creatorName => 'Joe Bob',
           :creatorType => 'person',
@@ -28,7 +28,7 @@ describe EemsController do
           :paymentFund => 'BIOLOGY',
           :selectorName => 'Bob Smith',
           :selectorSunetid => 'bsmith',
-          :sourceTitle => 'title',
+          :title => 'title',
           :sourceUrl => 'http://something.org/papers',
         }
       )

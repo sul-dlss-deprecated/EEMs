@@ -31,6 +31,7 @@ input, textarea, select, form, dl, dt, dd, textarea {
 #eems-new-form-widget textarea {
   border: 1px solid #999;
   background-color: #fff;
+  color: #555;
 }
 
 #eems-new-form-widget {
@@ -69,12 +70,16 @@ input, textarea, select, form, dl, dt, dd, textarea {
 
 #eems-upload-progress {
   width: 350px;
-  padding: 60px 0 0 90px;
+  padding: 60px 0 0 0;	
+  margin: 0 auto;
 }
 
-#eems-details-link {
+#eems-links {
+  text-align: center;	
+  clear: left;
   width: 350px;
-  padding: 60px 0 0 90px;	
+  padding: 60px 0 0 0;	
+  margin: 0 auto;
 }
 
 .marginLeft_14px {

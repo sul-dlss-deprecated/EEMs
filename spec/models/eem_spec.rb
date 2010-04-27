@@ -25,17 +25,17 @@ describe Eem do
   it "should have get and set properties" do
     props_ds = @eem.datastreams['eemsProperties']
     props_ds.note_values = ['a note to myself']
-    props_ds.copyrightDate_append('10-22-10')
+    props_ds.copyrightStatusDate_append('10-22-10')
     
     xml = props_ds.to_xml
     xml.should =~ /<note>a note to myself<\/note>/
-    xml.should =~ /<copyrightDate>10-22-10<\/copyrightDate>/
+    xml.should =~ /<copyrightStatusDate>10-22-10<\/copyrightStatusDate>/
   end
   
   describe "creator initialization" do
     before(:each) do
       @submitted_eem = HashWithIndifferentAccess.new({
-        :copyrightDate => '1/1/10',
+        :copyrightStatusDate => '1/1/10',
         :copyrightStatus => 'pending',
         :creatorName => 'Joe Bob',
         :creatorType => 'person',
@@ -46,9 +46,9 @@ describe Eem do
         :paymentFund => 'BIOLOGY',
         :selectorName => 'Bob Smith',
         :selectorSunetid => 'bsmith',
-        :sourceTitle => 'title',
+        :title => 'title',
         :sourceUrl => 'http://something.org/papers',
-        :submitted => 'sometimestamp'
+        :requestDate => 'sometimestamp'
       })
       
       

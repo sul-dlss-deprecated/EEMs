@@ -2,17 +2,18 @@
      Manually create the params sent to controller on submit?-->
 
 <% form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do %>
-<%= hidden_field_tag 'eem[selectorSunetid]', "#{@user.sunetid}"%>
-<%= hidden_field_tag 'eem[selectorName]', "#{@user.display_name_lf}"%>   
+  <%= hidden_field_tag 'eem[selectorSunetid]', "#{@user.sunetid}"%>
+  <%= hidden_field_tag 'eem[selectorName]', "#{@user.display_name_lf}"%>   
+  
   <dl>
     <dt>Found on this site:</dt>
-    <dd><%= eems_text_field_tag :sourceUrl, '', {:size => 41, :name => 'eem[sourceUrl]'} %></dd>
+    <dd><%= eems_text_field_tag :sourceUrl, get_source_url(params[:referrer]), {:size => 41, :name => 'eem[sourceUrl]'} %></dd>
 
     <dt style="width: 325px">Language:</dt>
-    <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :selected => 'English'} %></dd>
+    <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :selected => 'eng'} %></dd>
     
     <dt>Title of work:</dt>
-    <dd><%= eems_text_field_tag :sourceTitle, '', {:size => 41} %></dd>
+    <dd><%= eems_text_field_tag :title, '', {:size => 41} %></dd>
 
     <dt>Created by:</dt>
     <dd>
@@ -24,12 +25,11 @@
     <dd><%= text_field_tag :contentUrl, '', {:size => 41, :name => 'contentUrl'} %></dd>
 
     <dt style="width: 0px"></dt>
-    <dd><%= text_area_tag 'eem[note]', '', :rows => 5, :cols => 56 %></dd>
+    <dd><%= text_area_tag 'eem[note]', 'Citation, comments, etc.', :id => 'eem_note', :rows => 5, :cols => 56 %></dd>
 
     <dt>Copyright:</dt>
     <dd>
-      <%= render :partial => 'eems/select_options', :locals => {:field => 'copyrightStatus', :selected => ''} %>
-      <%= eems_text_field_tag :copyrightDate, '', {:size => 10, :id => 'eems_copyright_date', :class => 'marginLeft_14px', :style => 'display: none;'} %>         
+      <%= render :partial => 'eems/select_options', :locals => {:field => 'copyrightStatusWidget', :id => 'copyrightStatus', :selected => ''} %>
     </dd>
 
     <dt>Purchase:</dt>
@@ -65,12 +65,13 @@
   <div id="upload-progress-text">Your selection is being uploaded, please wait... </div>
   <div id="upload-complete-text" style="display:none;">Upload complete!</div>
   <div style="float: left; width: 40px;" id="percent_done"></div>      
-  <div style="float: left;width: 200px; height: 10px; background-color: #aaa; margin-top: 4px;">
+  <div style="float: left;width: 300px; height: 10px; background-color: #aaa; margin-top: 4px;">
     <img id="progress_bar" src="../images/progress_bar.png" style="width: 0px, height: 10px;" />    
   </div>      
 </div>
 
-<div id="eems-details-link" style="display: none; clear: left;">
-    <a href="" id="details-link" target="_blank">Detail view</a>
+<div id="eems-links" style="display: none;">
+    <a href="" id="details-link" target="_blank">Detail view</a> | 
+    <a href="/catalog" target="_blank">View Dashboard</a>
 </div>
 

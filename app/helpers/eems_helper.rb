@@ -30,6 +30,17 @@ module EemsHelper
     return value
   end 
 
+  # Get source URL 
+  def get_source_url(referrer)
+    value = ''
+    
+    if !referrer.nil? && !referrer.empty?
+      value = referrer
+    end
+    
+    return value
+  end
+
   
   # Get creator name (value from either creatorOrg or creatorPerson)
   def get_creator_name

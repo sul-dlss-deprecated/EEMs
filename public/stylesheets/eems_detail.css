@@ -12,7 +12,7 @@ body {
   width: 140px;
 }
 
-h1.mainTitle {
+.mainTitle {
   position: relative;
   top: 0;
   font-size: 1.8em;
@@ -42,6 +42,12 @@ h3 {
   float: left;
   padding: 0 10px;
   width: 260px;
+}
+
+#userNameBox {
+  text-align: right;
+  padding: 0 5px 5px 0;
+  overflow: auto;	
 }
 
 #resultsBox {
@@ -160,6 +166,10 @@ a.edit_link, a.sidebar_button {
   background-color: #ffffcc;	
   border: 1px solid #eee;
   cursor: pointer;  	
+}
+
+#text_title:hover {
+  cursor: pointer;  		
 }
 
 #eem_copyrightStatus {

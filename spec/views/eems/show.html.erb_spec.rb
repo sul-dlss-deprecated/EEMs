@@ -19,7 +19,7 @@ describe "Eems show page" do
 
   it "should render the fields of an Eem" do
     @eem_params = {
-      :copyrightDate => '1/1/10',
+      :copyrightStatusDate => '1/1/10',
       :copyrightStatus => 'pending',
       :creatorOrg => 'text from creator field',
       :creatorPerson => 'creator person',
@@ -30,9 +30,9 @@ describe "Eems show page" do
       :paymentFund => 'BIOLOGY',
       :selectorName => 'Bob Smith',
       :selectorSunetid => 'bsmith',
-      :sourceTitle => 'some title for the eem',
+      :title => 'some title for the eem',
       :sourceUrl => 'http://something.org/papers',
-      :submitted => 'sometimestamp'
+      :requestDate => 'requestDate'
     }
 
 		eem = Eem.from_params(@eem_params)
@@ -46,7 +46,7 @@ describe "Eems show page" do
     
     render "eems/show.html.erb"
     
-    response.body.should =~ /<h1 class=\"mainTitle\">some title for the eem<\/h1>/i
+    response.body.should =~ /<h1.*class=\"mainTitle\".*>some title for the eem<\/h1>/i
     response.body.should =~ /<option value=\"person\" selected=\"selected\">person<\/option>/i
   end
 end
