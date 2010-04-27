@@ -48,6 +48,14 @@ input, textarea, select, form, dl, dt, dd, textarea {
   width: 140px;
 }
 
+#userNameBox {
+  width: 920px;	
+  text-align: right;
+  padding: 0 5px 5px 0;
+  overflow: auto;	
+  margin: 0 auto;
+}
+
 #hd {border-bottom: 0px dotted #ccc;}
 
 #documents { background-color: #fff; }

@@ -52,8 +52,7 @@ var EEMsWidget = {
     closeLink.style.padding = 4 + 'px';    
     closeLink.style.textDecoration = 'none';
     closeLink.setAttribute('href', '#');
-    closeLink.setAttribute('onclick', "javascript:document.getElementById('popup').style.display='none';");
-    //closeLink.setAttribute('onclick', "javascript:document.removeChild(document.getElementById('popup'));");
+    closeLink.setAttribute('onclick', "javascript:(function(){elemWidget=document.getElementById('popup');elemWidget.parentNode.removeChild(elemWidget);}())");
     
     closeLink.innerHTML = 'x';
     popup_content.appendChild(closeLink);
@@ -81,10 +80,5 @@ var EEMsWidget = {
     popup.appendChild(popup_content);
     
     document.getElementsByTagName('body')[0].appendChild(popup);
-
-    this.updateIframe();
   },
-
-  updateIframe: function() {
-  }
 }

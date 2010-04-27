@@ -1,27 +1,36 @@
 <% 
   list_options = {
     'language' => [
-      {'Arabic' => 'Arabic'}, {'Chinese' => 'Chinese'}, {'English' => 'English'}, {'French' => 'French'}, 
-      {'German' => 'German'}, {'Hebrew' => 'Hebrew'}, {'Italian' => 'Italian'}, {'Japanese' => 'Japanese'}, 
-      {'Korean' => 'Korean'}, {'Russian' => 'Russian'}, {'Spanish' => 'Spanish'}, {'Other' => 'Other'}
+      {'ara' => 'Arabic'}, {'chi' => 'Chinese'}, {'eng' => 'English'}, {'fre' => 'French'}, 
+      {'ger' => 'German'}, {'heb' => 'Hebrew'}, {'ita' => 'Italian'}, {'jpn' => 'Japanese'}, 
+      {'kor' => 'Korean'}, {'rus' => 'Russian'}, {'spa' => 'Spanish'}, {'|||' => 'Other'}
     ],
     'creatorType' => [
       {'organization' => 'organization'}, {'person' => 'person'}    
     ],  
-    'copyrightStatus' => [
-      {'Cleared for public access' => 'Cleared for public access'},  
-      {'Cleared for Stanford access' => 'Cleared for Stanford access'}, 
-      {'Sent request, wait for response' => 'Sent request, wait for response'}, 
-      {'Sent request, assume Ok on' => 'Sent request, assume Ok on...'}
+    'copyrightStatusWidget' => [
+      {'Public access Ok' => 'Public access Ok'},  
+      {'Stanford access Ok' => 'Stanford access Ok'},  
+      {'Requires request' => 'Requires request'}  
+    ],
+    'copyrightStatusDetailPage' => [
+      {'Public access Ok' => 'Public access Ok'},  
+      {'Stanford access Ok' => 'Stanford access Ok'},  
+      {'Requires request' => 'Requires request'},   
+      {'Requires sent' => 'Requires sent'},   
+      {'Permission denied' => 'Permission denied'},   
+      {'No response received' => 'No response received'}  
     ],
     'paymentStatus' => [
       {'Free' => 'Free'},  
       {'Paid' => 'On fund...'}
     ]
   }
+  
+  id = field if id.nil?
 %>
 
-<select name="eem[<%= field %>]" id="eem_<%= field %>">
+<select name="eem[<%= id %>]" id="eem_<%= id %>">
     
 <% list_options["#{field.to_s}"].each { |status| %>
   <% status.each { |value, label| %>    

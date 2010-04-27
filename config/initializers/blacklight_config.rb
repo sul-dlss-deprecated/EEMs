@@ -52,14 +52,14 @@ Blacklight.configure(:shared) do |config|
 
   # solr field values given special treatment in the show (single result) view
   config[:show] = {
-    :html_title => "sourceTitle_field",
-    :heading => "sourceTitle_field",
+    :html_title => "title_field",
+    :heading => "title_field",
     :display_type => "format"
   }
 
   # solr fld values given special treatment in the index (search results) view
   config[:index] = {
-    :show_link => "sourceTitle_field",
+    :show_link => "title_field",
     :num_per_page => 10,
     :record_display_type => "format"
   }
@@ -104,7 +104,7 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:show_fields] = {
     :field_names => [
-      "sourceTitle_field",
+      "title_field",
       "sourceUrl_field",
       "language_field", 
       "creatorPerson_field",
@@ -112,7 +112,7 @@ Blacklight.configure(:shared) do |config|
       "url_field", 
       "note_field",
       "copyrightStatus_field", 
-      "copyrightDate_field", 
+      "copyrightStatusDate_field", 
       "paymentStatus_field",
       "paymentFund_field", 
       "notify_field",
@@ -120,7 +120,7 @@ Blacklight.configure(:shared) do |config|
       
     ],
     :labels => {
-      "sourceTitle_field" => "Title",
+      "title_field" => "Title",
       "sourceUrl_field" => "Found at this site",
       "language_field" => "Language",
       "creatorPerson_field" => "Creator",
@@ -128,7 +128,7 @@ Blacklight.configure(:shared) do |config|
       "url_field" => "Direct link to PDF", 
       "note_field" => "Citation/Comments", 
       "copyrightStatus_field" => "Copyright", 
-      "copyrightDate_field" => "Copyright date", 
+      "copyrightStatusDate_field" => "Copyright date", 
       "paymentStatus_field" => "Purchase", 
       "paymentFund_field" => "Payment fund", 
       "notify_field" => "Notification", 

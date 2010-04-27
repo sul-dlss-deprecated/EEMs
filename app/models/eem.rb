@@ -6,7 +6,7 @@ class Eem < Dor::Base
   has_relationship "parts", :is_part_of, :inbound => true #content files
   
   has_metadata :name => 'eemsProperties', :type => ActiveFedora::MetadataDatastream do |m|
-    m.field "copyrightDate", :string, :multiple => false #mutiple doesn't do anything
+    m.field "copyrightStatusDate", :string, :multiple => false #mutiple doesn't do anything
     m.field "copyrightStatus", :string
     m.field "creatorOrg", :string
     m.field "creatorPerson", :string
@@ -17,10 +17,12 @@ class Eem < Dor::Base
     m.field "paymentFund", :string
     m.field "selectorName", :string
     m.field "selectorSunetid", :string
-    m.field "sourceTitle", :string
+    m.field "title", :string
     m.field "sourceUrl", :string
     m.field "printedVersionSubmitted", :string
-    m.field "submitted", :string
+    m.field "requestDate", :string
+    m.field "status", :string
+    m.field "statusDateTime", :string
   end
   
   def initialize(attrs={})

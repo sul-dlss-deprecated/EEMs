@@ -8,6 +8,7 @@ class EemsController < ApplicationController
   def show
     @eem = Eem.find(params[:id])
     @parts = @eem.parts
+    @user = EemsUser.find(session[:user_id])   
     render :layout => "eems_show"
   end
   
