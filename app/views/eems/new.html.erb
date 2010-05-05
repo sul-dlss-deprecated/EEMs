@@ -6,33 +6,33 @@
   <%= hidden_field_tag 'eem[selectorName]', "#{@user.display_name_lf}"%>   
   
   <dl>
-    <dt>Found on this site:</dt>
+    <dt><%= label_tag 'eem_sourceUrl', 'Found on this site:' %></dt>
     <dd><%= eems_text_field_tag :sourceUrl, get_source_url(params[:referrer]), {:size => 41, :name => 'eem[sourceUrl]'} %></dd>
 
-    <dt style="width: 325px">Language:</dt>
+    <dt style="width: 325px"><%= label_tag 'eem_language', 'Language:' %></dt>
     <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :selected => 'eng'} %></dd>
     
-    <dt>Title of work:</dt>
+    <dt><%= label_tag 'eem_title', 'Title of work:' %></dt>
     <dd><%= eems_text_field_tag :title, '', {:size => 41} %></dd>
 
-    <dt>Created by:</dt>
+    <dt><%= label_tag 'eem_creatorName', 'Created by:' %></dt>
     <dd>
       <%= eems_text_field_tag :creatorName, '', {:size => 24} %> &nbsp; 
       <%= render :partial => 'eems/select_options', :locals => {:field => 'creatorType', :selected => ''} %>
     </dd>
 
-    <dt>Direct link to PDF:</dt>
+    <dt><%= label_tag 'eem_contentUrl', 'Direct link to PDF:' %></dt>
     <dd><%= text_field_tag :contentUrl, '', {:size => 41, :name => 'contentUrl'} %></dd>
 
     <dt style="width: 0px"></dt>
     <dd><%= text_area_tag 'eem[note]', 'Citation, comments, etc.', :id => 'eem_note', :rows => 5, :cols => 56 %></dd>
 
-    <dt>Copyright:</dt>
+    <dt><%= label_tag 'eem_copyrightStatus', 'Copyright:' %></dt>
     <dd>
       <%= render :partial => 'eems/select_options', :locals => {:field => 'copyrightStatusWidget', :id => 'copyrightStatus', :selected => ''} %>
     </dd>
 
-    <dt>Purchase:</dt>
+    <dt><%= label_tag 'eem_paymentStatus', 'Purchase:' %></dt>
     <dd>
       <%= render :partial => 'eems/select_options', :locals => {:field => 'paymentStatus', :selected => ''} %>      
       <%= eems_text_field_tag :paymentFund, '', {:size => 25, :id => 'eems_payment_fund', :class => 'marginLeft_14px', :style => 'display: none;'} %>         
