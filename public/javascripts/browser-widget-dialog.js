@@ -1,84 +1,126 @@
-var EEMsWidget = {
-
-  popupWidth : function() {
-    return 470;
-  },
-
-  popupHeight : function() {
-    return 500;
-  },  
+var EEMsWidget = { 
   
-  showPopOver : function(baseUrl){        
-    if (document.getElementById('popup') != null) {
-      document.getElementById('popup').style.display='inline';
+  showPopOver : function(baseUrl){    
+    var popup_width = 480;
+    var popup_height = 520;
+                  
+    if (document.getElementById('eems_popup') != null) {
+      document.getElementById('eems_popup').style.display='inline';
       return;
     }
 
     var popup = document.createElement('div');
-    popup.id = 'popup';
-    
-    popup.style.width = this.popupWidth() + 'px';
-    popup.style.height = this.popupHeight() + 'px';
-    popup.style.borderColor = '#999999';
-    popup.style.backgroundColor = '#770000';
-    popup.style.position = 'absolute';
-    popup.style.top = 10 + 'px';
-    popup.style.right = 10 + 'px';
-    popup.style.padding = 10 + 'px';
-    popup.style.fontFamily = 'Tahoma';
-    popup.style.fontSize = 9 + 'px';
-    popup.style.borderTop = '2px solid #440000';
-    popup.style.borderRight = '2px solid #440000';
-    popup.style.borderBottom = '2px solid #440000';
-    popup.style.borderLeft = '2px solid #440000';
-    popup.style.zIndex = 100000;
-    popup.style.textAlign = 'left';
-
+    var popup_style = 'overflow: auto; top: 10px; position: fixed; text-align: left; ' + 
+      'font: normal normal normal 9px/1.5 Tahoma,Arial; z-index: 100000';
+    popup.id = 'eems_popup';
+    popup.setAttribute('style', popup_style);
+    popup.style.left = (document.body.clientWidth - popup_width - 10) + 'px';
+    popup.style.width = popup_width + 'px';
+    popup.style.height = popup_height + 'px';
+    popup.onmousedown = function() { popup.style.cursor = '-moz-grabbing'; }
+    popup.onmouseup = function() { popup.style.cursor = ''; }
+     
+    var popup_container = document.createElement('div');
+    var popup_container_style = 'position: absolute; top: 0; left: 0; ' + 	
+      'overflow: auto; background-color: #660000; opacity: 0.6; filter: alpha(opacity=60); ' + 
+      '-moz-border-radius: 10px; -webkit-border-radius: 10px';
+    popup_container.setAttribute('style', popup_container_style);
+    popup_container.style.width = popup_width + 'px';
+    popup_container.style.height = popup_height + 'px';
+ 
     var popup_content = document.createElement('div');
+    var popup_content_style = 'top: 10px; left: 10px; clear: both; position: absolute; ' +
+      'border: 1px solid #666; -moz-border-radius: 5px; -webkit-border-radius: 5px; background-color: #f6f2f6;';
     popup_content.id = 'popup_content';
-    popup_content.style.zIndex = 100;
+    popup_content.setAttribute('style', popup_content_style);    
+    popup_content.style.width = (popup_width - 22) + 'px';
+    popup_content.style.height = (popup_height - 22) + 'px';
+    popup_content.style.backgroundColor = '#fff';
     
-    popup_content.style.width = (this.popupWidth() - 10) + 'px';
-    popup_content.style.height = (this.popupHeight() - 10) + 'px';
-    popup_content.style.backgroundColor = '#f6f2e6';
-    popup_content.style.padding = 5 + 'px';
-
-    var closeLink = document.createElement('a');    
-    closeLink.style.color = '#770000';    
-    closeLink.style.fontWeight = 'bold';
-    closeLink.style.position = 'absolute';
-    closeLink.style.right = 20 + 'px';
-    closeLink.style.top = 12 + 'px';
-    closeLink.style.padding = 4 + 'px';    
-    closeLink.style.textDecoration = 'none';
-    closeLink.setAttribute('href', '#');
-    closeLink.setAttribute('onclick', "javascript:(function(){elemWidget=document.getElementById('popup');elemWidget.parentNode.removeChild(elemWidget);}())");
+    var close_link = document.createElement('a');
+    var close_link_style = 'color: #770000; font-weight: bold; position: absolute; ' +
+      'right: 15px; top: 6px; padding: 4px; text-decoration: none; border-width: 0;';    
+    close_link.setAttribute('style', close_link_style);
+    close_link.setAttribute('href', '#');
+    close_link.setAttribute('onclick', "javascript:(function(){elemWidget=document.getElementById('eems_popup');elemWidget.parentNode.removeChild(elemWidget);}())");
     
-    closeLink.innerHTML = 'x';
-    popup_content.appendChild(closeLink);
+    close_link.innerHTML = 'x';
+    popup_content.appendChild(close_link);
     
-    var divPopupTitle = document.createElement('div');
-    divPopupTitle.style.fontWeight = 'bold';
-    divPopupTitle.style.padding = 4 + 'px';
-    divPopupTitle.style.borderBottom = '1px solid #aaaaaa';
+    var popup_title = document.createElement('div');
+    var popup_title_style = 'font-weight: bold; padding: 8px 4px; color: #770000; border-bottom: 1px solid #777; margin: 5px;'
+    popup_title.setAttribute('style', popup_title_style);
     
-    var popupTitle = document.createTextNode('EEMs Selection Widget');
-    divPopupTitle.appendChild(popupTitle);    
+    var popup_title_text = document.createTextNode('EEMs Selection Widget');
+    popup_title.appendChild(popup_title_text);    
 
     var iframeForm = document.createElement('iframe');
     iframeForm.style.width = 460 + 'px';
     iframeForm.style.height = 460 + 'px';
-    iframeForm.style.marginLeft = 5 + 'px';
+    iframeForm.style.marginLeft = '5px';
     iframeForm.style.borderWidth = 0;
     iframeForm.id = 'iframeForm';
     iframeForm.name = 'iframeForm';
     iframeForm.src = baseUrl + '/eems/new?referrer=' + parent.location.href;
 
-    popup_content.appendChild(divPopupTitle);
+    popup_content.appendChild(popup_title);
     popup_content.appendChild(iframeForm);
     
+    popup.appendChild(popup_container);
     popup.appendChild(popup_content);
     
     document.getElementsByTagName('body')[0].appendChild(popup);
+    
+    this.setupWidgetDragging();
   },
+ 
+  setupWidgetDragging : function() {
+    var attrs = {
+      isDragged : false,
+      left : 0,
+      top : 0, 
+      drag : { left: 0, top : 0 },    
+      start : { left: 0, top : 0 }    
+    };       
+    
+    var elemPopup = document.getElementById('eems_popup');
+         
+    var startWidgetMove = function(event) {
+      if (!event) event = window.event; // required for IE
+  
+      attrs.drag.left = event.clientX;
+      attrs.drag.top  = event.clientY;
+      attrs.start.left = parseFloat(elemPopup.style.left.replace(/px/, ''));
+      attrs.start.top  = parseFloat(elemPopup.style.top.replace(/px/, ''));
+      attrs.isDragged  = true;      
+    };
+  
+    var processWidgetMove = function(event) {      
+      if (!event) event = window.event; // required for IE
+      
+      if (attrs.isDragged) {
+        attrs.left = attrs.start.left + (event.clientX - attrs.drag.left);      
+        attrs.top = attrs.start.top + (event.clientY - attrs.drag.top);
+        
+        //if (attrs.left < 0) attrs.left = 0;
+        //if (attrs.top < 0) attrs.top = 0;
+        
+        elemPopup.style.cursor = '-moz-grabbing';
+        elemPopup.style.left = attrs.left + 'px';
+        elemPopup.style.top = attrs.top + 'px';
+      }
+    };
+    
+    var stopWidgetMove = function(event) {
+      attrs.isDragged = false;      
+      elemPopup.style.cursor = '';
+    };
+  
+    elemPopup.onmousedown = startWidgetMove; 
+    elemPopup.onmousemove = processWidgetMove; 
+    elemPopup.onmouseup = stopWidgetMove;
+    elemPopup.onmouseleave = stopWidgetMove;
+    elemPopup.onmouseout = stopWidgetMove;
+    elemPopup.ondragstart = function() { return false; } // for IE  
+  }
 }
