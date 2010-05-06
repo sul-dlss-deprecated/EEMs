@@ -102,9 +102,6 @@ var EEMsWidget = {
         attrs.left = attrs.start.left + (event.clientX - attrs.drag.left);      
         attrs.top = attrs.start.top + (event.clientY - attrs.drag.top);
         
-        //if (attrs.left < 0) attrs.left = 0;
-        //if (attrs.top < 0) attrs.top = 0;
-        
         elemPopup.style.cursor = '-moz-grabbing';
         elemPopup.style.left = attrs.left + 'px';
         elemPopup.style.top = attrs.top + 'px';

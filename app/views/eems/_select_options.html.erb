@@ -34,13 +34,11 @@
     
 <% list_options["#{field.to_s}"].each { |status| %>
   <% status.each { |value, label| %>    
-  
     <% if (selected == value) %>
       <option value="<%= value %>" selected="selected"><%= label %></option>
     <% else %>   
       <option value="<%= value %>"><%= label %></option>
     <% end %> 
-    
   <% } %>    
 <% } %>
 

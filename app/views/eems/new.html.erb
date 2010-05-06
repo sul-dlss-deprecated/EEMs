@@ -1,5 +1,4 @@
-<!-- This will render the form needed to create an Eem 
-     Manually create the params sent to controller on submit?-->
+<!-- This will render the form needed to create an Eem -->
 
 <% form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do %>
   <%= hidden_field_tag 'eem[selectorSunetid]', "#{@user.sunetid}"%>
