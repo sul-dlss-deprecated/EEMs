@@ -17,7 +17,7 @@
       {'Public access Ok' => 'Public access Ok'},  
       {'Stanford access Ok' => 'Stanford access Ok'},  
       {'Requires request' => 'Requires request'},   
-      {'Request sent' => 'Request sent'},   
+      {'Requires sent' => 'Requires sent'},   
       {'Permission denied' => 'Permission denied'},   
       {'No response received' => 'No response received'}  
     ],
@@ -34,13 +34,11 @@
     
 <% list_options["#{field.to_s}"].each { |status| %>
   <% status.each { |value, label| %>    
-  
     <% if (selected == value) %>
       <option value="<%= value %>" selected="selected"><%= label %></option>
     <% else %>   
       <option value="<%= value %>"><%= label %></option>
     <% end %> 
-    
   <% } %>    
 <% } %>
 
