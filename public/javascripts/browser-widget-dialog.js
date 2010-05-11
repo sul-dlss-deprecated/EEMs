@@ -2,7 +2,7 @@ var EEMsWidget = {
   
   showPopOver : function(baseUrl){    
     var popup_width = 480;
-    var popup_height = 520;
+    var popup_height = 530;
                   
     if (document.getElementById('eems_popup') != null) {
       document.getElementById('eems_popup').style.display='inline';
@@ -55,8 +55,8 @@ var EEMsWidget = {
     popup_title.appendChild(popup_title_text);    
 
     var iframeForm = document.createElement('iframe');
-    iframeForm.style.width = 460 + 'px';
-    iframeForm.style.height = 460 + 'px';
+    iframeForm.style.width = (popup_width - 40) + 'px';
+    iframeForm.style.height = (popup_height - 90) + 'px';
     iframeForm.style.marginLeft = '5px';
     iframeForm.style.borderWidth = 0;
     iframeForm.id = 'iframeForm';
