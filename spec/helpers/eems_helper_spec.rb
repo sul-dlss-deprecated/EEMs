@@ -12,8 +12,8 @@ describe EemsHelper do
       EOF
       
       out = helper.eems_text_field_tag(:note)
-      out.should =~ /<input id=\"eem_note\" name=\"eem\[note\]\" type=\"text\" value=\"\" \/>/
-      
+      out.should =~ /<input id=\"eem_note\" name=\"eem\[note\]\" type=\"text\" value=\"\" \/>/      
     end
   end
+    
 end
