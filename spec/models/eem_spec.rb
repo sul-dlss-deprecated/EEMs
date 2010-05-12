@@ -41,7 +41,6 @@ describe Eem do
         :creatorType => 'person',
         :language => 'English',
         :note => 'text of note',
-        :notify => 'some@email.com',
         :paymentStatus => 'free|paid',
         :paymentFund => 'BIOLOGY',
         :selectorName => 'Bob Smith',

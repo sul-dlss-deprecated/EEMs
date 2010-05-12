@@ -2,7 +2,7 @@ var EEMsWidget = {
   
   showPopOver : function(baseUrl){    
     var popup_width = 480;
-    var popup_height = 530;
+    var popup_height = 500;
                   
     if (document.getElementById('eems_popup') != null) {
       document.getElementById('eems_popup').style.display='inline';
@@ -17,6 +17,7 @@ var EEMsWidget = {
     popup.style.left = (document.body.clientWidth - popup_width - 10) + 'px';
     popup.style.width = popup_width + 'px';
     popup.style.height = popup_height + 'px';
+    popup.onmouseover = function() { popup.style.cursor = 'move'; }
     popup.onmousedown = function() { popup.style.cursor = '-moz-grabbing'; }
     popup.onmouseup = function() { popup.style.cursor = ''; }
      
@@ -39,7 +40,7 @@ var EEMsWidget = {
     
     var close_link = document.createElement('a');
     var close_link_style = 'color: #770000; font-weight: bold; position: absolute; ' +
-      'right: 15px; top: 6px; padding: 4px; text-decoration: none; border-width: 0;';    
+      'right: 15px; top: 6px; padding: 4px; text-decoration: none; border-width: 0; background-color: transparent;';    
     close_link.setAttribute('style', close_link_style);
     close_link.setAttribute('href', '#');
     close_link.setAttribute('onclick', "javascript:(function(){elemWidget=document.getElementById('eems_popup');elemWidget.parentNode.removeChild(elemWidget);}())");
@@ -56,7 +57,7 @@ var EEMsWidget = {
 
     var iframeForm = document.createElement('iframe');
     iframeForm.style.width = (popup_width - 40) + 'px';
-    iframeForm.style.height = (popup_height - 90) + 'px';
+    iframeForm.style.height = (popup_height - 60) + 'px';
     iframeForm.style.marginLeft = '5px';
     iframeForm.style.borderWidth = 0;
     iframeForm.id = 'iframeForm';
@@ -101,9 +102,6 @@ var EEMsWidget = {
       if (attrs.isDragged) {
         attrs.left = attrs.start.left + (event.clientX - attrs.drag.left);      
         attrs.top = attrs.start.top + (event.clientY - attrs.drag.top);
-        
-        //if (attrs.left < 0) attrs.left = 0;
-        //if (attrs.top < 0) attrs.top = 0;
         
         elemPopup.style.cursor = '-moz-grabbing';
         elemPopup.style.left = attrs.left + 'px';

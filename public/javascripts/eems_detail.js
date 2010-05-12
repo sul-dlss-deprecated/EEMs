@@ -85,12 +85,7 @@ $(document).ready(function() {
     if ($('#edit_' + name).text() == 'edit') { 	
 	  var url = $('#link_' + name).attr('href');
 	
-	  if (name == 'notify') {
-		url = url.replace('mailto:', '');
-	  }
-		
 	  $('#input_' + name).attr('value', url);
-
 	  $('#link_' + name).hide();
 	  $('#input_' + name).show();
 	  $('#edit_' + name).html('save');
@@ -102,10 +97,6 @@ $(document).ready(function() {
 	  $('#link_' + name).html(url); 		
 	  $('#link_' + name).attr('href', url); 
 	
-	  if (name == 'notify') {
-	    $('#link_' + name).attr('href', 'mailto:' + url);   	
-	  }
-
 	  $('#input_' + name).hide();	
 	  $('#link_' + name).show();
 	  $('#edit_' + name).html('edit');
@@ -157,35 +148,6 @@ $(document).ready(function() {
 	var value = !data ? "" : formatted;
     var pars = {"eem[paymentFund]" : value};
     eemUpdate(pars);
-  });
-
-  $('#noop').change(function() {
-    var pars = {};
-
-    if ($('#noop:checked').is(':checked')) {
-	  pars["eem[notify]"] = $('#input_notify').attr('value');
-	  if ($('#input_notify').attr('value') == '') { 
-		$('#input_notify').show();	  	  
-	    $('#edit_notify').html('save');
-        $('#edit_notify').show();
-	  }
-    }
-    else {	 
-	  pars["eem[notify]"] = '';
-	  $('#input_notify').attr('value', '')	
-	  $('#link_notify').attr('href', '#')	
-	  $('#link_notify').html('')		
-	  $('#edit_notify').html('save');
-	  $('#edit_notify').hide();
-	  $('#input_notify').hide();
-    }	    
-    
-    eemUpdate(pars);
-  });
-
-
-  $('#edit_notify').click(function() { 
-    editLink('notify');
   });
 
   function eemUpdate(pars) {

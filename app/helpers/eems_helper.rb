@@ -41,6 +41,16 @@ module EemsHelper
     return value
   end
 
+  # Get shortened source URL 
+  def shorten_url(url)
+    max_length = 50
+    
+    if url.length > max_length
+      url = url[0, max_length] + '...'
+    end
+    
+    return url
+  end  
   
   # Get creator name (value from either creatorOrg or creatorPerson)
   def get_creator_name
