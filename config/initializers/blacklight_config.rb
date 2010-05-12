@@ -87,16 +87,16 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:index_fields] = {
     :field_names => [
-      "creatorOrg_field",
       "submitted", 
       "selectorName_field", 
-      "copyrightStatus_field"
+      "copyrightStatus_field",
+      "status_field"
     ],
     :labels => {
-      "copyrightStatus_field"  => "Copyright", 
+      "submitted"              => "Date Requested",
       "selectorName_field"     => "Selector", 
-      "creatorOrg_field"       => "Source",
-      "submitted"              => "Date Requested"
+      "copyrightStatus_field"  => "Copyright",
+      "status_field"           => "Status"
     }
   }
 
@@ -115,7 +115,6 @@ Blacklight.configure(:shared) do |config|
       "copyrightStatusDate_field", 
       "paymentStatus_field",
       "paymentFund_field", 
-      "notify_field",
       "selectorSunetid_field"
       
     ],
@@ -131,7 +130,6 @@ Blacklight.configure(:shared) do |config|
       "copyrightStatusDate_field" => "Copyright date", 
       "paymentStatus_field" => "Purchase", 
       "paymentFund_field" => "Payment fund", 
-      "notify_field" => "Notification", 
       "selectorSunetid_field" => "Selector SUNet id"
     }
   }
