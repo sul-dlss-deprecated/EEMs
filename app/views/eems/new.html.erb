@@ -6,7 +6,7 @@
   
   <dl>
     <dt>Found on this site:</dt>
-    <dd><%= eems_text_field_tag :sourceUrl, get_source_url(params[:referrer]), {:size => 41, :name => 'eem[sourceUrl]'} %></dd>
+    <dd style="overflow: hidden;"><%= render :partial => 'eems/source_url' %></dd>
 
     <dt style="width: 325px">Language:</dt>
     <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :selected => 'eng'} %></dd>
@@ -24,38 +24,29 @@
     <dd><%= text_field_tag :contentUrl, '', {:size => 41, :name => 'contentUrl'} %></dd>
 
     <dt style="width: 0px"></dt>
-    <dd><%= text_area_tag 'eem[note]', 'Citation, comments, etc.', :id => 'eem_note', :rows => 5, :cols => 56 %></dd>
+    <dd><%= text_area_tag 'eem[note]', '(Citation, comments, etc.)', :id => 'eem_note', :rows => 5, :cols => 56 %></dd>
 
     <dt>Copyright:</dt>
     <dd>
-      <%= render :partial => 'eems/select_options', :locals => {:field => 'copyrightStatusWidget', :id => 'copyrightStatus', :selected => ''} %>
+      <%= render :partial => 'eems/select_options', :locals => {:field => 'copyrightStatusWidget', :id => 'copyrightStatus', :selected => 'Requires request'} %>
     </dd>
 
     <dt>Purchase:</dt>
     <dd>
       <%= render :partial => 'eems/select_options', :locals => {:field => 'paymentStatus', :selected => ''} %>      
-      <%= eems_text_field_tag :paymentFund, '', {:size => 25, :id => 'eems_payment_fund', :class => 'marginLeft_14px', :style => 'display: none;'} %>         
+      <%= eems_text_field_tag :paymentFund, '(Fund name)', {:size => 25, :id => 'eem_payment_fund', :class => 'marginLeft_14px', :style => 'display: none;'} %>         
     </dd>
 
     <dt></dt>
     <dd>
-      <%= check_box_tag 'noop', 'true' %>
-      <%= label_tag 'noop', 'Notify original requestor' %>
-      &nbsp;
-      <%= eems_text_field_tag :notify, '', {:size => 16, :style => 'display: none;'} %>
+      <%= check_box_tag 'eem[printedVersionSubmitted]', '' %>
+      <%= label_tag 'eem[printedVersionSubmitted]', 'Printed version will also be submitted' %>
     </dd>
-
-      <dt></dt>
-      <dd>
-        <%= check_box_tag 'eem[printedVersionSubmitted]', '' %>
-        <%= label_tag 'eem[printedVersionSubmitted]', 'Printed version will also be submitted' %>
-      </dd>
-    </dl>
-
   </dl>
 
   <div id="submit-buttons">
-    <input type="submit" value="Save to dashboard"/>
+    <%= submit_tag "Send to technical services", :disabled => true, :id => "send_to_tech_services" %> &nbsp;
+    <%= submit_tag "Save to dashboard", :disabled => true, :id => "save_to_dashboard" %>
   </div>
 
 <% end %>
@@ -70,7 +61,7 @@
 </div>
 
 <div id="eems-links" style="display: none;">
-    <a href="" id="details-link" target="_blank">Detail view</a> | 
-    <a href="/catalog" target="_blank">View Dashboard</a>
+	<%= link_to "Detail view", "", :id => "details-link", :target => "_blank" %> | 
+	<%= link_to "View dashboard", :controller => "catalog", :target => "_blank"  %>
 </div>
 

@@ -12,7 +12,6 @@ class Eem < Dor::Base
     m.field "creatorPerson", :string
     m.field "language", :string
     m.field "note", :string
-    m.field "notify", :string
     m.field "paymentStatus", :string
     m.field "paymentFund", :string
     m.field "selectorName", :string
