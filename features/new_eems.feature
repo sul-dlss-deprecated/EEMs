@@ -7,7 +7,3 @@ Feature: New EEMs
     Given I am on the widget
     Then I should see "Direct link to PDF"
     
-  Scenario: Submit item
-    Given I am on the widget
-    And I fill in "eem_sourceUrl" with "http://www.ntsb.gov/Publictn/Pub_list.htm"     
-    And I press "Save to dashboard"
