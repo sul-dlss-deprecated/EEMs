@@ -12,7 +12,7 @@ module NavigationHelpers
       '/'
 
     when /the widget/
-      '/eems/new'
+      '/eems/new?wau=jchris'
       
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
