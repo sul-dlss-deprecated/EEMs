@@ -76,10 +76,10 @@ Blacklight.configure(:shared) do |config|
     ],
     :labels => {
       "language_facet"            => "Language",
-      "creatorOrg_facet"     => "Creator- Organization",
-      "creatorPerson_facet"  => "Creator- Person",
-      "paymentStatus_facet" => "Payment Status",
-      "copyrightStatus_facet" => "Copyright Status"
+      "creatorOrg_facet"     => "Creator (organization)",
+      "creatorPerson_facet"  => "Creator (person)",
+      "paymentStatus_facet" => "Purchase",
+      "copyrightStatus_facet" => "Copyright"
     }
   }
 
@@ -115,8 +115,8 @@ Blacklight.configure(:shared) do |config|
       "copyrightStatusDate_field", 
       "paymentStatus_field",
       "paymentFund_field", 
-      "selectorSunetid_field"
-      
+      "selectorSunetid_field", 
+      "id"
     ],
     :labels => {
       "title_field" => "Title",
@@ -130,7 +130,8 @@ Blacklight.configure(:shared) do |config|
       "copyrightStatusDate_field" => "Copyright date", 
       "paymentStatus_field" => "Purchase", 
       "paymentFund_field" => "Payment fund", 
-      "selectorSunetid_field" => "Selector SUNet id"
+      "selectorSunetid_field" => "Selector SUNet id", 
+      "id" => "Id"
     }
   }
 

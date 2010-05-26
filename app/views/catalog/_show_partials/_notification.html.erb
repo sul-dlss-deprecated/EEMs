@@ -1,8 +1,0 @@
-<% notify = document[:notify_field].to_s %>
-<% selectorSunetid = document[:selectorSunetid_field].to_s %>
-
-<% if !notify.nil? && !notify.empty? && notify == 'true' && !selectorSunetid.nil? && !selectorSunetid.empty? %>
-  Original requestor <%= mail_to selectorSunetid %> will be notified when 
-  processing is complete.  
-<% end %>    
-

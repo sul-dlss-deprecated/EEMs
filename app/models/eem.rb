@@ -18,10 +18,10 @@ class Eem < Dor::Base
     m.field "selectorSunetid", :string
     m.field "title", :string
     m.field "sourceUrl", :string
-    m.field "printedVersionSubmitted", :string
-    m.field "requestDate", :string
+    m.field "submitDate", :string
     m.field "status", :string
     m.field "statusDateTime", :string
+    m.field "downloadDate", :string
   end
   
   def initialize(attrs={})
@@ -55,4 +55,12 @@ class Eem < Dor::Base
   end
   
   
+end
+
+# Nokogiri monkey-patch for usage with webrat
+# http://github.com/pengwynn/linkedin/issues/#issue/4
+class Nokogiri::XML::Element
+  def has_key?(key)
+    self.keys.include?(key)
+  end
 end
