@@ -59,8 +59,8 @@ end
 
 # Nokogiri monkey-patch for usage with webrat
 # http://github.com/pengwynn/linkedin/issues/#issue/4
-class Nokogiri::XML::Element
-  def has_key?(key)
-    self.keys.include?(key)
-  end
-end
+##class Nokogiri::XML::Element
+  ##def has_key?(key)
+    ##self.keys.include?(key)
+  ##end
+##end
