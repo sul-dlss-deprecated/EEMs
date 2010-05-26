@@ -72,14 +72,16 @@ Blacklight.configure(:shared) do |config|
       "creatorOrg_facet",
       "creatorPerson_facet",
       "paymentStatus_facet",
-      "copyrightStatus_facet"
+      "copyrightStatus_facet", 
+      "selectorName_facet"
     ],
     :labels => {
       "language_facet"            => "Language",
       "creatorOrg_facet"     => "Creator (organization)",
       "creatorPerson_facet"  => "Creator (person)",
       "paymentStatus_facet" => "Purchase",
-      "copyrightStatus_facet" => "Copyright"
+      "copyrightStatus_facet" => "Copyright",
+      "selectorName_facet" => "Selector"
     }
   }
 
