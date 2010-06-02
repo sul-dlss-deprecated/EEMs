@@ -12,7 +12,7 @@ class Eem < Dor::Base
     m.field "creatorPerson", :string
     m.field "language", :string
     m.field "note", :string
-    m.field "paymentStatus", :string
+    m.field "paymentType", :string
     m.field "paymentFund", :string
     m.field "selectorName", :string
     m.field "selectorSunetid", :string

@@ -114,9 +114,9 @@ module EemsHelper
   # Get payment fund 
   def get_payment_fund
     value = ''
-    payment_status = print_eems_field('paymentStatus')
+    payment_type = print_eems_field('paymentType')
     
-    if (payment_status == 'Paid')
+    if (payment_type == 'Paid')
       value = print_eems_field('paymentFund')
     end
     

@@ -64,8 +64,8 @@ $(document).ready(function() {
 	timeoutId = setTimeout(update, 500);
   }
 
-  $('#eem_paymentStatus').change(function() {	
-	if ($('#eem_paymentStatus').val() == 'Paid') {
+  $('#eem_paymentType').change(function() {	
+	if ($('#eem_paymentType').val() == 'Paid') {
 	  $('#eem_payment_fund').show();	
 	}
 	else {
@@ -114,7 +114,7 @@ $(document).ready(function() {
     if ($('#eem_title').val() != '' && $('#contentUrl').val() != '' && 
          ($('#eem_copyrightStatus').val() == 'Public access OK' || 
          $('#eem_copyrightStatus').val() == 'Stanford access OK' ||  
-         $('#eem_paymentStatus').val() == 'Paid')) {
+         $('#eem_paymentType').val() == 'Paid')) {
 	  $('#send_to_tech_services').attr("disabled", false);
 	}
 	else {
