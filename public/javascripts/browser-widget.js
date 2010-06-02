@@ -10,8 +10,7 @@ $(document).ready(function() {
 
   $('#eem_payment_fund').autocomplete(data);
 		
-  $('#eems-new-form-widget').submit(function() {
-	
+  $('#eems-new-form-widget').submit(function() {	
     $('#eems-new-form-widget').hide();
 
     if ($('#eem_note').val() == defaultValues.note) {
