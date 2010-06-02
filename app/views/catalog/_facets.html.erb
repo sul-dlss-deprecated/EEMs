@@ -8,16 +8,18 @@
         <h3><%= facet_field_labels[solr_fname] -%></h3>
         <ul>
           <% display_facet.items.each do |item| -%>
-            <% if facet_in_params? solr_fname, item.value %>
-              <li>
-                <span class="selected"><%= h(item.value) %> (<%= format_num item.hits %>)</span>
-                [<%= link_to 'remove', remove_facet_params(solr_fname, item.value, params), :class=>'remove' %>]
-              </li>
+            <% if !item.value.empty? %> 
+              <% if facet_in_params? solr_fname, item.value %>
+                <li>
+                  <span class="selected"><%= h(item.value) %> (<%= format_num item.hits %>)</span>
+                  [<%= link_to 'remove', remove_facet_params(solr_fname, item.value, params), :class=>'remove' %>]
+                </li>
               <% else %>
-              <li>
-                <%= link_to h(item.value), add_facet_params(solr_fname, item.value) %> (<%= format_num item.hits %>)
-              </li>
-            <% end -%>
+                <li>
+                  <%= link_to h(item.value), add_facet_params(solr_fname, item.value) %> (<%= format_num item.hits %>)
+                </li>
+              <% end -%>
+            <% end %>
           <% end %>
         </ul>
       <% end %>
