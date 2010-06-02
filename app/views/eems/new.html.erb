@@ -5,7 +5,7 @@
   <%= hidden_field_tag 'eem[selectorName]', "#{@user.display_name_lf}"%>   
   
   <dl>
-    <dt><%= label_tag 'eem[sourceUrl]', 'Found on this site:' %></dt>
+    <dt id="dt_sourceUrl"><%= label_tag 'eem[sourceUrl]', 'Found on this site:' %></dt>
     <dd style="overflow: hidden;"><%= render :partial => 'eems/source_url' %></dd>
 
     <dt style="width: 325px">Language:</dt>
@@ -58,6 +58,7 @@
 
 <div id="eems-links" style="display: none;">
 	<%= link_to "Detail view", "", :id => "details-link", :target => "_blank" %> | 
-	<%= link_to "View dashboard", "/catalog", :target => "_blank"  %>
+	<%= link_to "View dashboard", "/catalog", :target => "_blank"  %> | 
+	<%= link_to "Select another EEM", "/eems/new?referrer=" + get_source_url(params[:referrer]), :id => "select-another-eem"  %>
 </div>
 
