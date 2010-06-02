@@ -168,11 +168,11 @@ $(document).ready(function() {
   }
 
   // Payment Status
-  $('#eem_paymentStatus').change(function() {	
+  $('#eem_paymentType').change(function() {	
 	var pars = {};
-	pars["eem[paymentStatus]"] = $('#eem_paymentStatus').val();
+	pars["eem[paymentType]"] = $('#eem_paymentType').val();
 	
-	if ($('#eem_paymentStatus').val() == 'Paid') {
+	if ($('#eem_paymentType').val() == 'Paid') {
 	  pars["eem[paymentFund]"] = $('#paymentFund').val();
       $('#payment_fund').show();	
 	}

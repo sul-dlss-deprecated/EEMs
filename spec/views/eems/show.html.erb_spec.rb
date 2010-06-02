@@ -25,7 +25,7 @@ describe "Eems show page" do
       :creatorPerson => 'creator person',
       :language => 'English',
       :note => 'text of note',
-      :paymentStatus => 'free|paid',
+      :paymentType => 'free|paid',
       :paymentFund => 'BIOLOGY',
       :selectorName => 'Bob Smith',
       :selectorSunetid => 'bsmith',

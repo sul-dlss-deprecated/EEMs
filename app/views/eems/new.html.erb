@@ -34,9 +34,9 @@
       <%= render :partial => 'eems/select_options', :locals => {:field => 'copyrightStatusWidget', :id => 'copyrightStatus', :selected => 'Requires request'} %>
     </dd>
 
-    <dt><%= label_tag 'eem_paymentStatus', 'Purchase:' %></dt>
+    <dt><%= label_tag 'eem_paymentType', 'Purchase:' %></dt>
     <dd>
-      <%= render :partial => 'eems/select_options', :locals => {:field => 'paymentStatus', :selected => ''} %>      
+      <%= render :partial => 'eems/select_options', :locals => {:field => 'paymentType', :selected => ''} %>      
       <%= eems_text_field_tag :paymentFund, '(Fund name)', {:size => 25, :id => 'eem_payment_fund', :class => 'marginLeft_14px', :style => 'display: none;'} %>         
     </dd>
   </dl>

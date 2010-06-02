@@ -71,7 +71,7 @@ Blacklight.configure(:shared) do |config|
       "language_facet",
       "creatorOrg_facet",
       "creatorPerson_facet",
-      "paymentStatus_facet",
+      "paymentType_facet",
       "copyrightStatus_facet", 
       "selectorName_facet"
     ],
@@ -79,7 +79,7 @@ Blacklight.configure(:shared) do |config|
       "language_facet"      => "Language",
       "creatorOrg_facet"    => "Creator (organization)",
       "creatorPerson_facet" => "Creator (person)",
-      "paymentStatus_facet" => "Purchase",
+      "paymentType_facet" => "Purchase",
       "copyrightStatus_facet" => "Copyright",
       "selectorName_facet" => "Selector"
     }
@@ -115,7 +115,7 @@ Blacklight.configure(:shared) do |config|
       "note_field",
       "copyrightStatus_field", 
       "copyrightStatusDate_field", 
-      "paymentStatus_field",
+      "paymentType_field",
       "paymentFund_field", 
       "selectorSunetid_field", 
       "id"
@@ -130,7 +130,7 @@ Blacklight.configure(:shared) do |config|
       "note_field" => "Citation/Comments", 
       "copyrightStatus_field" => "Copyright", 
       "copyrightStatusDate_field" => "Copyright date", 
-      "paymentStatus_field" => "Purchase", 
+      "paymentType_field" => "Purchase", 
       "paymentFund_field" => "Payment fund", 
       "selectorSunetid_field" => "Selector SUNet id", 
       "id" => "Id"

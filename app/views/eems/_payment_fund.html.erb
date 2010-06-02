@@ -1,4 +1,4 @@
-<% if (print_eems_field('paymentStatus') == 'Paid')%>
+<% if (print_eems_field('paymentType') == 'Paid')%>
   <%= eems_text_field_tag :paymentFund, print_eems_field('paymentFund'), {:size => 25, :id => 'payment_fund', :class => 'marginLeft_14px'} %>           
 <% else %>
   <%= eems_text_field_tag :paymentFund, '', {:size => 25, :id => 'payment_fund', :class => 'marginLeft_14px', :style => 'display: none;'} %>           

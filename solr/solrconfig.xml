@@ -406,7 +406,7 @@
 	   sourceUrl_field,
 	   language_field,
 	   selectorName_field,
-	   paymentStatus_field,
+	   paymentType_field,
 	   copyrightStatus_field
    <!-- go through everything -->
 	   
@@ -418,7 +418,7 @@
      <str name="facet.limit">10</str>
      <str name="facet.field">language_field</str>
 <str name="facet.field">selectorName_field</str>
-<str name="facet.field">paymentStatus_field</str>
+<str name="facet.field">paymentType_field</str>
 <str name="facet.field">copyrightStatus_field</str>
      <!-- config[:facet] -->
 
