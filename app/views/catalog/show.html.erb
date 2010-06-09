@@ -13,12 +13,12 @@
       <h3>Actions</h3> 
       <ul id="acquisitions_actions">
         <li class="list_style_show">
-          <%= link_to 'Send to acquisitions',  '#', {:id => 'link_send_to_acquisitions'} %> 
-          <div class="comment_formlet" id="formlet_send_to_acquisitions">
+          <%= link_to 'Send to Technical Services',  '#', {:id => 'link_send_to_tech_services'} %> 
+          <div class="comment_formlet" id="formlet_send_to_tech_services">
             <textarea id="text_send_to_acquistions" rows="5" cols="28"></textarea>
             <div style="text-align: right; padding-right: 8px;">
-              <%= link_to 'Send', '#', :id => 'sent_to_acquisitions_ok', :class => 'sidebar_button'%>
-              <%= link_to 'Cancel', '#', :id => 'sent_to_acquisitions_cancel' %>
+              <%= link_to 'Send', '#', :id => 'sent_to_tech_services_ok', :class => 'sidebar_button'%>
+              <%= link_to 'Cancel', '#', :id => 'sent_to_tech_services_cancel' %>
             </div>
           </div>    
         </li>    
@@ -62,10 +62,10 @@
       <dd><%= render :partial => 'catalog/_show_partials/creator_name', :locals => {:document => @document} %></dd>
       
       <dt>Direct link to PDF :</dt>
-      <dd><%= @document[:url_field].to_s %></dd>
+      <dd><%= link_to print_parts_field('url'),  print_parts_field('url'), {:id => 'link_url', :target => '_blank'} %></dd>
       
       <dt>Local copy of PDF :</dt>
-      <dd></dd>
+      <dd><%= link_to get_local_filename(),  get_local_file_path(), {:id => 'link_local_file'} %></dd>
 
       <dt>Citation/comments :</dt>
       <dd><%= @document[:note_field].to_s %></dd>
@@ -87,7 +87,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     
-  acquisitionsActionsBindToggle('send_to_acquisitions');	 
+  acquisitionsActionsBindToggle('send_to_tech_services');	 
   acquisitionsActionsBindToggle('delete_this_selection');
   acquisitionsActionsBindToggle('comment_to_selector');	 
 

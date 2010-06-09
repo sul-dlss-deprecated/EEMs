@@ -14,7 +14,7 @@ $(document).ready(function() {
   function init() { 
     $('#payment_fund').autocomplete(data);
 
-    acquisitionsActionsBindToggle('send_to_acquisitions');	 
+    acquisitionsActionsBindToggle('send_to_tech_services');	 
     acquisitionsActionsBindToggle('delete_this_selection');
     acquisitionsActionsBindToggle('comment_to_selector');	 
 
@@ -23,7 +23,6 @@ $(document).ready(function() {
 	    $('#text_' + name).html("<span class='text_placeholder'>" + defaultValues[name] + "</span>");
 	  }
     });
-
   }
 
   // Title - inline edit
@@ -35,11 +34,6 @@ $(document).ready(function() {
 	editTextOnBlur('title');	
 	var pars = {"eem[title]" : $('#input_title').val()};
 	eemUpdate(pars);	
-  });
-
-  // Source URL - inline edit
-  $('#edit_sourceUrl').click(function() { 
-    editLink('sourceUrl')
   });
 
   // Creator Name - inline edit 
@@ -101,7 +95,7 @@ $(document).ready(function() {
 	  $('#text_' + name).html('');	
 	} 
 	
-	$('#input_' + name).attr('value', $('#text_' + name).html());	
+	$('#input_' + name).attr('value', escapeTags($('#text_' + name).html()));	
 	$('#text_' + name).hide();
 
 	$('#input_' + name).show();
@@ -111,9 +105,12 @@ $(document).ready(function() {
   function editTextOnBlur(name) {
 	if ($('#input_' + name).attr('value') == '') {
 	  $('#input_' + name).attr('value', "<span class='text_placeholder'>" + defaultValues[name] + "</span>");	
+  	  $('#text_' + name).html($('#input_' + name).attr('value'));		
 	} 
-	
-	$('#text_' + name).html($('#input_' + name).attr('value'));
+	else {
+	  $('#text_' + name).html(unescapeTags($('#input_' + name).attr('value')));		
+	}
+
 	$('#input_' + name).hide();
 	$('#text_' + name).show();
   }
@@ -219,6 +216,18 @@ $(document).ready(function() {
 	    $('#link_' + name).parents('li').removeClass('list_style_hide').addClass('list_style_show');	
       }
     );
+  }
+
+  function unescapeTags(value) {
+    value = value.replace(/>/gi, "&gt;");
+    value = value.replace(/</gi, "&lt;");
+    return value;
+  }
+
+  function escapeTags(value) {
+    value = value.replace(/&gt;/gi, ">");
+    value = value.replace(/&lt;/gi, "<");
+    return value;
   }
 
 }); 

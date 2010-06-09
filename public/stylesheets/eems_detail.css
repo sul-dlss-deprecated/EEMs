@@ -33,7 +33,7 @@ h3 {
   border: 0px solid #fff;
   margin: 58px auto 20px auto;
   top: 0;
-  width: 1014px;
+  width: 920px;
   padding-bottom: 20px;
 }
 
@@ -54,7 +54,7 @@ h3 {
   overflow: auto;
   background-color: #fff;	
   border: 1px solid #cdccc8;
-  padding: 20px 10px;
+  padding: 20px;
 }
 
 #results {
@@ -62,7 +62,7 @@ h3 {
   border-left: 1px solid #cdccc8;
   float: left;
   padding: 0 20px;
-  width: 660px;
+  width: 540px;
 }
 
 dl.details {
@@ -82,7 +82,7 @@ dl.details dt {
   
 dl.details dd {
   float: left;
-  width: 480px;
+  width: 390px;
   padding: 4px 0;
 }
 
@@ -179,4 +179,12 @@ a.edit_link, a.sidebar_button {
 .text_placeholder {
   color: #555;
   font-style: italic;	
+}
+
+.back_to_dashboard {
+  width: 100%; 
+  border-bottom: 1px solid #ccc; 
+  padding: 8px 6px; 
+  overflow: auto; 
+  margin: 5px 0;	
 }
