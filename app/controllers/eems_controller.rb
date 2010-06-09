@@ -23,6 +23,8 @@ class EemsController < ApplicationController
   #Assume we receive the standard Rails hash of all the form params
   def create
     eem = Eem.from_params(params[:eem])
+    attrs = unescape_keys(params[:eem])
+    eem.update_attributes(attrs)
     eem.save
     
     cf = ContentFile.new
@@ -72,11 +74,6 @@ class EemsController < ApplicationController
     response = {'eem' => attrs}
     logger.debug("returning #{response.inspect}")
     render :json => response
-    ###respond_to do |want| 
-      ###want.js {
-        ###render :json=> response.pop
-      ###}
-    ###end
   end
   
   protected

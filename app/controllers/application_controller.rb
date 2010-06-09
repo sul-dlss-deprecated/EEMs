@@ -31,20 +31,22 @@ class ApplicationController < ActionController::Base
       ActiveFedora::SolrService.register(SOLR_URL)
     end
 
-    #underscores are escaped w/ + signs, which are unescaped by rails to spaces
+    # underscores are escaped w/ + signs, which are unescaped by rails to spaces
+    # html tags are escaped by converting < and > to &lt; and &gt;
     def unescape_keys(attrs)
       h=Hash.new
       attrs.each do |k,v|
-        h[k.gsub(/ /, '_')]=v
-
+        v = v.gsub(/</, '&lt;')
+        v = v.gsub(/>/, '&gt;')
+        h[k.gsub(/ /, '_')] = v
       end
       h
     end
+    
     def escape_keys(attrs)
       h=Hash.new
       attrs.each do |k,v|
         h[k.gsub(/_/, '+')]=v
-
       end
       h
     end

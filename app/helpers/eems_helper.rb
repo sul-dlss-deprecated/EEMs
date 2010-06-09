@@ -122,5 +122,13 @@ module EemsHelper
     
     return value
   end
+
+  # escape html tags (<, >)
+  def escape_tags(value)
+    value = value.gsub(/>/, '&gt;')     
+    value = value.gsub(/</, '&lt;')    
+    
+    return value
+  end     
     
 end

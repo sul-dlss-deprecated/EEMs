@@ -85,7 +85,7 @@ var EEMsWidget = {
     };       
  
     var dragLimits = {
-      left : { min : 0, max: (document.body.clientWidth - this.popup_width) }, 	
+      left : { min : 0, max: (this.f_clientWidth() - this.popup_width) }, 	
       top : { min : 0, max: (this.f_clientHeight() - this.popup_height) }
     };
 
@@ -112,6 +112,9 @@ var EEMsWidget = {
         if (attrs.left > dragLimits.left.max) attrs.left = dragLimits.left.max;        
         if (attrs.top < dragLimits.top.min) attrs.top = dragLimits.top.min;        
         if (attrs.top > dragLimits.top.max) attrs.top = dragLimits.top.max;          
+
+        if (attrs.top < 0) attrs.top = 10;
+        if (attrs.left < 0) attrs.left = 10;
 
         elemPopup.style.cursor = '-moz-grabbing';
         elemPopup.style.left = attrs.left + 'px';

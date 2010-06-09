@@ -10,7 +10,7 @@ $(document).ready(function() {
 
   $('#eem_payment_fund').autocomplete(data);
 		
-  $('#eems-new-form-widget').submit(function() {	
+  function submitEEM(status) {	
     $('#eems-new-form-widget').hide();
 
     if ($('#eem_note').val() == defaultValues.note) {
@@ -25,7 +25,7 @@ $(document).ready(function() {
 	  url: '/eems', 
 	  type: 'POST', 
 	  datatype: 'json', 
-	  data: $('#eems-new-form-widget').serialize(), 
+	  data: $('#eems-new-form-widget').serialize() + '&' + status, 
 	  success: function(eem) {
 		$('#eems-upload-progress').show();	    
 		if (eem != null) {
@@ -37,7 +37,7 @@ $(document).ready(function() {
 	});
 
 	return false;
-  });
+  }
 
   function update() {
 	$.getJSON('/content_files/' + content_file_id, function(data){
@@ -96,8 +96,21 @@ $(document).ready(function() {
     toggleSendToTechServices();
   });
 
+  $('#contentUrl').change(function() {
+    toggleSaveToDashboard();
+    toggleSendToTechServices();
+  });
+
   $('#eem_copyrightStatus').change(function() {
     toggleSendToTechServices();
+  });
+
+  $('#save_to_dashboard').click(function() {
+    submitEEM("eem[status]=Created");
+  });
+
+  $('#send_to_tech_services').click(function() {
+    submitEEM("eem[status]=Request submitted");
   });
 
   function toggleSaveToDashboard() {
@@ -110,15 +123,21 @@ $(document).ready(function() {
   }
 
   function toggleSendToTechServices() {
-    if ($('#eem_title').val() != '' && $('#contentUrl').val() != '' && 
-         ($('#eem_copyrightStatus').val() == 'Public access OK' || 
-         $('#eem_copyrightStatus').val() == 'Stanford access OK' ||  
-         $('#eem_paymentType').val() == 'Paid')) {
+    if ($('#eem_title').val() != '' && 
+         (($('#eem_copyrightStatus').val() == 'Public access OK' && $('#eem_paymentType').val() == 'Paid') || 
+	      ($('#eem_copyrightStatus').val() == 'Stanford access OK' && $('#eem_paymentType').val() == 'Paid') || 
+	      ($('#eem_copyrightStatus').val() == 'Requires request' && $('#eem_paymentType').val() == 'Paid')) ) {
 	  $('#send_to_tech_services').attr("disabled", false);
 	}
 	else {
 	  $('#send_to_tech_services').attr("disabled", true);
 	}	
+  }
+
+  function unescapeTags(value) {
+    value = value.replace(/>/gi, "&gt;");
+    value = value.replace(/</gi, "&lt;");
+    return value;
   }
 
 });
