@@ -389,7 +389,7 @@
      <str name="q.alt">*:*</str>
      <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
      <str name="qf">
-		title_field
+		title_field creatorPerson_field creatorOrg_field selectorName_field text
      </str>
 
      <str name="pf">
