@@ -5,6 +5,7 @@ module EemsHelper
     text_field_tag "eem[#{prop.to_s}]", value, options 
   end
 
+
   # Get value for a given eem field
   def print_eems_field(name, msg = '') 
     value = eval("@eem.fields[:#{name.to_s}][:values].first")
@@ -15,6 +16,7 @@ module EemsHelper
     
     return value
   end 
+
 
   # Get value for a given eem part field
   def print_parts_field(name, msg = '') 
@@ -30,6 +32,7 @@ module EemsHelper
     return value
   end 
 
+
   # Get source URL 
   def get_source_url(referrer)
     value = ''
@@ -41,6 +44,7 @@ module EemsHelper
     return value
   end
 
+
   # Get shortened source URL 
   def shorten_url(url)
     max_length = 50
@@ -51,6 +55,7 @@ module EemsHelper
     
     return url
   end  
+
   
   # Get creator name (value from either creatorOrg or creatorPerson)
   def get_creator_name
@@ -68,6 +73,7 @@ module EemsHelper
     
     return value
   end
+
 
   # Get creator type (either 'person' or 'organization')
   def get_creator_type
@@ -123,6 +129,7 @@ module EemsHelper
     return value
   end
 
+
   # escape html tags (<, >)
   def escape_tags(value)
     value = value.gsub(/>/, '&gt;')     
@@ -130,5 +137,17 @@ module EemsHelper
     
     return value
   end     
+  
+
+  # get external language name
+  def get_language_name(code) 
+    language = {
+      'ara' => 'Arabic', 'chi' => 'Chinese', 'eng' => 'English', 'fre' => 'French', 
+      'ger' => 'German', 'heb' => 'Hebrew', 'ita' => 'Italian', 'jpn' => 'Japanese', 
+      'kor' => 'Korean', 'rus' => 'Russian', 'spa' => 'Spanish', '|||' => 'Other'
+    }
+    
+    return language[code] || code
+  end
     
 end
