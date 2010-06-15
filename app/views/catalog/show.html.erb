@@ -56,7 +56,7 @@
       <dd><%= link_to @document[:sourceUrl_field].to_s,  @document[:sourceUrl_field].to_s, {:target => '_blank'} %></dd>
 
       <dt>Language :</dt>
-      <dd><%= @document[:language_field].to_s %></dd>
+      <dd><%= get_language_name(@document[:language_field].to_s) %></dd>
       
       <dt>Created by :</dt>
       <dd><%= render :partial => 'catalog/_show_partials/creator_name', :locals => {:document => @document} %></dd>
@@ -90,7 +90,6 @@ $(document).ready(function() {
   acquisitionsActionsBindToggle('send_to_tech_services');	 
   acquisitionsActionsBindToggle('delete_this_selection');
   acquisitionsActionsBindToggle('comment_to_selector');	 
-
 
   function acquisitionsActionsBindToggle(name) { 
     $('#link_' + name).toggle(
