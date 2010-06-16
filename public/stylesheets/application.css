@@ -134,16 +134,16 @@ dl.details dt {
   color: #58535A;
   clear: both;
   float: left;
-  margin-right: 5px;
+  margin-right: 10px;
   text-align: right;
   width: 140px;  
-  padding: 3px 0;
+  padding: 4px 0;
 } 
   
 dl.details dd {
   float: left;
-  width: 380px;
-  padding: 3px 0;
+  width: 390px;
+  padding: 4px 0;
 }
 
 ul#acquisitions_actions {
@@ -195,4 +195,52 @@ a.edit_link, a.sidebar_button {
   color: #333;
   cursor: pointer;	
   text-decoration: none	;	
+}
+
+.mainTitle {
+  position: relative;
+  top: 0;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2px 0;
+  color: #9b0100;
+}
+
+#text_creatorName {
+  border: 1px solid #fff;	
+  margin-right: 10px;
+  width: 300px;	
+  display: inline;
+}
+
+#text_note {
+  border: 1px solid #fff;	
+}
+
+#text_creatorName:hover, #text_note:hover {	
+  background-color: #ffffcc;	
+  border: 1px solid #eee;
+  cursor: pointer;  	
+}
+
+#text_title:hover {
+  cursor: pointer;  		
+}
+
+#eem_copyrightStatus {
+  width: 200px;	
+}
+
+.text_placeholder {
+  color: #555;
+  font-style: italic;	
+}
+
+.marginLeft_14px {
+  margin-left: 14px;	
+}
+
+.input_payment_fund {
+  margin-left: 14px;	
+  text-align: left;	
 }

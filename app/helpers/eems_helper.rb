@@ -138,6 +138,16 @@ module EemsHelper
     return value
   end     
   
+  
+  # check if the eem is editable (i.e., eem is not sent to tech services)
+  def is_eem_editable(status)    
+    if status =~ /Created/i
+      return true
+    end
+    
+    return false
+  end
+
 
   # get external language name
   def get_language_name(code) 

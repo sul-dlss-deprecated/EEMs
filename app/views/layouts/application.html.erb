@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
-    
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <title><%= h(@page_title || application_name) %></title>
@@ -11,7 +10,8 @@
     <%= render_js_includes %>
     <%= render_stylesheet_includes %>
     <%= stylesheet_link_tag 'application' %>
-    
+    <%= stylesheet_link_tag 'jquery.autocomplete' %>
+    <%= javascript_include_tag 'eems_detail_actions' %>    
   </head>
   <% if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
     <body onload="$('input#q').focus();">

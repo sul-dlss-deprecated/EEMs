@@ -9,30 +9,36 @@ $(document).ready(function() {
   };
 
   $('#eem_payment_fund').autocomplete(data);
+
+  $('#eem_payment_fund').change(function() { 
+    toggleSendToTechServices();
+  });
 		
-  function submitEEM(status) {	
+  function submitEEM(pars) {	
     $('#eems-new-form-widget').hide();
 
     if ($('#eem_note').val() == defaultValues.note) {
-	  $('#eem_note').val('');
+		  $('#eem_note').val('');
     }
 
     if ($('#eem_payment_fund').val() == defaultValues.payment_fund) {
-	  $('#eem_payment_fund').val('');
+		  $('#eem_payment_fund').val('');
     }
+
+    pars = pars + '&eem[statusDate]=' + dateFormat('isoUtcDateTime');
 
     $.ajax({
 	  url: '/eems', 
 	  type: 'POST', 
 	  datatype: 'json', 
-	  data: $('#eems-new-form-widget').serialize() + '&' + status, 
+	  data: $('#eems-new-form-widget').serialize() + '&' + pars, 
 	  success: function(eem) {
-		$('#eems-upload-progress').show();	    
-		if (eem != null) {
-		  $('#details-link').attr('href', '/eems/' + eem.eem_pid);	
-	      content_file_id = eem.content_file_id;		
-		  update();
-		}
+			$('#eems-upload-progress').show();	    
+			if (eem != null) {
+			  $('#details-link').attr('href', '/catalog/' + eem.eem_pid);	
+		      content_file_id = eem.content_file_id;		
+			  update();
+			}
 	  }, 
 	});
 
@@ -58,31 +64,31 @@ $(document).ready(function() {
 	    clearTimeout(timeoutId);
 	    return;
       }	  
-	});
+		});
 	
-	timeoutId = setTimeout(update, 500);
+		timeoutId = setTimeout(update, 500);
   }
 
   $('#eem_paymentType').change(function() {	
-	if ($('#eem_paymentType').val() == 'Paid') {
-	  $('#eem_payment_fund').show();	
-	}
-	else {
-	  $('#eem_payment_fund').hide();	
-	}
+		if ($('#eem_paymentType').val() == 'Paid') {
+		  $('#eem_payment_fund').show();	
+		}
+		else {
+		  $('#eem_payment_fund').hide();	
+		}
 	
-	toggleSendToTechServices();
+		toggleSendToTechServices();
   });
 
   $('#eem_note').focus(function() {
     if ($('#eem_note').val() == defaultValues.note) {
-	  $('#eem_note').val('');
+		  $('#eem_note').val('');
     }
   });
 
   $('#eem_payment_fund').focus(function() {
     if ($('#eem_payment_fund').val() == defaultValues.payment_fund) {
-	  $('#eem_payment_fund').val('');
+		  $('#eem_payment_fund').val('');
     }
   });
 
@@ -106,32 +112,30 @@ $(document).ready(function() {
   });
 
   $('#save_to_dashboard').click(function() {
-    submitEEM("eem[status]=Created");
+    submitEEM('eem[status]=Created');
   });
 
   $('#send_to_tech_services').click(function() {
-    submitEEM("eem[status]=Request submitted");
+    submitEEM('eem[status]=Request submitted&eem[submitDate]=' + dateFormat('isoUtcDateTime'));
   });
 
   function toggleSaveToDashboard() {
     if ($('#eem_title').val() != '' && $('#contentUrl').val() != '' ) {
-	  $('#save_to_dashboard').attr("disabled", false);
+		  $('#save_to_dashboard').attr("disabled", false);
     }	
     else {
-	  $('#save_to_dashboard').attr("disabled", true);
+		  $('#save_to_dashboard').attr("disabled", true);
     }
   }
 
   function toggleSendToTechServices() {
-    if ($('#eem_title').val() != '' && 
-         (($('#eem_copyrightStatus').val() == 'Public access OK' && $('#eem_paymentType').val() == 'Paid') || 
-	      ($('#eem_copyrightStatus').val() == 'Stanford access OK' && $('#eem_paymentType').val() == 'Paid') || 
-	      ($('#eem_copyrightStatus').val() == 'Requires request' && $('#eem_paymentType').val() == 'Paid')) ) {
-	  $('#send_to_tech_services').attr("disabled", false);
-	}
-	else {
-	  $('#send_to_tech_services').attr("disabled", true);
-	}	
+    if ($('#eem_title').val() != '' && $('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != '' && $('#eem_payment_fund').val() != defaultValues.payment_fund && 
+         ($('#eem_copyrightStatus').val() == 'Public access OK' || $('#eem_copyrightStatus').val() == 'Stanford access OK' || $('#eem_copyrightStatus').val() == 'Requires request')) {
+	    $('#send_to_tech_services').attr("disabled", false);
+		}
+		else {
+	  	$('#send_to_tech_services').attr("disabled", true);
+		}	
   }
 
   function unescapeTags(value) {

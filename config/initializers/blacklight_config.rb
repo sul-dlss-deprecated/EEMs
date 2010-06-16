@@ -93,13 +93,13 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:index_fields] = {
     :field_names => [
-      "submitted", 
+      "submitDate_field", 
       "selectorName_field", 
       "copyrightStatus_field",
       "status_field"
     ],
     :labels => {
-      "submitted"              => "Date Requested",
+      "submitDate_field"       => "Date Requested",
       "selectorName_field"     => "Selector", 
       "copyrightStatus_field"  => "Copyright",
       "status_field"           => "Status"
