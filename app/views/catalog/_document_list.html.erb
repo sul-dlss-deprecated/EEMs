@@ -13,8 +13,8 @@
     
   <% # loop thru each doc -%>
   <% @document_list.each_with_index do |document, counter| %>
-    <% rowBackgroundColor = (counter % 2) == 1 ? "searchResultsRow1" : "searchResultsRow2" %>
-    <tr class="<%= rowBackgroundColor %>">                
+    <% rowBgColor = (counter % 2) == 1 ? "searchResultsRow1" : "searchResultsRow2" %>
+    <tr class="<%= rowBgColor %>">                
       <td class="index_title"><%= link_to_document document, :label=>document_show_link_field %></td>
       
       <% # main container for doc partial view -%>

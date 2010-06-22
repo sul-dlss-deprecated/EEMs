@@ -4,6 +4,7 @@
   <% facet_field_names.each do |solr_fname| %>
     <div>
       <% display_facet = @response.facets.detect {|f| f.name == solr_fname} -%>
+
       <% if display_facet.items.length > 0 %>
         <h3><%= facet_field_labels[solr_fname] -%></h3>
         <ul>
@@ -29,5 +30,6 @@
         </ul>
       <% end %>
     </div>
+
   <% end %>
 </div>

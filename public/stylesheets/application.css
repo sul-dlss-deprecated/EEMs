@@ -75,7 +75,7 @@ a:link, a:visited, a:active {border-bottom: 0px dotted #aaa; color: #2e4f81; }
 }
 
 table#searchResults {
-  margin: 5px 0;
+  margin: 10px 0 0 0;
   border: 1px solid #aaa;
   width: 100%;	  
 }
@@ -83,19 +83,20 @@ table#searchResults {
 table#searchResults td {
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  padding: 3px;
+  padding: 4px 6px;
 }
 
 table#searchResults tr#searchResultsHeader {
-  background-color: #aaa;
+  background-color: #ddd;
+  border-bottom: 1px solid #ccc;
 }
 
 table#searchResults tr.searchResultsRow1 {
-  background-color: #ebebeb;
+  background-color: #f3f3f3;
 }
 
 table#searchResults tr.searchResultsRow2 {
-  background-color: #fafafa;
+  background-color: #fcfcfc;
 }
 
 .searchResultsDropDown { width: 15px; }
