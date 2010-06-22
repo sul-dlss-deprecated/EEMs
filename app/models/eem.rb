@@ -1,5 +1,6 @@
 require "active_fedora"
 require "lyber_core"
+require 'dor/action_log_datastream'
 
 class Eem < Dor::Base
   
@@ -22,6 +23,10 @@ class Eem < Dor::Base
     m.field "status", :string
     m.field "statusDate", :string
     m.field "downloadDate", :string
+  end
+  
+  has_metadata :name => 'actionLog', :type => Dor::ActionLogDatastream do |m|
+    #nada
   end
   
   def initialize(attrs={})

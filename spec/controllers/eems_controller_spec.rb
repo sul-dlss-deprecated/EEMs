@@ -35,9 +35,11 @@ describe EemsController do
       @content_url = 'http://something.org/papers/a.pdf'
       @eem = Eem.new(:pid => 'pid:123')
       @eem.set_properties(@eems_params.stringify_keys)
-      @eem.should_receive(:save)
+      @eem.should_receive(:save).twice
 
       Eem.should_receive(:from_params).with(@eems_params).and_return(@eem)
+      
+      @eem.should_receive(:add_datastream).with(an_instance_of(Dor::ActionLogDatastream))
       
       @cf = ContentFile.new
       @cf.stub!(:id).and_return(1)
@@ -91,6 +93,10 @@ describe EemsController do
         'part_pid' => 'part:345',
         'content_file_id' => 1
         }
+    end
+    
+    it "should create an ActionLog datastream" do
+      
     end
     
   end
