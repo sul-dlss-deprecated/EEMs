@@ -27,6 +27,11 @@ class EemsController < ApplicationController
     eem.update_attributes(attrs)
     eem.save
     
+    #Add actionLog datastream
+    log = Dor::ActionLogDatastream.new
+    eem.add_datastream(log)
+    eem.save
+    
     cf = ContentFile.new
     cf.url = params[:contentUrl]
     filename = params[:contentUrl].split(/\?/).first.split(/\//).last
