@@ -31,5 +31,14 @@ module ApplicationHelper
     return value
   end      
   
+  def formatSearchResultsTimestamp(timestamp)
+    if !timestamp.nil?
+      time = Time.parse(timestamp) 
+      return time.strftime("%d-%b-%Y")
+    end
+        
+    return ''    
+  end
+  
 end
 

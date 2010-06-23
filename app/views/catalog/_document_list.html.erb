@@ -4,8 +4,6 @@
 
 <table id="searchResults">
   <tr id="searchResultsHeader">
-    <td class="searchResultsTitle">Title</td>  
-
     <% index_field_names.each do |solr_fname| -%>
       <td><%= h index_field_labels[solr_fname]%></td>
     <% end -%>      
@@ -15,8 +13,6 @@
   <% @document_list.each_with_index do |document, counter| %>
     <% rowBgColor = (counter % 2) == 1 ? "searchResultsRow1" : "searchResultsRow2" %>
     <tr class="<%= rowBgColor %>">                
-      <td class="index_title"><%= link_to_document document, :label=>document_show_link_field %></td>
-      
       <% # main container for doc partial view -%>
       <%= render_document_partial document, :index %>
     </tr>
