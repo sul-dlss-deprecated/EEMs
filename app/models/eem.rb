@@ -19,7 +19,7 @@ class Eem < Dor::Base
     m.field "selectorSunetid", :string
     m.field "title", :string
     m.field "sourceUrl", :string
-    m.field "submitDate", :string
+    m.field "requestDatetime", :string
     m.field "status", :string
     m.field "statusDate", :string
     m.field "downloadDate", :string

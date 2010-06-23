@@ -47,7 +47,7 @@ describe Eem do
         :selectorSunetid => 'bsmith',
         :title => 'title',
         :sourceUrl => 'http://something.org/papers',
-        :submitDate => 'sometimestamp'
+        :requestDatetime => 'sometimestamp'
       })
       
       

@@ -137,7 +137,7 @@ $(document).ready(function() {
   $('#send_to_tech_services').click(function() {
 	  var selectorName = $('#eem_selectorName').val();
     var logMsg = 'Request submitted by ' + selectorName;
-    var pars = 'eem[status]=Request submitted&eem[submitDate]=' + dateFormat('isoUtcDateTime');
+    var pars = 'eem[status]=Request submitted&eem[requestDatetime]=' + dateFormat('isoUtcDateTime');
     submitEEM(pars, logMsg);
   });
 

@@ -31,7 +31,7 @@ describe "Eems show page" do
       :selectorSunetid => 'bsmith',
       :title => 'some title for the eem',
       :sourceUrl => 'http://something.org/papers',
-      :submitDate => 'submitDate'
+      :requestDatetime => '1/10/10'
     }
 
 		eem = Eem.from_params(@eem_params)

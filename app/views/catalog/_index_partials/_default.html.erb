@@ -5,7 +5,7 @@
 
         <% if solr_fname == 'title_field' %>
           <%= link_to_document document, :label=>document_show_link_field %>
-	      <% elsif solr_fname == 'system_create_date' || solr_fname == 'submitDate_field' %>
+	      <% elsif solr_fname == 'system_create_date' || solr_fname == 'requestDatetime_field' %>
 	          <%= formatSearchResultsTimestamp(document.get(solr_fname)) %>
         <% else %>
 	        <%= h document.get(solr_fname) %>

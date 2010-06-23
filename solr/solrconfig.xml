@@ -409,7 +409,7 @@
 	   paymentType_field,
 	   copyrightStatus_field, 
 	   status_field,
-	   submitDate_field,
+	   requestDatetime_field,
 	   system_create_date
    <!-- go through everything -->
 	   
