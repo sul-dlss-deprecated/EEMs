@@ -1,6 +1,6 @@
-
-
 class LogController < ApplicationController
+  before_filter :require_fedora
+  before_filter :require_solr
 
   def create
     eem = Eem.find(params[:eems_id])

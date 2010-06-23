@@ -14,7 +14,7 @@ $(document).ready(function() {
     toggleSendToTechServices();
   });
 		
-  function submitEEM(pars) {	
+  function submitEEM(pars, logMsg) { 
     $('#eems-new-form-widget').hide();
 
     if ($('#eem_note').val() == defaultValues.note) {
@@ -26,23 +26,39 @@ $(document).ready(function() {
     }
 
     pars = pars + '&eem[statusDate]=' + dateFormat('isoUtcDateTime');
+    var selectorName = $('#eem_selectorName').val();
 
     $.ajax({
-	  url: '/eems', 
-	  type: 'POST', 
-	  datatype: 'json', 
-	  data: $('#eems-new-form-widget').serialize() + '&' + pars, 
-	  success: function(eem) {
-			$('#eems-upload-progress').show();	    
-			if (eem != null) {
-			  $('#details-link').attr('href', '/catalog/' + eem.eem_pid);	
-		      content_file_id = eem.content_file_id;		
-			  update();
-			}
-	  }, 
-	});
+		  url: '/eems', 
+		  type: 'POST', 
+		  datatype: 'json', 
+		  data: $('#eems-new-form-widget').serialize() + '&' + pars, 
+		  success: function(eem) {			
+				$('#eems-upload-progress').show();	    
+				
+				if (eem != null) {
+				  $('#details-link').attr('href', '/catalog/' + eem.eem_pid);	
+			      content_file_id = eem.content_file_id;		
+			      addLogEntry(logMsg, eem.eem_pid);					  
+				    update();
+				    addLogEntry("PDF uploaded by " + selectorName, eem.eem_pid);					  
+					}
+			  }, 
+		});
 
-	return false;
+		return false;
+  }
+
+  function addLogEntry(logMsg, pid) {
+	  var pars = {'entry': logMsg, 'authenticity_token': window._token};
+	
+    $.ajax({
+		  url: '/eems/' + pid + '/log', 
+		  type: 'POST', 
+		  datatype: 'json', 
+		  data: pars, 
+		  success: function() {}, 
+		});	  
   }
 
   function update() {
@@ -58,11 +74,11 @@ $(document).ready(function() {
       }
 
       if (parseInt(data.percent_done) == 100) {
-	    $('#upload-progress-text').hide();
-	    $('#upload-complete-text').show();
-	    $('#eems-links').show();
-	    clearTimeout(timeoutId);
-	    return;
+		    $('#upload-progress-text').hide();
+		    $('#upload-complete-text').show();
+		    $('#eems-links').show();
+		    clearTimeout(timeoutId);
+		    return;
       }	  
 		});
 	
@@ -112,11 +128,17 @@ $(document).ready(function() {
   });
 
   $('#save_to_dashboard').click(function() {
-    submitEEM('eem[status]=Created');
+	  var selectorName = $('#eem_selectorName').val();
+    var logMsg = 'Request created by ' + selectorName;
+    var pars = 'eem[status]=Created'; 
+    submitEEM(pars, logMsg);
   });
 
   $('#send_to_tech_services').click(function() {
-    submitEEM('eem[status]=Request submitted&eem[submitDate]=' + dateFormat('isoUtcDateTime'));
+	  var selectorName = $('#eem_selectorName').val();
+    var logMsg = 'Request submitted by ' + selectorName;
+    var pars = 'eem[status]=Request submitted&eem[submitDate]=' + dateFormat('isoUtcDateTime');
+    submitEEM(pars, logMsg);
   });
 
   function toggleSaveToDashboard() {

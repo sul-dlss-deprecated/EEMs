@@ -159,5 +159,24 @@ module EemsHelper
     
     return language[code] || code
   end
+  
+  
+  # format action log timestamp
+  def formatActionLogTimestamp(timestamp)
+    if !timestamp.nil?
+      return timestamp.strftime("%d-%b-%Y %I:%M %p")
+    end
+    
+    return ''
+  end
+  
+  # format action log message
+  def formatActionLogMessage(msg)    
+    if (!msg.nil? && msg =~ /^(.*? by )(.*)$/)
+      msg = $1 + '<a href="/?f%5BselectorName_facet%5D%5B%5D=' + $2 + '">' + $2 + '</a>'
+    end
+    
+    return msg || ''
+  end
     
 end

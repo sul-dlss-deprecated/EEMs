@@ -235,7 +235,22 @@ function sendToTechServices() {
 	  type: 'PUT', 
 	  data: pars, 
 	  success: function(eem) {
-		  window.location.reload();
+		  var logMsg = 'Request submitted by ' + selectorName;
+		  var pars = {'entry': logMsg, 'authenticity_token': token};
+		  addLogEntry(pid, pars);
 	  }, 
 	});
 }
+
+function addLogEntry(pid, pars) {
+  $.ajax({
+	  url: '/eems/' + pid + '/log', 
+	  type: 'POST', 
+	  datatype: 'json', 
+	  data: pars, 
+	  success: function() { 
+	    window.location.reload();
+	  }, 
+	});	  	
+}
+
