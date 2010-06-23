@@ -83,8 +83,8 @@ Blacklight.configure(:shared) do |config|
       "paymentType_facet" => "Purchase",
       "paymentFund_facet" => "Fund",
       "copyrightStatus_facet" => "Copyright",
-      "language_facet"      => "Language",
-      "creatorOrg_facet"    => "Creator (organization)",
+      "language_facet" => "Language",
+      "creatorOrg_facet" => "Creator (organization)",
       "creatorPerson_facet" => "Creator (person)"
     }
   }
@@ -93,16 +93,20 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:index_fields] = {
     :field_names => [
+      "title_field",
+      "system_create_date", 
       "submitDate_field", 
       "selectorName_field", 
       "copyrightStatus_field",
       "status_field"
     ],
     :labels => {
-      "submitDate_field"       => "Date Requested",
-      "selectorName_field"     => "Selector", 
-      "copyrightStatus_field"  => "Copyright",
-      "status_field"           => "Status"
+      "title_field" => "Title", 
+      "system_create_date" => "Created", 
+      "submitDate_field" => "Date Requested",
+      "selectorName_field" => "Selector", 
+      "copyrightStatus_field" => "Copyright",
+      "status_field" => "Status"
     }
   }
 
@@ -161,10 +165,10 @@ Blacklight.configure(:shared) do |config|
   # except in the relevancy case).
   # label is key, solr field is value
   config[:sort_fields] ||= []
-  config[:sort_fields] << ['relevance', 'score desc, pub_date_sort desc, title_sort asc']
-  config[:sort_fields] << ['year', 'pub_date_sort desc, title_sort asc']
-  config[:sort_fields] << ['author', 'author_sort asc, title_sort asc']
-  config[:sort_fields] << ['title', 'title_sort asc, pub_date_sort desc']
+  config[:sort_fields] << ['relevance', 'score desc, title_sort asc, submitDate_sort desc, note_sort asc']
+  config[:sort_fields] << ['title', 'title_sort asc, submitDate_sort desc']
+  config[:sort_fields] << ['date requested', 'submitDate_sort desc, title_sort asc']
+  config[:sort_fields] << ['created', 'system_create_date_sort asc, title_sort asc']
   
   # If there are more than this many search results, no spelling ("did you 
   # mean") suggestion is offered.

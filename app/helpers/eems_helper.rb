@@ -20,6 +20,7 @@ module EemsHelper
 
   # Get value for a given eem part field
   def print_parts_field(name, msg = '') 
+    value = ''
     
     if (!@parts.nil?)
       value = eval("@parts[0].datastreams['properties'].#{name.to_s}_values.first")

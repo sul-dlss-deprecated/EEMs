@@ -407,7 +407,10 @@
 	   language_field,
 	   selectorName_field,
 	   paymentType_field,
-	   copyrightStatus_field
+	   copyrightStatus_field, 
+	   status_field,
+	   submitDate_field,
+	   system_create_date
    <!-- go through everything -->
 	   
      </str>
