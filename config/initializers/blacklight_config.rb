@@ -95,7 +95,7 @@ Blacklight.configure(:shared) do |config|
     :field_names => [
       "title_field",
       "system_create_date", 
-      "submitDate_field", 
+      "requestDatetime_field", 
       "selectorName_field", 
       "copyrightStatus_field",
       "status_field"
@@ -103,7 +103,7 @@ Blacklight.configure(:shared) do |config|
     :labels => {
       "title_field" => "Title", 
       "system_create_date" => "Created", 
-      "submitDate_field" => "Date Requested",
+      "requestDatetime_field" => "Date Requested",
       "selectorName_field" => "Selector", 
       "copyrightStatus_field" => "Copyright",
       "status_field" => "Status"
@@ -165,9 +165,9 @@ Blacklight.configure(:shared) do |config|
   # except in the relevancy case).
   # label is key, solr field is value
   config[:sort_fields] ||= []
-  config[:sort_fields] << ['relevance', 'score desc, title_sort asc, submitDate_sort desc, note_sort asc']
-  config[:sort_fields] << ['title', 'title_sort asc, submitDate_sort desc']
-  config[:sort_fields] << ['date requested', 'submitDate_sort desc, title_sort asc']
+  config[:sort_fields] << ['relevance', 'score desc, title_sort asc, requestDatetime_sort desc, note_sort asc']
+  config[:sort_fields] << ['title', 'title_sort asc, requestDatetime_sort desc']
+  config[:sort_fields] << ['date requested', 'requestDatetime_sort desc, title_sort asc']
   config[:sort_fields] << ['created', 'system_create_date_sort asc, title_sort asc']
   
   # If there are more than this many search results, no spelling ("did you 
