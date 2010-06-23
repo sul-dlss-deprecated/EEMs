@@ -58,6 +58,7 @@
 
     <div id="action_log">  
       <h3>Action log</h3>   
+	    <%= render :partial => 'eems/_detail_partials/action_log' %>
     </div>      
 
   </div>
@@ -65,4 +66,5 @@
 
 <script type="text/javascript">
 	var status = '<%= print_eems_field('status') %>';
+	var selectorName = '<%= print_eems_field('selectorName') %>';
 </script>

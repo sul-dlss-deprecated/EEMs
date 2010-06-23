@@ -39,6 +39,7 @@ class CatalogController < ApplicationController
     @response, @document = get_solr_response_for_doc_id
     @eem = Eem.find(@document[:id].to_s)
     @parts = @eem.parts
+    @log = @eem.datastreams['actionLog']        
     
     respond_to do |format|
       format.html {setup_next_and_previous_documents}

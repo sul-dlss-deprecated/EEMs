@@ -5,6 +5,7 @@
   <head>    
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
     <title><%= h(@page_title || application_name) %></title>
+    <%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
     <%= javascript_include_tag 'jquery-1.4.2.min.js', 'jquery.autocomplete.js', 'date.format', 'browser-widget.js' %>
     <%= stylesheet_link_tag 'site', 'jquery.autocomplete.css' %>
   </head>
