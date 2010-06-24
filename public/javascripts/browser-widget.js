@@ -25,7 +25,7 @@ $(document).ready(function() {
 		  $('#eem_payment_fund').val('');
     }
 
-    pars = pars + '&eem[statusDate]=' + dateFormat('isoUtcDateTime');
+    pars = pars + '&eem[statusDatetime]=' + dateFormat('isoUtcDateTime');
     var selectorName = $('#eem_selectorName').val();
 
     $.ajax({
