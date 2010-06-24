@@ -20,11 +20,12 @@ describe LogController do
     end
     
     # It can handle json 
-    # {"entry": "My log entry text"}
+    # {"entry": "My log entry text", "comment": "My comment about this entry"}
     # 
     # Or xml
     # <log>
     #  <entry>My xml entry</entry>
+    #  <comment>My comment about this entry</comment>
     # </log>
     #
     # Or application/x-www-form-urlencoded
@@ -35,13 +36,31 @@ describe LogController do
       
       Eem.should_receive(:find).with('my:pid123').and_return(@eem)
       
+      post "create", :entry => "My log entry", :comment => 'Saying something', :eems_id => 'my:pid123'
+      
+      sleep 1
+      log = @eem.datastreams['actionLog']
+      log.each_entry do |ts, action, comment|
+        ts.should < Time.new
+        action.should == 'My log entry'
+        comment.should == 'Saying something'
+      end
+      
+      response.should be_success
+      response.status.should == "200 OK"
+    end
+    
+    it "Handles posted xml without comment" do
+      Eem.should_receive(:find).with('my:pid123').and_return(@eem)
+      
       post "create", :entry => "My log entry", :eems_id => 'my:pid123'
       
       sleep 1
       log = @eem.datastreams['actionLog']
-      log.each_entry do |ts, txt|
+      log.each_entry do |ts, action, comment|
         ts.should < Time.new
-        txt.should == 'My log entry'
+        action.should == 'My log entry'
+        comment.should be_nil
       end
       
       response.should be_success

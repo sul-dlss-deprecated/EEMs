@@ -34,6 +34,34 @@ describe Dor::ActionLogDatastream do
       
     end
     
+    describe "comment parameter" do
+      
+      it "#log handles optional comment parameter" do
+        act_log = Dor::ActionLogDatastream.new
+        act_log.log("I did something", "It was really neat when I did it")
+        sleep 1
+
+        act_log.each_entry do |timestamp, log_entry, comment|
+          timestamp.should < Time.new
+          log_entry.should == "I did something"
+          comment.should == "It was really neat when I did it"
+        end
+      end
+      
+      it "#log should still work without passing in a comment" do
+        act_log = Dor::ActionLogDatastream.new
+        act_log.log("I did something")
+        sleep 1
+
+        act_log.each_entry do |timestamp, log_entry, comment|
+          timestamp.should < Time.new
+          log_entry.should == "I did something"
+          comment.should be_nil
+        end
+      end
+    end
+    
+    
     
   end
   
@@ -44,8 +72,17 @@ describe Dor::ActionLogDatastream do
         <foxml:datastreamVersion>
           <foxml:xmlContent>
             <actionLog>
-              <entry timestamp="2010-05-25T14:06:38-07:00">First action</entry>
-              <entry timestamp="2010-05-25T15:06:38-07:00">Second action</entry>
+              <entry timestamp="2010-05-25T14:06:38-07:00">
+                <action>First action</action>
+                <comment>This was done initially</comment>
+              </entry>
+              <entry timestamp="2010-05-25T15:06:38-07:00">
+                <action>Second action</action>
+                <comment>This was done last</comment>
+              </entry>
+              <entry timestamp="2010-05-25T16:06:38-07:00">
+                <action>Third action</action>
+              </entry>
             </actionLog>
           </foxml:xmlContent>
         </foxml:datastreamVersion>
@@ -57,30 +94,46 @@ describe Dor::ActionLogDatastream do
       doc = REXML::Document.new(@dsfoxml).root
       ds = Dor::ActionLogDatastream.from_xml(Dor::ActionLogDatastream.new, doc)
       
-      timestamps, text = [], []
-      ds.each_entry do |timestamp, log_entry|
+      timestamps, actions, comments = [], [], []
+      ds.each_entry do |timestamp, action, comment|
         timestamps << timestamp
-        text << log_entry
+        actions << action
+        comments << comment unless(comment.nil?)
       end
       
       timestamps[0].should == Time.parse('2010-05-25T14:06:38-07:00')
       timestamps[1].should == Time.parse('2010-05-25T15:06:38-07:00')
-      text[0].should == "First action"
-      text[1].should == "Second action"
+      timestamps[2].should == Time.parse('2010-05-25T16:06:38-07:00')
+      actions[0].should == "First action"
+      actions[1].should == "Second action"
+      actions[2].should == "Third action"
+      comments[0].should == "This was done initially"
+      comments[1].should == "This was done last"
+      comments.size.should == 2
     end
     
     it "can marshall itself to xml" do
       act_xml = <<-EOF
       <actionLog>
-        <entry timestamp="2010-05-25T14:06:38-07:00">First action</entry>
-        <entry timestamp="2010-05-25T15:06:38-07:00">Second action</entry>
+        <entry timestamp="2010-05-25T14:06:38-07:00">
+          <action>First action</action>
+          <comment>Hi there</comment>
+        </entry>
+        <entry timestamp="2010-05-25T15:06:38-07:00">
+          <action>Second action</action>
+          <comment>Hola</comment>
+        </entry>
+        <entry timestamp="2010-05-25T16:06:38-07:00">
+          <action>Third action</action>
+        </entry>
       </actionLog>
       EOF
       
       ds = Dor::ActionLogDatastream.new
       entries = []
-      entries << {:timestamp => Time.parse('2010-05-25T14:06:38-07:00'), :log_text => "First action"}
-      entries << {:timestamp => Time.parse('2010-05-25T15:06:38-07:00'), :log_text => "Second action"}
+      entries << {:timestamp => Time.parse('2010-05-25T14:06:38-07:00'), :action => "First action", :comment => "Hi there"}
+      entries << {:timestamp => Time.parse('2010-05-25T15:06:38-07:00'), :action => "Second action", :comment => "Hola"}
+      entries << {:timestamp => Time.parse('2010-05-25T16:06:38-07:00'), :action => "Third action"}
       ds.entries = entries
       
       expected = XmlSimple.xml_in(act_xml)

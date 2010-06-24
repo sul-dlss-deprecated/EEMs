@@ -20,14 +20,15 @@ module Dor
       super
     end
 
-    def log(entry_text)
-      entry = {:timestamp => Time.new, :log_text => entry_text}
+    def log(action, comment = nil)
+      entry = {:timestamp => Time.new, :action => action}
+      entry[:comment] = comment unless(comment.nil?)
       @entries << entry
     end
 
     def each_entry(&block)
       @entries.each do |entry|
-        block.call(entry[:timestamp], entry[:log_text])
+        block.call(entry[:timestamp], entry[:action], entry[:comment])
       end
     end
     
@@ -37,7 +38,9 @@ module Dor
     def self.from_xml(tmpl, el)
       entries = []
       el.elements.each("./foxml:datastreamVersion[last()]/foxml:xmlContent/actionLog/entry") do |node|
-        entry = {:timestamp => Time.parse(node.attributes["timestamp"]), :log_text => node.text}
+        entry = {:timestamp => Time.parse(node.attributes["timestamp"]), 
+                 :action => node.elements["action"].text}
+        entry[:comment] = node.elements["comment"].text if(node.elements["comment"])
         entries << entry
       end
       
@@ -49,9 +52,10 @@ module Dor
     def to_xml
       builder = Nokogiri::XML::Builder.new do |xml|
         xml.actionLog {
-          self.each_entry do |ts, txt|
+          self.each_entry do |ts, action, comment|
             xml.entry(:timestamp => ts.xmlschema) {
-              xml.text txt
+              xml.action action
+              xml.comment comment unless(comment.nil?)
             }
           end
         }
