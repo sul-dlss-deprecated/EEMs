@@ -7,6 +7,8 @@ class Eem < Dor::Base
   has_relationship "parts", :is_part_of, :inbound => true #content files
   
   has_metadata :name => 'eemsProperties', :type => ActiveFedora::MetadataDatastream do |m|
+    m.label = "eemsProperties"
+    
     m.field "copyrightStatusDate", :string, :multiple => false #mutiple doesn't do anything
     m.field "copyrightStatus", :string
     m.field "creatorOrg", :string
