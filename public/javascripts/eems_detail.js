@@ -213,7 +213,7 @@ function escapeTags(value) {
 }
 
 function toggleSendToTechServices() {
-  if ($('#input_title').val() != '' && $('#input_title').val() != 'Click to add title' && status != 'Request submitted' && 
+  if ($('#input_title').val() != '' && $('#input_title').val() != 'Click to add title' && status != 'Submitted' && 
        (($('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != '' && $('#eem_payment_fund').val() != '(Fund name)') || $('#eem_paymentType').val() == 'Free')) {
     $('#sent_to_tech_services_ok').attr("disabled", false);
 	}
@@ -224,7 +224,7 @@ function toggleSendToTechServices() {
 
 function sendToTechServices() {
   var pars = {};	
-  pars['eem[status]'] = 'Request submitted';
+  pars['eem[status]'] = 'Submitted';
   pars['eem[statusDate]'] = dateFormat('isoUtcDateTime');
   pars['eem[requestDatetime]'] = dateFormat('isoUtcDateTime');
   pars['authenticity_token'] = token;

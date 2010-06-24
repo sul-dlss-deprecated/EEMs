@@ -103,7 +103,7 @@ Blacklight.configure(:shared) do |config|
     :labels => {
       "title_field" => "Title", 
       "system_create_date" => "Created", 
-      "requestDatetime_field" => "Date Requested",
+      "requestDatetime_field" => "Submitted",
       "selectorName_field" => "Selector", 
       "copyrightStatus_field" => "Copyright",
       "status_field" => "Status"

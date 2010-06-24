@@ -2,7 +2,7 @@
 
 <% form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do %>
   <%= hidden_field_tag 'eem[selectorSunetid]', "#{@user.sunetid}"%>
-  <%= hidden_field_tag 'eem[selectorName]', "#{@user.display_name_lf}"%>   
+  <%= hidden_field_tag 'eem[selectorName]', "#{@user.display_name}"%>   
   
   <dl>
     <dt id="dt_sourceUrl"><%= label_tag 'eem[sourceUrl]', 'Found on this site:' %></dt>
