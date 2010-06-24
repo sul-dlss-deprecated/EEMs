@@ -1,6 +1,17 @@
 ActionController::Routing::Routes.draw do |map|
   map.login "login", :controller => 'login', :action => 'new'
   
+  # Copied from vendor/plugins/blacklight/lib/blacklight/routes.rb and modified for /view
+  map.resources(:catalog, :as => 'view',
+    :only => [:index, :show, :update],
+    # /catalog/:id/image <- for ajax cover requests
+    # /catalog/:id/status
+    # /catalog/:id/availability
+    :member=>{:image=>:get, :status=>:get, :availability=>:get, :citation=>:get, :send_email_record=>:post, :email=>:get, :sms=>:get},
+    # /catalog/map
+    :collection => {:map => :get, :opensearch=>:get}
+  )
+  
   # The priority is based upon order of creation: first created -> highest priority.
   Blacklight::Routes.build map
   
