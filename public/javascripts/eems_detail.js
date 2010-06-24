@@ -225,7 +225,7 @@ function toggleSendToTechServices() {
 function sendToTechServices() {
   var pars = {};	
   pars['eem[status]'] = 'Submitted';
-  pars['eem[statusDate]'] = dateFormat('isoUtcDateTime');
+  pars['eem[statusDatetime]'] = dateFormat('isoUtcDateTime');
   pars['eem[requestDatetime]'] = dateFormat('isoUtcDateTime');
   pars['authenticity_token'] = token;
   pars['pid'] = pid;

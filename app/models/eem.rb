@@ -21,7 +21,7 @@ class Eem < Dor::Base
     m.field "sourceUrl", :string
     m.field "requestDatetime", :string
     m.field "status", :string
-    m.field "statusDate", :string
+    m.field "statusDatetime", :string
     m.field "downloadDate", :string
   end
   
