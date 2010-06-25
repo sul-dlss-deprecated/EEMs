@@ -53,6 +53,7 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing the them or commenting them out if you're using named routes and resources.
   map.connect 'eems/:eems_id/log', :controller => 'log', :action => 'create'
+  map.connect 'eems/no_pdf', :controller => 'eems', :action => 'no_pdf'
   
   map.resources :eems
   map.resources :content_files

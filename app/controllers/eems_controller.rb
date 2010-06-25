@@ -23,39 +23,30 @@ class EemsController < ApplicationController
   #Handles submit from /eems/new
   #Assume we receive the standard Rails hash of all the form params
   def create
-    eem = Eem.from_params(params[:eem])
-    attrs = unescape_keys(params[:eem])
-    eem.update_attributes(attrs)
-    eem.save
-    
-    #Add actionLog datastream
-    log = Dor::ActionLogDatastream.new
-    eem.add_datastream(log)
-    eem.save
+    create_eem_and_log
     
     cf = ContentFile.new
     cf.url = params[:contentUrl]
     filename = params[:contentUrl].split(/\?/).first.split(/\//).last
-    FileUtils.mkdir(File.join(Sulair::WORKSPACE_DIR, eem.pid)) unless (File.exists?(File.join(Sulair::WORKSPACE_DIR, eem.pid)))
-    cf.filepath = File.join(Sulair::WORKSPACE_DIR, eem.pid, filename)
+    FileUtils.mkdir(File.join(Sulair::WORKSPACE_DIR, @eem.pid)) unless (File.exists?(File.join(Sulair::WORKSPACE_DIR, @eem.pid)))
+    cf.filepath = File.join(Sulair::WORKSPACE_DIR, @eem.pid, filename)
     cf.save
     
     part = Part.from_params(:url => params[:contentUrl], :content_file_id => cf.id)
-    part.add_relationship(:is_part_of, eem)
+    part.add_relationship(:is_part_of, @eem)
     part.save
     cf.part_pid = part.pid
     cf.save
     
     job = Dor::DownloadJob.new(cf.id)
     Delayed::Job.enqueue(job)
-    
-    resp = {
-      'eem_pid' => eem.pid,
-      'part_pid' => part.pid,
-      'content_file_id' => cf.id
-    }
-    
-    render :json => resp.to_json
+        
+    render_creation_response(@eem.pid, part.pid, cf.id)
+  end
+  
+  def no_pdf
+    create_eem_and_log
+    render_creation_response(@eem.pid)
   end
   
   # Taken from Salt project
@@ -98,6 +89,26 @@ class EemsController < ApplicationController
       render :status => 401, :text => "You are unauthorized to use this application"
       return false
     end
+  end
+  
+  def create_eem_and_log
+    @eem = Eem.from_params(params[:eem])
+    attrs = unescape_keys(params[:eem])
+    @eem.update_attributes(attrs)
+    @eem.save
+    
+    #Add actionLog datastream
+    log = Dor::ActionLogDatastream.new
+    @eem.add_datastream(log)
+    @eem.save
+  end
+  
+  def render_creation_response(eem_pid, part_pid=nil, content_file_id=nil)
+    resp = {'eem_pid' => @eem.pid}
+    resp['part_pid'] = part_pid unless(part_pid.nil?)
+    resp['content_file_id'] = content_file_id unless(content_file_id.nil?)
+      
+    render :json => resp.to_json
   end
   
 end
