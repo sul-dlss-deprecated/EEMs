@@ -38,8 +38,9 @@ class CatalogController < ApplicationController
   def show
     @response, @document = get_solr_response_for_doc_id
     @eem = Eem.find(@document[:id].to_s)
-    @parts = @eem.parts
+    @parts = @eem.parts unless (@eem.parts.nil?)
     @log = @eem.datastreams['actionLog']        
+    @user = EemsUser.find(session[:user_id])   
     
     respond_to do |format|
       format.html {setup_next_and_previous_documents}

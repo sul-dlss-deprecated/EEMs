@@ -8,6 +8,7 @@ var defaultValues = {
   "note" : "Click to add citations, comments, etc.",
   "payment_fund" : "(Fund name)"
 };
+var dateFormatMask = "yyyy-mm-dd'T'HH:MM:sso";
 
 $(document).ready(function() {
 	
@@ -88,7 +89,7 @@ $(document).ready(function() {
   $('#eem_copyrightStatus').change(function() {
 		var pars = {};
 		pars["eem[copyrightStatus]"] = $('#eem_copyrightStatus').val();
-		pars["eem[copyrightStatusDate]"] = dateFormat("isoUtcDateTime");
+		pars["eem[copyrightStatusDate]"] = dateFormat(dateFormatMask);
 	
 		eemUpdate(pars);
   });
@@ -225,8 +226,8 @@ function toggleSendToTechServices() {
 function sendToTechServices() {
   var pars = {};	
   pars['eem[status]'] = 'Submitted';
-  pars['eem[statusDatetime]'] = dateFormat('isoUtcDateTime');
-  pars['eem[requestDatetime]'] = dateFormat('isoUtcDateTime');
+  pars['eem[statusDatetime]'] = dateFormat(dateFormatMask);
+  pars['eem[requestDatetime]'] = dateFormat(dateFormatMask);
   pars['authenticity_token'] = token;
   pars['pid'] = pid;
 

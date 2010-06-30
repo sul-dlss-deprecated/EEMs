@@ -22,7 +22,7 @@ module EemsHelper
   def print_parts_field(name, msg = '') 
     value = ''
     
-    if (!@parts.nil?)
+    if (!@parts[0].nil?)
       value = eval("@parts[0].datastreams['properties'].#{name.to_s}_values.first")
     end
   
@@ -93,7 +93,7 @@ module EemsHelper
   def get_local_filename
     value = ''
     
-    if (!@parts.nil?)
+    if (!@parts[0].nil?)
       file_url = @parts[0].datastreams['properties'].url_values.first
     end
     
