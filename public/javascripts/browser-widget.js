@@ -88,7 +88,7 @@ $(document).ready(function() {
   function update() {
 	  $.getJSON('/content_files/' + content_file_id, function(data) {
 	  
-	  if (date == null) {
+	  if (data == null) {
 		  showErrorMsg(); 
 		  return;
 	  }  
