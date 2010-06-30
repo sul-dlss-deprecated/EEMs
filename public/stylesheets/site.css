@@ -41,10 +41,6 @@ input, textarea, select, form, dl, dt, dd, textarea {
   padding: 10px;
 }
 
-#eems-new-form-widget dl {
-
-}
-
 #eems-new-form-widget dt, #eems-new-form-widget dd {
   float: left;
 }
@@ -66,6 +62,23 @@ input, textarea, select, form, dl, dt, dd, textarea {
   clear: both;
   padding: 25px 5px 0 0;
   text-align: right;
+}
+
+#eems-loader {
+	background: transparent url('/images/h_loading.gif') no-repeat center center;
+	height: 50px;
+  margin: 60px auto 0 auto;
+  text-align: center;
+	width: 350px;
+}
+
+#eems-error {
+	background: transparent url('/images/error.png') no-repeat left 2px;
+	height: 60px;
+  margin: 60px auto 0 auto;
+  padding-left: 25px;
+  text-align: left;
+	width: 320px;
 }
 
 #eems-upload-progress {

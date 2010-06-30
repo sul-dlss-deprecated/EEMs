@@ -7,6 +7,7 @@ $(document).ready(function() {
     note: "(Citation, comments, etc.)",
     payment_fund: "(Fund name)"
   };
+  var dateFormatMask = "yyyy-mm-dd'T'HH:MM:sso";
 
   $('#eem_payment_fund').autocomplete(data);
 
@@ -15,38 +16,58 @@ $(document).ready(function() {
   });
 		
   function submitEEM(pars, logMsg) { 
-    $('#eems-new-form-widget').hide();
+    pars = pars + '&eem[statusDatetime]=' + dateFormat(dateFormatMask);
+    $('#eems-new-form-widget').fadeOut('slow');
+    $('#eems-loader').show();
 
-    if ($('#eem_note').val() == defaultValues.note) {
-		  $('#eem_note').val('');
-    }
+    if ($('#eem_note').val() == defaultValues.note) { $('#eem_note').val(''); }
+    if ($('#eem_payment_fund').val() == defaultValues.payment_fund) { $('#eem_payment_fund').val(''); }
 
-    if ($('#eem_payment_fund').val() == defaultValues.payment_fund) {
-		  $('#eem_payment_fund').val('');
-    }
-
-    pars = pars + '&eem[statusDatetime]=' + dateFormat('isoUtcDateTime');
-    var selectorName = $('#eem_selectorName').val();
-
-    $.ajax({
-		  url: '/eems', 
-		  type: 'POST', 
-		  datatype: 'json', 
-		  data: $('#eems-new-form-widget').serialize() + '&' + pars, 
-		  success: function(eem) {			
-				$('#eems-upload-progress').show();	    
+    if ($('#contentUrl').val() == '') {
+	    $.ajax({
+			  url: '/eems/no_pdf', 
+			  type: 'POST', 
+			  datatype: 'json', 
+			  data: $('#eems-new-form-widget').serialize() + '&' + pars, 
+			  success: function(eem) {			
+					if (eem != null) {
+					  $('#details-link').attr('href', '/view/' + eem.eem_pid);	
+			      addLogEntry(logMsg, eem.eem_pid);		
+				    $('#eems-loader').hide();				
+				    $('#eems-links').show();							  
+					}
+			  },
+				error: function() { showErrorMsg(); },  			
+			});
+    } else {
+	    $.ajax({
+			  url: '/eems', 
+			  type: 'POST', 
+			  datatype: 'json', 
+			  data: $('#eems-new-form-widget').serialize() + '&' + pars, 
+			  success: function(eem) {			
+			    $('#eems-loader').hide();
+					$('#eems-upload-progress').show();	    
 				
-				if (eem != null) {
-				  $('#details-link').attr('href', '/catalog/' + eem.eem_pid);	
+					if (eem != null) {
+					  $('#details-link').attr('href', '/view/' + eem.eem_pid);	
 			      content_file_id = eem.content_file_id;		
 			      addLogEntry(logMsg, eem.eem_pid);					  
 				    update();
+				    var selectorName = $('#eem_selectorName').val();
 				    addLogEntry("PDF uploaded by " + selectorName, eem.eem_pid);					  
 					}
 			  }, 
-		});
+			  error: function() { showErrorMsg(); },  			
+			});
+		}
 
 		return false;
+  }
+
+  function showErrorMsg() {
+    $('#eems-loader').hide();				
+    $('#eems-error').show();							  						
   }
 
   function addLogEntry(logMsg, pid) {
@@ -137,7 +158,7 @@ $(document).ready(function() {
   $('#send_to_tech_services').click(function() {
 	  var selectorName = $('#eem_selectorName').val();
     var logMsg = 'Request submitted by ' + selectorName;
-    var pars = 'eem[status]=Submitted&eem[requestDatetime]=' + dateFormat('isoUtcDateTime');
+    var pars = 'eem[status]=Submitted&eem[requestDatetime]=' + dateFormat(dateFormatMask);
     submitEEM(pars, logMsg);
   });
 

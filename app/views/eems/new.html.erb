@@ -47,13 +47,16 @@
   </div>
 <% end %>
 
+<div id="eems-loader" style="display: none;">Please wait...</div>
+<div id="eems-error" style="display: none;">Error creating EEM and/or uploading PDF.<br/>Please try again or contact application administrator.</div>
+
 <div id="eems-upload-progress" style="display: none;">
-  <div id="upload-progress-text">Your selection is being uploaded, please wait... </div>
+  <div id="upload-progress-text">Your selection is being uploaded... </div>
   <div id="upload-complete-text" style="display:none;">Upload complete!</div>
-  <div style="float: left; width: 40px;" id="percent_done"></div>      
   <div style="float: left;width: 300px; height: 10px; background-color: #aaa; margin-top: 4px;">
     <img id="progress_bar" src="../images/progress_bar.png" style="width: 0px, height: 10px;" />    
   </div>      
+  <div style="float: left; width: 40px; text-align: left; text-indent: 3px;" id="percent_done"></div>      
 </div>
 
 <div id="eems-links" style="display: none;">
