@@ -35,6 +35,8 @@ $(document).ready(function() {
 			      addLogEntry(logMsg, eem.eem_pid);		
 				    $('#eems-loader').hide();				
 				    $('#eems-links').show();							  
+					} else {
+					  showErrorMsg(); 	
 					}
 			  },
 				error: function() { showErrorMsg(); },  			
@@ -47,8 +49,7 @@ $(document).ready(function() {
 			  data: $('#eems-new-form-widget').serialize() + '&' + pars, 
 			  success: function(eem) {			
 			    $('#eems-loader').hide();
-					$('#eems-upload-progress').show();	    
-				
+					$('#eems-upload-progress').show();	    				
 					if (eem != null) {
 					  $('#details-link').attr('href', '/view/' + eem.eem_pid);	
 			      content_file_id = eem.content_file_id;		
@@ -56,7 +57,9 @@ $(document).ready(function() {
 				    update();
 				    var selectorName = $('#eem_selectorName').val();
 				    addLogEntry("PDF uploaded by " + selectorName, eem.eem_pid);					  
-					}
+					} else {
+					  showErrorMsg(); 	
+					}					
 			  }, 
 			  error: function() { showErrorMsg(); },  			
 			});
@@ -83,8 +86,13 @@ $(document).ready(function() {
   }
 
   function update() {
-	$.getJSON('/content_files/' + content_file_id, function(data){
+	  $.getJSON('/content_files/' + content_file_id, function(data) {
 	  
+	  if (date == null) {
+		  showErrorMsg(); 
+		  return;
+	  }  
+	
 	  $('#progress_bar').css({'width' : parseInt(data.percent_done)*3 + 'px', 'height' : '10px' });
 	
 	  if (data.percent_done != '') { 
