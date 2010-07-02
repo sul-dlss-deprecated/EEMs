@@ -245,3 +245,10 @@ a.edit_link, a.sidebar_button {
   margin-left: 14px;	
   text-align: left;	
 }
+
+.log_comment {
+	clear: both;
+	padding: 4px 0;
+	color: #555;
+	font-style: italic;
+}
