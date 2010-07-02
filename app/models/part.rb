@@ -16,9 +16,11 @@ class Part < Dor::Base
   has_relationship "parents", :is_part_of #relationship between content file and parent Eem
   
   has_metadata :name => 'properties', :type => ActiveFedora::MetadataDatastream do |m|
+    m.label = "properties"
     m.field "url", :string
     m.field "done", :string
     m.field "content_file_id", :string
+    m.field "filename", :string
   end
   
   def initialize(attrs={})
@@ -38,8 +40,9 @@ class Part < Dor::Base
     return if(datastreams.has_key?('content'))
     
     props_ds = datastreams['properties']
+    props_ds.filename_values = [filename]
+    props_ds.save
     mime_type = MIME::Types.type_for(filename).to_s
-    
     url = Sulair::WORKSPACE_URL + '/' + parent_pid + '/' + filename
     
     #TODO what if more than one content file? add_content_datastream?

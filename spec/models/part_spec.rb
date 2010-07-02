@@ -56,7 +56,11 @@ describe Part do
     it "should create the content datastream using the url it already contains and save it" do
       content_ds = @part.datastreams['content']
       content_ds[:dsLocation].should == Sulair::WORKSPACE_URL + '/druid:123/a.pdf'
-      #TODO verify other ds properties
+    end
+    
+    it "should save the filename in the properties datastream" do
+      props_ds = @part.datastreams['properties']
+      props_ds.filename_values.first.should == 'a.pdf'
     end
     
     it "should not create the content datastream if it exists already" do

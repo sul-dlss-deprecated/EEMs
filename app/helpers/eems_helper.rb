@@ -91,17 +91,14 @@ module EemsHelper
 
   # Get locally saved filename 
   def get_local_filename
-    value = ''
+    fname = ''
     
     if (!@parts[0].nil?)
-      file_url = @parts[0].datastreams['properties'].url_values.first
+      value = @parts[0].datastreams['properties'].filename_values.first
+      fname = value unless(value.nil?)
     end
-    
-    if (!file_url.nil? && !file_url.empty?)
-      value = file_url.split(/\?/).first.split(/\//).last
-    end
-    
-    return value
+        
+    return fname
   end
   
   
