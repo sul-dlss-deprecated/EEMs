@@ -1,8 +1,13 @@
 <% if (!@log.nil?) %>
   <dl class="details">
-	  <% @log.each_entry do |timestamp, log_entry| %>
+	  <% @log.each_entry do |timestamp, entry, comment| %>
 	    <dt><%= formatActionLogTimestamp(timestamp) %> : </dt>
-	    <dd><%= formatActionLogMessage(log_entry) %> </dd>		  		
+	    <dd>
+	      <%= formatActionLogMessage(entry) %> 
+	      <% if (!comment.nil? && !comment.empty?)%>
+  	      <div class="log_comment"><%= comment %></div> 
+	      <% end %>
+		  </dd>		  		
 	  <% end %>
   </dl>
 <% end %>

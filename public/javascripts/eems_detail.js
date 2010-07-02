@@ -29,7 +29,8 @@ $(document).ready(function() {
 	toggleSendToTechServices();
 
   // send to tech services
-  $('#sent_to_tech_services_ok').click(function() {
+  $('#send_to_tech_services_ok').click(function() {
+	  $('#send_to_tech_services_ok').attr('disabled', true);
     sendToTechServices();
   });
 
@@ -216,10 +217,10 @@ function escapeTags(value) {
 function toggleSendToTechServices() {
   if ($('#input_title').val() != '' && $('#input_title').val() != 'Click to add title' && status != 'Submitted' && 
        (($('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != '' && $('#eem_payment_fund').val() != '(Fund name)') || $('#eem_paymentType').val() == 'Free')) {
-    $('#sent_to_tech_services_ok').attr("disabled", false);
+    $('#send_to_tech_services_ok').attr("disabled", false);
 	}
 	else {
-  	$('#sent_to_tech_services_ok').attr("disabled", true);
+  	$('#send_to_tech_services_ok').attr("disabled", true);
 	}	
 }
 
@@ -237,7 +238,8 @@ function sendToTechServices() {
 	  data: pars, 
 	  success: function(eem) {
 		  var logMsg = 'Request submitted by ' + selectorName;
-		  var pars = {'entry': logMsg, 'authenticity_token': token};
+		  var logComment = unescapeTags($('#text_send_to_acquistions').val());
+		  var pars = {'entry': logMsg, 'comment': logComment, 'authenticity_token': token};
 		  addLogEntry(pid, pars);
 	  }, 
 	});
