@@ -27,9 +27,8 @@ class EemsController < ApplicationController
     
     cf = ContentFile.new
     cf.url = params[:contentUrl]
-    filename = params[:contentUrl].split(/\?/).first.split(/\//).last
     FileUtils.mkdir(File.join(Sulair::WORKSPACE_DIR, @eem.pid)) unless (File.exists?(File.join(Sulair::WORKSPACE_DIR, @eem.pid)))
-    cf.filepath = File.join(Sulair::WORKSPACE_DIR, @eem.pid, filename)
+    cf.filepath = File.join(Sulair::WORKSPACE_DIR, @eem.pid)
     cf.save
     
     part = Part.from_params(:url => params[:contentUrl], :content_file_id => cf.id)

@@ -58,7 +58,7 @@ describe EemsController do
       session[:user_id] = 'somesunetid'
       EemsUser.stub!(:valid?).with('somesunetid').and_return(true)
       post "create", :eem => @eems_params, :contentUrl => @content_url
-      
+            
     end
     
     it "should create a new Eem from the params hash and create the DelayedJob to do the download" do
@@ -66,10 +66,10 @@ describe EemsController do
 
     end
     
-    it "should create a ContentFile object from the url" do
+    it "should create a ContentFile object from the url and the filepath should be the parent directory that will house the content" do
 
       @cf.url.should == @content_url
-      @cf.filepath.should == File.join(Sulair::WORKSPACE_DIR, 'pid:123', 'a.pdf')
+      @cf.filepath.should == File.join(Sulair::WORKSPACE_DIR, 'pid:123')
     end
     
     it "should create a Part object from the ContentFile and url" do
