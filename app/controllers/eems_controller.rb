@@ -27,8 +27,9 @@ class EemsController < ApplicationController
     
     cf = ContentFile.new
     cf.url = params[:contentUrl]
-    FileUtils.mkdir(File.join(Sulair::WORKSPACE_DIR, @eem.pid)) unless (File.exists?(File.join(Sulair::WORKSPACE_DIR, @eem.pid)))
-    cf.filepath = File.join(Sulair::WORKSPACE_DIR, @eem.pid)
+    content_dir = File.join(Sulair::WORKSPACE_DIR, @eem.pid)
+    FileUtils.mkdir(content_dir) unless (File.exists?(content_dir))
+    cf.filepath = content_dir
     cf.save
     
     part = Part.from_params(:url => params[:contentUrl], :content_file_id => cf.id)
@@ -43,6 +44,7 @@ class EemsController < ApplicationController
     render_creation_response(@eem.pid, part.pid, cf.id)
   end
   
+  #POST /eems/no_pdf
   def no_pdf
     create_eem_and_log
     render_creation_response(@eem.pid)
