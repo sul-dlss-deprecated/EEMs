@@ -34,11 +34,10 @@ class Part < Dor::Base
     p
   end
   
-  def create_content_datastream
+  def create_content_datastream(filename)
     return if(datastreams.has_key?('content'))
     
     props_ds = datastreams['properties']
-    filename = props_ds.url_values.first.split(/\?/).first.split(/\//).last
     mime_type = MIME::Types.type_for(filename).to_s
     
     url = Sulair::WORKSPACE_URL + '/' + parent_pid + '/' + filename

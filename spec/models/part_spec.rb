@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require 'active_fedora'
 
+
 describe Part do
   before(:all) do
     ActiveFedora::SolrService.register(SOLR_URL)
@@ -48,7 +49,7 @@ describe Part do
       @part.stub!(:save)
       @part.add_relationship(:is_part_of, @eem)
       
-      @part.create_content_datastream
+      @part.create_content_datastream('a.pdf')
     end
     
     #TODO might have to change for files that aren't retrieved with GET
@@ -62,7 +63,7 @@ describe Part do
        props = @part.datastreams['properties']
        props.url_values = ['http://somesite.com/b.pdf']
        
-       @part.create_content_datastream
+       @part.create_content_datastream('a.pdf')
        
        content_ds = @part.datastreams['content']
        content_ds[:dsLocation].should == Sulair::WORKSPACE_URL + '/druid:123/a.pdf'
