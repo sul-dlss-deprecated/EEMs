@@ -34,9 +34,9 @@ describe Dor::DownloadJob do
       job = Dor::DownloadJob.new(1)
       job.perform
       
-      #cf.percent_done.should == 33
       part.datastreams.has_key?('content').should be_true
       part.datastreams['properties'].done_values.should == ['true']
+      part.datastreams['properties'].filename_values.should == ['stanford_title.jpg']
       
       File.file?(File.join(cf.filepath, 'stanford_title.jpg')).should be_true
     end

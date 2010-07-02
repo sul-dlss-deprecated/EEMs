@@ -15,11 +15,15 @@ module Dor
       
       @c = Curl::Easy.new(cf.url)
       @filename = nil
+      @counter = 0
       
       tmpdl = Tempfile.new('dlfile', File.join(RAILS_ROOT,'tmp'))
       File.open(tmpdl.path, "wb") do |output|
         @c.on_header do |hdr|
-          @filename = $1 if(hdr =~ /content-disposition.*filename=\"?([^\"]*)\"?/i)
+          if(hdr =~ /content-disposition.*filename\s*=\s*\"?([^\"]*)\"?/i)
+            @filename = $1
+          end
+          Rails.logger.info(hdr)
           hdr.length
         end
         
@@ -29,11 +33,7 @@ module Dor
         end
         
         @c.on_progress do |dl_total, dl_now, ut, un|
-          begin
-            cf.update_progress(dl_total, dl_now)
-          rescue Exception => e
-            Rails.logger.error("#{e.to_s}\n\n")
-          end
+          cf.update_progress(dl_total, dl_now)
           true
         end
         @c.follow_location = true
