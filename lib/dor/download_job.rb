@@ -8,12 +8,11 @@ module Dor
   class DownloadJob < Struct.new(:content_file_id)
     
     #TODO figure out if it isn't an http GET
-    #TODO what if the filename is different than the last part of the URL path?
     #TODO if job fails, dj retries perform?  Should test if file exists
     def perform
-      cf = ContentFile.find(content_file_id)
+      @cf = ContentFile.find(content_file_id)
       
-      @c = Curl::Easy.new(cf.url)
+      @c = Curl::Easy.new(@cf.url)
       @filename = nil
       @counter = 0
       
@@ -33,7 +32,7 @@ module Dor
         end
         
         @c.on_progress do |dl_total, dl_now, ut, un|
-          cf.update_progress(dl_total, dl_now)
+          @cf.update_progress(dl_total, dl_now)
           true
         end
         @c.follow_location = true
@@ -43,20 +42,26 @@ module Dor
 
       # If filename wasn't sent in the content-disposition header, we assume it is the last part of the url
       unless(@filename)
-        @filename = cf.url.split(/\?/).first.split(/\//).last
+        @filename = @cf.url.split(/\?/).first.split(/\//).last
       end
 
-      FileUtils.cp(tmpdl.path, File.join(cf.filepath,@filename))
+      FileUtils.cp(tmpdl.path, File.join(@cf.filepath,@filename))
       tmpdl.delete
             
-      part = Part.find(cf.part_pid)
+      part = Part.find(@cf.part_pid)
       part.create_content_datastream(@filename)
       part.download_done
     rescue Exception => e
       msg = e.message
       unless(e.backtrace.nil?)
-        msg << "\n\n" << e.backtrace.join("\n")
+        msg << "\n" << e.backtrace.join("\n")
       end
+      
+      if( @cf.attempts < Delayed::Worker.max_attempts + 1)
+        @cf.attempts = @cf.attempts + 1
+        @cf.save
+      end
+      
       Rails.logger.error("DownloadJob Failed: " + msg)
       raise e
     end

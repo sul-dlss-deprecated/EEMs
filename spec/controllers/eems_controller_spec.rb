@@ -58,7 +58,7 @@ describe EemsController do
       session[:user_id] = 'somesunetid'
       EemsUser.stub!(:valid?).with('somesunetid').and_return(true)
       post "create", :eem => @eems_params, :contentUrl => @content_url
-            
+      
     end
     
     it "should create a new Eem from the params hash and create the DelayedJob to do the download" do
@@ -97,6 +97,10 @@ describe EemsController do
     
     it "should create an ActionLog datastream" do
       
+    end
+    
+    it "should set the number of ContentFile attempts to 1" do
+      @cf.attempts.should == 1
     end
     
   end

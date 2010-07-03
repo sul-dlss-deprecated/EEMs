@@ -30,6 +30,7 @@ class EemsController < ApplicationController
     content_dir = File.join(Sulair::WORKSPACE_DIR, @eem.pid)
     FileUtils.mkdir(content_dir) unless (File.exists?(content_dir))
     cf.filepath = content_dir
+    cf.attempts = 1
     cf.save
     
     part = Part.from_params(:url => params[:contentUrl], :content_file_id => cf.id)

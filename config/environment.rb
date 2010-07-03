@@ -21,7 +21,7 @@ Rails::Initializer.run do |config|
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
   
-  config.gem 'delayed_job', :version => '1.8.4'
+  config.gem 'delayed_job', :version => '2.0.3'
   config.gem 'curb'
   config.gem 'active-fedora', :version => '1.0.7'
   config.gem 'ruby-fedora', :version => '1.0.7'
