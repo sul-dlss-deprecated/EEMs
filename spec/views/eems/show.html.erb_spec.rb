@@ -4,7 +4,7 @@ describe "Eems show page" do
   before(:all) do
     ActiveFedora::SolrService.register(SOLR_URL)
     Fedora::Repository.register(FEDORA_URL)
-    Fedora::Repository.stubs(:instance).returns(stub('frepo').as_null_object)
+    Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
   end
   
   before(:each) do
@@ -42,6 +42,7 @@ describe "Eems show page" do
     part.add_relationship(:is_part_of, @eem)
 
     assigns[:eem] = eem
+    assigns[:parts] = [part]
     
     render "eems/show.html.erb"
     

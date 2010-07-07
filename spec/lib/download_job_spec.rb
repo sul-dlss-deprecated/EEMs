@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require 'curl'
 require 'active_fedora'
 require 'tempfile'
+require 'dor/download_job'
 
 describe Dor::DownloadJob do
   before(:all) do
