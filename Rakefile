@@ -24,7 +24,7 @@ end
 
 #Call this from the command line with: rake verify_rcov
 RCov::VerifyTask.new(:verify_rcov => ['clean','spec:rcov']) do |t|
-  t.threshold = 71.87
+  t.threshold = 81.2
   t.index_html = 'coverage/index.html'
 end
 
