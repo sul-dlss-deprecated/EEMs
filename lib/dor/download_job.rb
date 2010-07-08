@@ -51,6 +51,7 @@ module Dor
       part = Part.find(@cf.part_pid)
       part.create_content_datastream(@filename)
       part.download_done
+      
     rescue Exception => e
       msg = e.message
       unless(e.backtrace.nil?)

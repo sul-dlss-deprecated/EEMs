@@ -5,7 +5,6 @@ module EemsHelper
     text_field_tag "eem[#{prop.to_s}]", value, options 
   end
 
-
   # Get value for a given eem field
   def print_eems_field(name, msg = '') 
     value = eval("@eem.fields[:#{name.to_s}][:values].first")
@@ -16,7 +15,6 @@ module EemsHelper
     
     return value
   end 
-
 
   # Get value for a given eem part field
   def print_parts_field(name, msg = '') 
@@ -33,8 +31,7 @@ module EemsHelper
     return value
   end 
 
-
-  # Get source URL 
+  # Get source URL from referrer (or return empty string if nil)
   def get_source_url(referrer)
     value = ''
     
@@ -45,8 +42,7 @@ module EemsHelper
     return value
   end
 
-
-  # Get shortened source URL 
+  # Get shortened source URL (max length = 50 characters)
   def shorten_url(url)
     max_length = 50
     
@@ -57,7 +53,6 @@ module EemsHelper
     return url
   end  
 
-  
   # Get creator name (value from either creatorOrg or creatorPerson)
   def get_creator_name
     value = ''
@@ -75,7 +70,6 @@ module EemsHelper
     return value
   end
 
-
   # Get creator type (either 'person' or 'organization')
   def get_creator_type
     value = 'organization'
@@ -87,7 +81,6 @@ module EemsHelper
     
     return value
   end
-
 
   # Get locally saved filename 
   def get_local_filename
@@ -101,8 +94,7 @@ module EemsHelper
     return fname
   end
   
-  
-  # Get URL to the locally saved filename
+  # Get URL/path to the locally saved filename
   def get_local_file_path 
     value = 'unknown'
     filename = get_local_filename()
@@ -114,8 +106,7 @@ module EemsHelper
     return value
   end
 
-  
-  # Get payment fund 
+  # Get payment fund (or empty string if nil)
   def get_payment_fund
     value = ''
     payment_type = print_eems_field('paymentType')
@@ -127,7 +118,6 @@ module EemsHelper
     return value
   end
 
-
   # escape html tags (<, >)
   def escape_tags(value)
     value = value.gsub(/>/, '&gt;')     
@@ -135,8 +125,7 @@ module EemsHelper
     
     return value
   end     
-  
-  
+    
   # check if the eem is editable (i.e., eem is not sent to tech services)
   def is_eem_editable(status)    
     if status =~ /Created/i
@@ -146,8 +135,7 @@ module EemsHelper
     return false
   end
 
-
-  # get external language name
+  # get external language name from given code
   def get_language_name(code) 
     language = {
       'ara' => 'Arabic', 'chi' => 'Chinese', 'eng' => 'English', 'fre' => 'French', 
@@ -157,8 +145,7 @@ module EemsHelper
     
     return language[code] || code
   end
-  
-  
+    
   # format action log timestamp
   def formatActionLogTimestamp(timestamp)
     if !timestamp.nil?
@@ -175,6 +162,15 @@ module EemsHelper
     end
     
     return msg || ''
+  end
+
+  # format download date timestamp to store in part child object
+  def formatDownloadDateTimestamp(timestamp)
+    if !timestamp.nil?
+      return timestamp.strftime("%Y-%m-%dT%H:%M%z")
+    end
+    
+    return ''
   end
     
 end

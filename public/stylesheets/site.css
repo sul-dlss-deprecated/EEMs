@@ -72,13 +72,20 @@ input, textarea, select, form, dl, dt, dd, textarea {
 	width: 350px;
 }
 
-#eems-error {
-	background: transparent url('/images/error.png') no-repeat left 2px;
-	height: 60px;
+#eems-success {
   margin: 60px auto 0 auto;
-  padding-left: 25px;
-  text-align: left;
-	width: 320px;
+  text-align: center;
+	width: 350px;
+}
+
+#eems-error {
+  margin: 60px auto 0 auto;
+  text-align: center;
+}
+
+.errorMsg {
+	background: transparent url('/images/error.png') no-repeat left 0;
+	padding: 2px 0 2px 25px;
 }
 
 #eems-upload-progress {

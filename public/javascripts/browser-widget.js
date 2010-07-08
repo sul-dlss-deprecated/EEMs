@@ -23,54 +23,99 @@ $(document).ready(function() {
     if ($('#eem_note').val() == defaultValues.note) { $('#eem_note').val(''); }
     if ($('#eem_payment_fund').val() == defaultValues.payment_fund) { $('#eem_payment_fund').val(''); }
 
+    var eem_data = $('#eems-new-form-widget').serialize() + '&' + pars;
+
     if ($('#contentUrl').val() == '') {
-	    $.ajax({
-			  url: '/eems/no_pdf', 
-			  type: 'POST', 
-			  datatype: 'json', 
-			  data: $('#eems-new-form-widget').serialize() + '&' + pars, 
-			  success: function(eem) {			
-					if (eem != null) {
-					  $('#details-link').attr('href', '/view/' + eem.eem_pid);	
-			      addLogEntry(logMsg, eem.eem_pid);		
-				    $('#eems-loader').hide();				
-				    $('#eems-links').show();							  
-					} else {
-					  showErrorMsg(); 	
-					}
-			  },
-				error: function() { showErrorMsg(); },  			
-			});
+	    createEEM_WithoutPDF(eem_data, logMsg);
     } else {
-	    $.ajax({
-			  url: '/eems', 
-			  type: 'POST', 
-			  datatype: 'json', 
-			  data: $('#eems-new-form-widget').serialize() + '&' + pars, 
-			  success: function(eem) {			
-			    $('#eems-loader').hide();
-					$('#eems-upload-progress').show();	    				
-					if (eem != null) {
-					  $('#details-link').attr('href', '/view/' + eem.eem_pid);	
-			      content_file_id = eem.content_file_id;		
-			      addLogEntry(logMsg, eem.eem_pid);					  
-				    update();
-				    var selectorName = $('#eem_selectorName').val();
-				    addLogEntry("PDF uploaded by " + selectorName, eem.eem_pid);					  
-					} else {
-					  showErrorMsg(); 	
-					}					
-			  }, 
-			  error: function() { showErrorMsg(); },  			
-			});
+	    createEEM_WithPDF(eem_data, logMsg);
 		}
 
 		return false;
   }
 
-  function showErrorMsg() {
+  function createEEM_WithPDF(eem_data, logMsg) {
+	  $.ajax({
+		  url: '/eems', 
+		  type: 'POST', 
+		  datatype: 'json', 
+		  timeout: 10000, 
+		  data: eem_data, 
+		  success: function(eem) {			
+		    $('#eems-loader').hide();
+				$('#eems-upload-progress').show();	    				
+				if (eem != null) {
+				  $('#details-link').attr('href', '/view/' + eem.eem_pid);	
+		      content_file_id = eem.content_file_id;		
+		      addLogEntry(logMsg, eem.eem_pid);					  
+			    update();
+			    var selectorName = $('#eem_selectorName').val();
+			    addLogEntry("PDF uploaded by " + selectorName, eem.eem_pid);					  
+				} else {
+				  showPDFErrorMsg(); 	
+				}					
+		  }, 
+		  error: function() { showEEMsErrorMsg(); },  			
+		});  
+  }
+
+  function createEEM_WithoutPDF(eem_data, logMsg) {
+    $.ajax({
+		  url: '/eems/no_pdf', 
+		  type: 'POST', 
+		  datatype: 'json', 
+		  timeout: 10000, 
+		  data: eem_data, 
+		  success: function(eem) {			
+				if (eem != null) {
+				  $('#details-link').attr('href', '/view/' + eem.eem_pid);	
+		      addLogEntry(logMsg, eem.eem_pid);		
+			    $('#eems-loader').hide();	
+			    $('#eems-success').show();			
+			    $('#eems-links').show();							  
+				} else {
+				  showPDFErrorMsg(); 	
+				}
+		  },
+			error: function() { showEEMsErrorMsg(); },  			
+		});	
+  }
+
+  function showEEMsErrorMsg() {
+    $('#eems-loader').hide();					  
+    $('#eems-error').html("<span class=\"errorMsg\">Error creating EEM.</span>").show();							  						
+  }
+
+  function showPDFErrorMsg() {
     $('#eems-loader').hide();				
-    $('#eems-error').show();							  						
+    $('#eems-error').html("<span class=\"errorMsg\">Error uploading PDF.</span>").show();							  						
+  }
+
+  function update() {
+	  $.getJSON('/content_files/' + content_file_id, function(data) {
+	  
+		  if (data == null || (data != null && data.attempts == 'failed')) {
+			  showPDFErrorMsg(); 
+			  return;
+		  }  
+	
+		  var percent = parseInt(data.percent_done);
+	   
+		  if (!isNaN(percent)) {
+			  $('#percent_done').html(percent + ' %');
+			  $('#progress_bar').css({'width' : (percent*3) + 'px', 'height' : '10px' });
+
+			  if (percent == 100) {
+			    $('#upload-progress-text').hide();
+			    $('#upload-complete-text').show();
+			    $('#eems-links').show();
+			    clearTimeout(timeoutId);
+			    return;			
+				}
+      }		  
+		});
+	
+		timeoutId = setTimeout(update, 500);
   }
 
   function addLogEntry(logMsg, pid) {
@@ -83,35 +128,6 @@ $(document).ready(function() {
 		  data: pars, 
 		  success: function() {}, 
 		});	  
-  }
-
-  function update() {
-	  $.getJSON('/content_files/' + content_file_id, function(data) {
-	  
-	  if (data == null) {
-		  showErrorMsg(); 
-		  return;
-	  }  
-	
-	  $('#progress_bar').css({'width' : parseInt(data.percent_done)*3 + 'px', 'height' : '10px' });
-	
-	  if (data.percent_done != '') { 
-	    $('#percent_done').html(data.percent_done + ' %');
-      }
-      else {
-	    $('#percent_done').html(data.percent_done + '0 %');	 
-      }
-
-      if (parseInt(data.percent_done) == 100) {
-		    $('#upload-progress-text').hide();
-		    $('#upload-complete-text').show();
-		    $('#eems-links').show();
-		    clearTimeout(timeoutId);
-		    return;
-      }	  
-		});
-	
-		timeoutId = setTimeout(update, 500);
   }
 
   $('#eem_paymentType').change(function() {	

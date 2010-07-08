@@ -21,6 +21,7 @@ class Part < Dor::Base
     m.field "done", :string
     m.field "content_file_id", :string
     m.field "filename", :string
+    m.field "download_date", :string
   end
   
   def initialize(attrs={})
@@ -63,6 +64,7 @@ class Part < Dor::Base
   def download_done
     props_ds = datastreams['properties']
     props_ds.done_values= ['true']
+    props_ds.download_date_values = (Time.now).strftime("%Y-%m-%dT%H:%M%z")
     props_ds.save
   end
 end
