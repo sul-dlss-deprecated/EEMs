@@ -28,6 +28,13 @@ class CatalogController < ApplicationController
   def index
     (@response, @document_list) = get_search_results
     @filters = params[:f] || []
+    @user = EemsUser.find(session[:user_id])   
+
+    if @user.nil?
+      render :text => "Sorry, you are not authorized to view this page."
+      return
+    end
+
     respond_to do |format|
       format.html { save_current_search_params }
       format.rss  { render :layout => false }
@@ -41,7 +48,7 @@ class CatalogController < ApplicationController
     @parts = @eem.parts unless (@eem.parts.nil?)
     @log = @eem.datastreams['actionLog']        
     @user = EemsUser.find(session[:user_id])   
-    
+
     respond_to do |format|
       format.html {setup_next_and_previous_documents}
       format.xml  {render :xml => @document.marc.to_xml}
