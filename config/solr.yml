@@ -2,6 +2,8 @@ development:
   url: http://127.0.0.1:8080/solr
 ladev:
   url: http://127.0.0.1:8080/solr
+eems-test:
+  url: http://127.0.0.1:8080/solr
 test:
   url: http://127.0.0.1:8080/solr
 cucumber:
