@@ -1,2 +1,9 @@
 #!/bin/sh
-/usr/bin/env RAILS_ENV=ladev /home/lyberadmin/eems/script/delayed_job start
+
+if [ -z $1 ]; then
+	echo "Usage: startjob.sh <RAILS_ENV>"
+	echo "Where <RAILS_ENV> can be: ladev, eems-test, production"
+	exit
+fi
+
+/usr/bin/env RAILS_ENV=$1 /home/lyberadmin/eems/script/delayed_job start
