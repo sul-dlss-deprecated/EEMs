@@ -83,11 +83,13 @@ $(document).ready(function() {
 
   function showEEMsErrorMsg() {
     $('#eems-loader').hide();					  
+    $('#eems-upload-progress').hide();
     $('#eems-error').html("<span class=\"errorMsg\">Error creating EEM.</span>").show();							  						
   }
 
   function showPDFErrorMsg() {
     $('#eems-loader').hide();				
+    $('#eems-upload-progress').hide();
     $('#eems-error').html("<span class=\"errorMsg\">Error uploading PDF.</span>").show();							  						
   }
 
