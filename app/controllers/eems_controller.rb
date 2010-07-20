@@ -1,3 +1,5 @@
+require 'dor/workflow_service'
+
 class EemsController < ApplicationController
   before_filter :require_fedora
   before_filter :require_solr
@@ -103,6 +105,10 @@ class EemsController < ApplicationController
     log = Dor::ActionLogDatastream.new
     @eem.add_datastream(log)
     @eem.save
+    
+    #Create the workflow datastream
+    #It's defined in config/initializers/accession_workflow_config
+    Dor::WorkflowService.create_workflow('dor', @eem.pid, 'eemsAccessionWF', ACCESSION_WF_XML)
   end
   
   def render_creation_response(eem_pid, part_pid=nil, content_file_id=nil)

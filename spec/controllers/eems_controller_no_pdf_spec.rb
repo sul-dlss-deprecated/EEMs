@@ -36,6 +36,7 @@ describe EemsController do
       @eem.should_receive(:save).twice
 
       Eem.should_receive(:from_params).with(@eems_params).and_return(@eem)
+      Dor::WorkflowService.should_receive(:create_workflow).with('dor', 'pid:123', 'eemsAccessionWF', ACCESSION_WF_XML)
       
       @eem.should_receive(:add_datastream).with(an_instance_of(Dor::ActionLogDatastream))
 

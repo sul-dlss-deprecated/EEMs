@@ -55,6 +55,8 @@ describe EemsController do
       Dor::DownloadJob.should_receive(:new).with(@cf.id).and_return(job)
       Delayed::Job.should_receive(:enqueue).with(job)
       
+      Dor::WorkflowService.should_receive(:create_workflow).with('dor', 'pid:123', 'eemsAccessionWF', ACCESSION_WF_XML)
+      
       session[:user_id] = 'somesunetid'
       EemsUser.stub!(:valid?).with('somesunetid').and_return(true)
       post "create", :eem => @eems_params, :contentUrl => @content_url
@@ -101,6 +103,10 @@ describe EemsController do
     
     it "should set the number of ContentFile attempts to 1" do
       @cf.attempts.should == 1
+    end
+    
+    it "should create the eemsAccessionWF datastream" do
+      
     end
     
   end
