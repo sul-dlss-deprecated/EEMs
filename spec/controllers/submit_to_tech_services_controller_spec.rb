@@ -20,6 +20,7 @@ describe SubmitToTechServicesController do
       
       session[:user_id] = 'wmene'
       Eem.should_receive(:find).with('my:pid123').and_return(@eem)
+      @eem.stub!(:save)
 
       Dor::WorkflowService.should_receive(:update_workflow_status).with('dor', 'my:pid123', 'eemsAccessionWF', 'submit-tech-services', 'completed')
     end
