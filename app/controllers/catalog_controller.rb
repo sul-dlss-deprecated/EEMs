@@ -26,7 +26,16 @@ class CatalogController < ApplicationController
   
   # get search results from the solr index
   def index
-    (@response, @document_list) = get_search_results
+    @extra_controller_params ||= {}
+    q = ""
+    # start query of with user supplied query term
+    q << "_query_:\"{!dismax qf=$qf_dismax pf=$pf_dismax}#{params[:q]}\""
+
+    # Append the exclusion of FileAssets
+    q << " AND _query_:\"Eem\""
+    #info:fedora/afmodel:Eem
+    
+    (@response, @document_list) = get_search_results(@extra_controller_params.merge!(:q=>q))
     @filters = params[:f] || []
     @user = EemsUser.find(session[:user_id])   
 
