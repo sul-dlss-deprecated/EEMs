@@ -29,7 +29,7 @@ module Dor
   SURI_USER = ***REMOVED***
   SURI_PASSWORD = ***REMOVED***
   
-  CREATE_WORKFLOW = true
+  CREATE_WORKFLOW = false
   WF_URI = 'http://lyberservices-dev.stanford.edu/workflow'
 end
 

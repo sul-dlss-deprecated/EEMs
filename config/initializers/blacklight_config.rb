@@ -47,7 +47,7 @@ Blacklight.configure(:shared) do |config|
   ##############################
   
   
-  config[:default_qt] = "search"
+  config[:default_qt] = "search_eems"
   
 
   # solr field values given special treatment in the show (single result) view
@@ -154,7 +154,7 @@ Blacklight.configure(:shared) do |config|
   # "fielded" search configuration. Used by pulldown among other places.
   # For supported keys in hash, see rdoc for Blacklight::SearchFields
   config[:search_fields] ||= []
-  config[:search_fields] << {:display_label => 'All Fields', :qt => 'search'}
+  config[:search_fields] << {:display_label => 'All Fields', :qt => 'search_eems'}
   config[:search_fields] << {:display_label => 'Title', :qt => 'title_search'}
   config[:search_fields] << {:display_label =>'Author', :qt => 'author_search'}
   config[:search_fields] << {:display_label => 'Subject', :qt=> 'subject_search'}
