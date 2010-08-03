@@ -3,8 +3,13 @@ require 'dor/workflow_service'
 class EemsController < ApplicationController
   before_filter :require_fedora
   before_filter :require_solr
-  before_filter :user_required
-  before_filter :authorized_user
+  before_filter :user_required, :except => :index
+  before_filter :authorized_user, :except => :index
+  
+  #GET /eems
+  def index
+    render :text => 'OK'
+  end
   
   #GET /eems/{:id}
   def show

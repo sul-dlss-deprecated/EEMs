@@ -163,5 +163,14 @@ describe EemsController do
     end
   end
   
+  describe "#index" do
+    it "returns 'OK' as a testable response for nagios" do
+      get "index"
+      
+      response.body.should == 'OK'
+      response.status.should == '200 OK'
+    end
+  end
+  
   
 end
