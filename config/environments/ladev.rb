@@ -20,6 +20,7 @@ FEDORA_URL = 'https://***REMOVED***@dor-dev.stanford.edu/fedora'
 CERT_FILE = File.join(RAILS_ROOT, "config", "certs", "etd-test.crt")
 KEY_FILE = File.join(RAILS_ROOT, "config", "certs", "etd-test.key")
 KEY_PASS = ***REMOVED***
+WIDGET_NAME = 'Dev EEMs Widget'
 
 module Sulair
   WORKSPACE_URL = 'https://eems-dev.stanford.edu/workspace'
