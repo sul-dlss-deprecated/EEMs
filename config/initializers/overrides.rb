@@ -33,9 +33,32 @@ module ActiveFedora
       self.versionable = false
     end
     
-  end
+   
+    #this is to order the xml into an alphabetical order. 
+    def to_xml(xml = Nokogiri::XML::Document.parse("<fields />")) #:nodoc:
+      if xml.instance_of?(Nokogiri::XML::Document)
+        xml_insertion_point = xml.root
+      else
+        xml_insertion_point = xml.sort
+      end
+      builder = Nokogiri::XML::Builder.with(xml_insertion_point) do |xml|
+        f = fields.sort {|a,b| a[0].to_s <=> b[0].to_s}
+        f.each do |value|
+          field = value[0]
+          field_info = value[1]
+          element_attrs = field_info[:element_attrs].nil? ? {} : field_info[:element_attrs]
+          field_info[:values].each do |val|
+              builder_arg = "xml.#{field}(val, element_attrs)"
+              puts builder_arg.inspect
+              eval(builder_arg)
+          end #do |val|
+        end #each do |value|
+      end #builder
+      return builder.to_xml
+    end #def to_xml
     
-end
+  end #class
+end #module
 
 module Fedora
   class Connection
