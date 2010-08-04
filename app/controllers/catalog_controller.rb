@@ -57,7 +57,7 @@ class CatalogController < ApplicationController
     @parts = @eem.parts unless (@eem.parts.nil?)
     @log = @eem.datastreams['actionLog']        
     @user = EemsUser.find(session[:user_id])   
-
+    
     respond_to do |format|
       format.html {setup_next_and_previous_documents}
       format.xml  {render :xml => @document.marc.to_xml}

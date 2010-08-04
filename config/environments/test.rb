@@ -30,6 +30,7 @@ config.action_mailer.delivery_method = :test
 config.gem 'rspec-rails', :version => '>= 1.3.2', :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
 
 FEDORA_URL = 'http://***REMOVED***@127.0.0.1:8080/fedora'
+WIDGET_NAME = 'Dev EEMs Widget'
 
 module Sulair
   WORKSPACE_URL = "https://eems-unit.stanford.edu/workspace"
