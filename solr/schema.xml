@@ -196,7 +196,6 @@
    <field name="title_sort" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="requestDatetime_sort" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="system_create_date_sort" type="date" indexed="true" stored="false" multiValued="true"/>
-   <field name="note_sort" type="string" indexed="true" stored="false" multiValued="true"/>
 
    <!-- Dynamic field definitions.  If a field name is not found, dynamicFields
         will be used if the name matches any of the patterns.
@@ -240,7 +239,6 @@
  <copyField source="title_field" dest="title_sort"/>
  <copyField source="requestDatetime_field" dest="requestDatetime_sort"/>
  <copyField source="system_create_date" dest="system_create_date_sort"/>
- <copyField source="note_field" dest="note_sort"/>
 
  <!-- Similarity is the scoring routine for each document vs. a query.
       A custom similarity may be specified here, but the default is fine

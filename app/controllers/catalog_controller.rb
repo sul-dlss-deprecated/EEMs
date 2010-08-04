@@ -163,7 +163,7 @@ class CatalogController < ApplicationController
     setup_next_document
   end
   
-  # gets a document based on its position within a resultset  
+  # gets a document based on its position within a resultset   
   def setup_document_by_counter(counter)
     return if counter < 1 || session[:search].blank?
     search = session[:search] || {}
@@ -195,7 +195,11 @@ class CatalogController < ApplicationController
   # if the values aren't blank, they are saved to the session in the :search hash.
   def delete_or_assign_search_session_params
     [:q, :qt, :search_field, :f, :per_page, :page, :sort].each do |pname|
-      params[pname].blank? ? session[:search].delete(pname) : session[:search][pname] = params[pname]
+      if(pname == :q && params[pname].blank?)
+        session[:search][pname] = "_query_:\"Eem\""
+      else  
+        params[pname].blank? ? session[:search].delete(pname) : session[:search][pname] = params[pname]
+      end
     end
   end
   

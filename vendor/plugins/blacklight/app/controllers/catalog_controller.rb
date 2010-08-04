@@ -9,20 +9,20 @@ class CatalogController < ApplicationController
   # Whenever an action raises SolrHelper::InvalidSolrID, this block gets executed.
   # Hint: the SolrHelper #get_solr_response_for_doc_id method raises this error,
   # which is used in the #show action here.
-  rescue_from InvalidSolrID, :with => lambda {
-    # when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
-    flash[:notice] = "Sorry, you seem to have encountered an error."
-    redirect_to catalog_index_path
-  }
-  
-  # When RSolr::RequestError is raised, this block is executed.
-  # The index action will more than likely throw this one.
-  # Example, when the standard query parser is used, and a user submits a "bad" query.
-  rescue_from RSolr::RequestError, :with => lambda {
-    # when solr (RSolr) throws an error (RSolr::RequestError), this method is executed.
-    flash[:notice] = "Sorry, I don't understand your search."
-    redirect_to catalog_index_path
-  }
+  # rescue_from InvalidSolrID, :with => lambda {
+  #   # when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
+  #   flash[:notice] = "Sorry, you seem to have encountered an error."
+  #   redirect_to catalog_index_path
+  # }
+  # 
+  # # When RSolr::RequestError is raised, this block is executed.
+  # # The index action will more than likely throw this one.
+  # # Example, when the standard query parser is used, and a user submits a "bad" query.
+  # rescue_from RSolr::RequestError, :with => lambda {
+  #   # when solr (RSolr) throws an error (RSolr::RequestError), this method is executed.
+  #   flash[:notice] = "Sorry, I don't understand your search."
+  #   redirect_to catalog_index_path
+  # }
   
   # get search results from the solr index
   def index
