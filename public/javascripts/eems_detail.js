@@ -225,22 +225,23 @@ function toggleSendToTechServices() {
 }
 
 function sendToTechServices() {
-  var pars = {};	
-  pars['eem[status]'] = 'Submitted';
-  pars['eem[statusDatetime]'] = dateFormat(dateFormatMask);
-  pars['eem[requestDatetime]'] = dateFormat(dateFormatMask);
-  pars['authenticity_token'] = token;
-  pars['pid'] = pid;
+  var comment = unescapeTags($('#text_send_to_acquistions').val());
 
+  var pars = {};	
+  pars['authenticity_token'] = token;
+
+  if (comment.length != 0) { 
+		 pars['comment'] = comment;
+	}
+  
   $.ajax({
-	  url: '/eems/' + pid + '.json', 
+	  url: '/eems/' + pid + '/submit_to_tech_services', 
 	  type: 'PUT', 
 	  data: pars, 
-	  success: function(eem) {
-		  var logMsg = 'Request submitted by ' + selectorName;
-		  var logComment = unescapeTags($('#text_send_to_acquistions').val());
-		  var pars = {'entry': logMsg, 'comment': logComment, 'authenticity_token': token};
-		  addLogEntry(pid, pars);
+	  success: function(status) {
+		  if (status) {
+			  window.location.reload();
+		  }
 	  }, 
 	});
 }
