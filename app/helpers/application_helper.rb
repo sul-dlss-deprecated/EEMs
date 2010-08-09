@@ -38,18 +38,5 @@ module ApplicationHelper
     return ''    
   end
   
-  # link_back_to_catalog(:label=>'Back to Search')
-  # Create a link back to the index screen, keeping the user's facet, query and paging choices intact by using session.
-  # Removed '_query_:"EEM"' from query string (EEMS-146)
-  def link_back_to_catalog(opts={:label=>'Back to Search'})
-    query_params = session[:search].dup || {}
-    query_params.delete :counter
-    query_params.delete :total
-    link_url = catalog_index_path(query_params)
-    link_url = link_url.gsub('_query_%3A%22Eem%22', '') 
-    link_to opts[:label], link_url
-  end
-  
-  
 end
 
