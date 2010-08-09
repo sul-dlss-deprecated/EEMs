@@ -1,6 +1,6 @@
-require 'vendor/plugins/blacklight/app/helpers/application_helper.rb'
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  require_dependency 'vendor/plugins/blacklight/app/helpers/application_helper.rb'
   
   def application_name
     'EEMs'
