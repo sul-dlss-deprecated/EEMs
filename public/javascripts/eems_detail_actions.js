@@ -46,7 +46,11 @@ function acquisitionsActionsBindToggle(name) {
 function cancelThisRequest() {
   var cancelComment = unescapeTags($('#text_cancel_this_request').val());
   var pid = window._pid;
-  var parsUpdate = { 'eem[status]': 'Canceled', 'authenticity_token': window._token };
+  var parsUpdate = { 
+	  'eem[status]': 'Canceled', 
+	  'eem[statusDatetime]': dateFormat(dateFormatMask), 
+	  'authenticity_token': window._token 
+	};
 
   eemUpdate(pid, parsUpdate);
 
