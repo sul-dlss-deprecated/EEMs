@@ -26,22 +26,26 @@
 	          </div>    
 	        </li>    
         <% end %>
-        <li class="list_style_show">
-          <%= link_to 'Delete this selection',  '#', {:id => 'link_delete_this_selection'} %> 
-          <div class="comment_formlet" id="formlet_delete_this_selection">
-            <textarea id="text_delete_this_selection" rows="5" cols="28"></textarea>
-            <div style="text-align: right; padding-right: 8px;">
-	    	      <input type="button" id="delete_this_selection_ok" value="Confirm">
-              <%= link_to 'Cancel', '#', :id => 'delete_this_selection_cancel' %>
-            </div>
-          </div>    
-        </li>    
+
+			  <% if is_eem_editable(print_eems_field('status')) %>
+	        <li class="list_style_show">
+	          <%= link_to 'Cancel this request',  '#', {:id => 'link_cancel_this_request'} %> 
+	          <div class="comment_formlet" id="formlet_cancel_this_request">
+	            <textarea id="text_cancel_this_request" rows="5" cols="28"></textarea>
+	            <div style="text-align: right; padding-right: 8px;">
+		    	      <input type="button" id="cancel_this_request_ok" value="Confirm">
+	              <%= link_to 'Cancel', '#', :id => 'cancel_this_request_cancel' %>
+	            </div>
+	          </div>    
+	        </li>    
+        <% end %>
+
         <li class="list_style_show">
           <%= link_to 'Question/comment to selector',  '#', {:id => 'link_comment_to_selector'} %> 
           <div class="comment_formlet" id="formlet_comment_to_selector">
             <textarea id="text_comment_to_selector" rows="5" cols="28"></textarea>
             <div style="text-align: right; padding-right: 8px;">
-	    	      <input type="button" id="comment_to_selector_ok" value="Send">
+	    	      <input type="button" disabled="disabled" id="comment_to_selector_ok" value="Send">
               <%= link_to 'Cancel', '#', :id => 'comment_to_selector_cancel' %>
             </div>
           </div>    
@@ -68,3 +72,4 @@
 	var status = '<%= print_eems_field('status') %>';
 	var selectorName = '<%= @user.display_name %>';
 </script>
+<%= javascript_tag "window._pid = '#{@eem.pid}'" %>    

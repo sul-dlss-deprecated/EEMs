@@ -9,9 +9,10 @@
     <link href="<%= url_for :controller=>'catalog',:action => 'opensearch', :format => 'xml', :only_path => false %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
     <%= render_js_includes %>
     <%= render_stylesheet_includes %>
+    <%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
     <%= stylesheet_link_tag 'application' %>
     <%= stylesheet_link_tag 'jquery.autocomplete' %>
-    <%= javascript_include_tag 'eems_detail_actions' %>    
+    <%= javascript_include_tag 'eems_common', 'eems_detail_actions' %>    
   </head>
   <% if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
     <body onload="$('input#q').focus();">
