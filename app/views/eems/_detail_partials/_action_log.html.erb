@@ -1,5 +1,5 @@
 <% if (!@log.nil?) %>
-  <dl class="details">
+  <dl class="actionLog">
 	  <% @log.each_entry do |timestamp, entry, comment| %>
 	    <dt><%= formatActionLogTimestamp(timestamp) %> : </dt>
 	    <dd>

@@ -9,32 +9,26 @@ class CatalogController < ApplicationController
   # Whenever an action raises SolrHelper::InvalidSolrID, this block gets executed.
   # Hint: the SolrHelper #get_solr_response_for_doc_id method raises this error,
   # which is used in the #show action here.
-  rescue_from InvalidSolrID, :with => lambda {
-    # when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
-    flash[:notice] = "Sorry, you seem to have encountered an error."
-    redirect_to catalog_index_path
-  }
-  
-  # When RSolr::RequestError is raised, this block is executed.
-  # The index action will more than likely throw this one.
-  # Example, when the standard query parser is used, and a user submits a "bad" query.
-  rescue_from RSolr::RequestError, :with => lambda {
-    # when solr (RSolr) throws an error (RSolr::RequestError), this method is executed.
-    flash[:notice] = "Sorry, I don't understand your search."
-    redirect_to catalog_index_path
-  }
+  # rescue_from InvalidSolrID, :with => lambda {
+  #   # when a request for /catalog/BAD_SOLR_ID is made, this method is executed...
+  #   flash[:notice] = "Sorry, you seem to have encountered an error."
+  #   redirect_to catalog_index_path
+  # }
+  # 
+  # # When RSolr::RequestError is raised, this block is executed.
+  # # The index action will more than likely throw this one.
+  # # Example, when the standard query parser is used, and a user submits a "bad" query.
+  # rescue_from RSolr::RequestError, :with => lambda {
+  #   # when solr (RSolr) throws an error (RSolr::RequestError), this method is executed.
+  #   flash[:notice] = "Sorry, I don't understand your search."
+  #   redirect_to catalog_index_path
+  # }
   
   # get search results from the solr index
   def index
     @extra_controller_params ||= {}
-    q = ""
-    # start query of with user supplied query term
-    q << "_query_:\"{!dismax qf=$qf_dismax pf=$pf_dismax}#{params[:q]}\""
-
-    # Append the exclusion of FileAssets
-    q << " AND _query_:\"Eem\""
-    #info:fedora/afmodel:Eem
-    
+    q = build_eems_solr_query(params[:q])
+        
     (@response, @document_list) = get_search_results(@extra_controller_params.merge!(:q=>q))
     @filters = params[:f] || []
     @user = EemsUser.find(session[:user_id])   
@@ -195,11 +189,11 @@ class CatalogController < ApplicationController
   # if the values aren't blank, they are saved to the session in the :search hash.
   def delete_or_assign_search_session_params
     [:q, :qt, :search_field, :f, :per_page, :page, :sort].each do |pname|
-      if(pname == :q && params[pname].blank?)
-        session[:search][pname] = "_query_:\"Eem\""
-      else  
+      #if(pname == :q && params[pname].blank?)
+      #  session[:search][pname] = ""
+      #else  
         params[pname].blank? ? session[:search].delete(pname) : session[:search][pname] = params[pname]
-      end
+      #end
     end
   end
   
@@ -220,6 +214,25 @@ class CatalogController < ApplicationController
     unless @response.nil?
       search_session[:total] = @response.total
     end
+  end
+  
+  # a solr query method
+  # this is used when selecting a search result: we have a query and a 
+  # position in the search results and possibly some facets
+  def get_single_doc_via_search(extra_controller_params={})
+    solr_params = solr_search_params(extra_controller_params)
+    solr_params[:per_page] = 1
+    solr_params[:fl] = '*'
+    Blacklight.solr.find(solr_params.merge(:q => build_eems_solr_query(extra_controller_params[:q]))).docs.first
+  end
+  
+  def build_eems_solr_query(query)
+    q = ""
+    # start query of with user supplied query term
+    q << "_query_:\"{!dismax qf=$qf_dismax pf=$pf_dismax}#{query}\""
+
+    # Append the exclusion of FileAssets
+    q << " AND _query_:\"Eem\""
   end
   
 end

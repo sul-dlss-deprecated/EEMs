@@ -30,10 +30,9 @@ $(document).ready(function() {
 
   // send to tech services
   $('#send_to_tech_services_ok').click(function() {
-	  $('#send_to_tech_services_ok').attr('disabled', true);
+	  $('#send_to_tech_services_ok').attr('disabled', 'disabled');
     sendToTechServices();
   });
-
 
   // Title - inline edit
   $('#text_title').click(function() { 
@@ -42,8 +41,8 @@ $(document).ready(function() {
 
   $('#input_title').blur(function() { 	
 		editTextOnBlur('title');	
-		var pars = {"eem[title]" : $('#input_title').val()};		
-		eemUpdate(pars);	
+		var pars = {"eem[title]" : $('#input_title').val(), 'authenticity_token': token };		
+		eemUpdate(pid, pars);	
 		toggleSendToTechServices();
   });
 
@@ -76,14 +75,14 @@ $(document).ready(function() {
 		  noteValue = '';	
 		}	
 
-		var pars = {"eem[note]" : noteValue};
-		eemUpdate(pars);
+		var pars = {"eem[note]" : noteValue, 'authenticity_token': token };
+		eemUpdate(pid, pars);
   });
 
   // Language 
   $('#eem_language').change(function() {	
-		var pars = {"eem[language]" : $('#eem_language').val()};
-		eemUpdate(pars);
+		var pars = {"eem[language]" : $('#eem_language').val(), 'authenticity_token': token };
+		eemUpdate(pid, pars);
   });
 
   // Copyright
@@ -91,14 +90,16 @@ $(document).ready(function() {
 		var pars = {};
 		pars["eem[copyrightStatus]"] = $('#eem_copyrightStatus').val();
 		pars["eem[copyrightStatusDate]"] = dateFormat(dateFormatMask);
+		pars["authenticity_token"] = token;
 	
-		eemUpdate(pars);
+		eemUpdate(pid, pars);
   });
 
   // Payment Status
   $('#eem_paymentType').change(function() {	
 		var pars = {};
 		pars["eem[paymentType]"] = $('#eem_paymentType').val();
+		pars["authenticity_token"] = token;
 	
 		if ($('#eem_paymentType').val() == 'Paid') {
 			var value = $('#eem_payment_fund').val();
@@ -115,7 +116,7 @@ $(document).ready(function() {
 		  $('#eem_payment_fund').hide();	
 		}
 	
-		eemUpdate(pars);
+		eemUpdate(pid, pars);
 		toggleSendToTechServices();		
   });
 
@@ -124,8 +125,8 @@ $(document).ready(function() {
 		var value = !data ? "" : formatted;
 		
 		if (value != '' && value != defaultValues.payment_fund) {
-	    var pars = { "eem[paymentFund]" : value };
-	    eemUpdate(pars);
+	    var pars = { "eem[paymentFund]" : value, 'authenticity_token': token };
+	    eemUpdate(pid, pars);
     }
 
 		toggleSendToTechServices();
@@ -134,7 +135,7 @@ $(document).ready(function() {
 }); 
 
 function updateCreator() {
-	var pars = {};
+	var pars = { 'authenticity_token': token };
 	var creatorValue = $('#input_creatorName').attr('value');
 
 	if (creatorValue.match(new RegExp(defaultValues['creatorName'], 'i')) != null) {
@@ -149,7 +150,7 @@ function updateCreator() {
 	  pars["eem[creatorPerson]"] = '';	
 	}
 
-	eemUpdate(pars);	
+	eemUpdate(pid, pars);	
 }	
 
 // inline edit functions 
@@ -180,43 +181,14 @@ function editTextOnBlur(name) {
 
 function updateCopyrightDate(data) {
   var dateValue = data["mm"] + '/' + data["dd"] + '/' + data["yyyy"];
-	var pars = {"eem[copyrightDate]" : dateValue};
-	eemUpdate(pars);
-}
-
-// Ajax updater
-function eemUpdate(pars) {
-  pars['authenticity_token'] = token;
-  pars['pid'] = pid;
-
-  $.ajax({
-	  url: '/eems/' + pid + '.json', 
-	  type: 'PUT', 
-	  data: pars, 
-	  success: function(eem) {
-	  }, 
-	});
-
-	return false;	
-}
-
-function unescapeTags(value) {
-  value = value.replace(/>/gi, "&gt;");
-  value = value.replace(/</gi, "&lt;");
-  value = value.replace(/[\n\r]/gi, "<br/>");
-  return value;
-}
-
-function escapeTags(value) {
-  value = value.replace(/&gt;/gi, ">");
-  value = value.replace(/&lt;/gi, "<");
-  value = value.replace(/<br\/?>/gi, "\r");
-  return value;
+	var pars = { "eem[copyrightDate]" : dateValue, 'authenticity_token': token };
+	eemUpdate(pid, pars);
 }
 
 function toggleSendToTechServices() {
   if ($('#input_title').val() != '' && $('#input_title').val() != 'Click to add title' && status != 'Submitted' && 
-       (($('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != '' && $('#eem_payment_fund').val() != '(Fund name)') || $('#eem_paymentType').val() == 'Free')) {
+       (($('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != '' && 
+         $('#eem_payment_fund').val() != '(Fund name)') || $('#eem_paymentType').val() == 'Free')) {
     $('#send_to_tech_services_ok').attr("disabled", false);
 	}
 	else {
@@ -225,35 +197,24 @@ function toggleSendToTechServices() {
 }
 
 function sendToTechServices() {
+  var comment = unescapeTags($('#text_send_to_acquistions').val());
   var pars = {};	
-  pars['eem[status]'] = 'Submitted';
-  pars['eem[statusDatetime]'] = dateFormat(dateFormatMask);
-  pars['eem[requestDatetime]'] = dateFormat(dateFormatMask);
+  if (pid == undefined) { pid = window._pid; }
   pars['authenticity_token'] = token;
-  pars['pid'] = pid;
 
+  if (/\S/.test(comment)) { 
+		 pars['comment'] = comment;
+	}
+  
   $.ajax({
-	  url: '/eems/' + pid + '.json', 
+	  url: '/eems/' + pid + '/submit_to_tech_services', 
 	  type: 'PUT', 
 	  data: pars, 
-	  success: function(eem) {
-		  var logMsg = 'Request submitted by ' + selectorName;
-		  var logComment = unescapeTags($('#text_send_to_acquistions').val());
-		  var pars = {'entry': logMsg, 'comment': logComment, 'authenticity_token': token};
-		  addLogEntry(pid, pars);
+	  success: function(status) {
+		  if (status) {
+			  window.location.reload();
+		  }
 	  }, 
 	});
-}
-
-function addLogEntry(pid, pars) {
-  $.ajax({
-	  url: '/eems/' + pid + '/log', 
-	  type: 'POST', 
-	  datatype: 'json', 
-	  data: pars, 
-	  success: function() { 
-	    window.location.reload();
-	  }, 
-	});	  	
 }
 
