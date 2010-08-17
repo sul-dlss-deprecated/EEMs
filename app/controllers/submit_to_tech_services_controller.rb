@@ -1,6 +1,8 @@
 require 'dor/workflow_service'
 
 class SubmitToTechServicesController < ApplicationController
+  before_filter :require_fedora
+  before_filter :require_solr
 
   def create
     @eem = Eem.find(params[:eems_id])
@@ -14,6 +16,7 @@ class SubmitToTechServicesController < ApplicationController
     user = EemsUser.find(session[:user_id])
     action_log = @eem.datastreams['actionLog']
     action_log.log("Request submitted by #{user.display_name}", params[:comment])
+    action_log.save
 
     @eem.save
     

@@ -45,5 +45,5 @@ module Dor
   SURI_PASSWORD = ***REMOVED***
   
   CREATE_WORKFLOW = true
-  WF_URI = 'http://lyberservices-dev.stanford.edu/workflow'
+  WF_URI = 'http://lyberservices-prod.stanford.edu/workflow'
 end

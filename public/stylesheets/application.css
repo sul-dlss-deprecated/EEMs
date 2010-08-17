@@ -126,12 +126,12 @@ h3 {
 }
 
 
-dl.details {
+dl.details, dl.actionLog {
   padding: 10px 0;
   overflow: auto;
 } 
-  
-dl.details dt {
+
+dl.details dt, dl.actionLog dt {
   color: #58535A;
   clear: both;
   float: left;
@@ -141,10 +141,18 @@ dl.details dt {
   padding: 4px 0;
 } 
   
-dl.details dd {
+dl.details dd, dl.actionLog dd {
   float: left;
   width: 390px;
   padding: 4px 0;
+}
+
+dl.actionLog {
+	padding: 0;
+}
+
+dl.actionLog dt, dl.actionLog dd {
+	padding: 2px 0;
 }
 
 ul#acquisitions_actions {
@@ -179,9 +187,9 @@ ul#acquisitions_actions textarea {
 
 div#action_log {
   float: clear;
-  margin: 10px 0 0 0;
+  margin: 6px 0 0 0;
   border-top: 1px solid #ccc;
-  padding-top: 10px;
+  padding-top: 4px;
 }
 
 .sidebar_button {
@@ -248,7 +256,7 @@ a.edit_link, a.sidebar_button {
 
 .log_comment {
 	clear: both;
-	padding: 4px 0;
+	padding: 2px 0;
 	color: #555;
 	font-style: italic;
 }

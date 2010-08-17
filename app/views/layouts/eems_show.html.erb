@@ -5,10 +5,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><%= h(@page_title || application_name) %></title>
-    <%= stylesheet_link_tag 'site', 'jquery.autocomplete', 'eems_detail' %>    
     <%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
     <%= javascript_tag "window._pid = '#{@eem.pid}'" %>    
-    <%= javascript_include_tag 'jquery-1.4.2.min.js', 'jquery.autocomplete.js', 'eems_detail.js' %>
+    <%= javascript_include_tag 'jquery-1.4.2.min', 'jquery.autocomplete', 'common', 'eems_detail' %>
+    <%= stylesheet_link_tag 'site', 'jquery.autocomplete', 'eems_detail' %>    
 </head>
 
 <body>
