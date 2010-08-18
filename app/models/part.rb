@@ -28,11 +28,11 @@ class Part < Dor::Base
     super(attrs)
   end
   
-  def self.from_params(params)
+  def self.from_params(params={})
     p = Part.new
     props = p.datastreams['properties']
-    props.url_values = [params[:url]]
-    props.content_file_id_values = [params[:content_file_id].to_s]
+    props.url_values = [params[:url]] unless(params[:content_file_id].nil?)
+    props.content_file_id_values = [params[:content_file_id].to_s] unless(params[:content_file_id].nil?)
     props.done_values = ['false']
     p
   end
