@@ -31,7 +31,7 @@ describe Part do
     props.content_file_id_values.should == ['12']
     props.done_values.should == ['false']
   end
-  
+    
   it "download_done should set done properties field to true" do
     part = Part.from_params(@parts_params)
     part.download_done
@@ -39,7 +39,7 @@ describe Part do
     props_ds = part.datastreams['properties']
     props_ds.done_values.should == ['true']
   end
-  
+    
   describe "create_content_datastream" do
     before(:each) do
       @eem = Eem.new(:pid => 'druid:123')
@@ -72,6 +72,16 @@ describe Part do
        content_ds = @part.datastreams['content']
        content_ds[:dsLocation].should == Sulair::WORKSPACE_URL + '/druid:123/a.pdf'
     end
+  end
+  
+  it "should create itself without passing in a params hash" do
+
+    part = Part.from_params()
+    props = part.datastreams['properties']
+    props.url_values.should  == []
+    props.content_file_id_values.should == []
+    props.done_values.should == ['false']
+    
   end
   
 end

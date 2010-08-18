@@ -32,24 +32,44 @@ class EemsController < ApplicationController
   def create
     create_eem_and_log
     
-    cf = ContentFile.new
-    cf.url = params[:contentUrl]
     content_dir = File.join(Sulair::WORKSPACE_DIR, @eem.pid)
     FileUtils.mkdir(content_dir) unless (File.exists?(content_dir))
-    cf.filepath = content_dir
-    cf.attempts = 1
-    cf.save
     
-    part = Part.from_params(:url => params[:contentUrl], :content_file_id => cf.id)
-    part.add_relationship(:is_part_of, @eem)
-    part.save
-    cf.part_pid = part.pid
-    cf.save
+    # The file was uploaded with the POST
+    if(!params[:content_upload].nil?) 
+      content_file = params[:content_upload]
+      part = Part.from_params()
+      part.add_relationship(:is_part_of, @eem)
+      part.save
+      
+      File.open(File.join(content_dir,content_file.original_filename), "wb") { |f| f.write(content_file.read) }
+      
+      part.create_content_datastream(content_file.original_filename)
+      part.download_done
+      
+      render_creation_response(@eem.pid, part.pid)
     
-    job = Dor::DownloadJob.new(cf.id)
-    Delayed::Job.enqueue(job)
+    # We will download the file in the background  
+    else
+      cf = ContentFile.new
+      cf.url = params[:contentUrl]
+      
+      cf.filepath = content_dir
+      cf.attempts = 1
+      cf.save
+    
+      part = Part.from_params(:url => params[:contentUrl], :content_file_id => cf.id)
+      part.add_relationship(:is_part_of, @eem)
+      part.save
+      cf.part_pid = part.pid
+      cf.save
+      
+      job = Dor::DownloadJob.new(cf.id)
+      Delayed::Job.enqueue(job)
+      
+      render_creation_response(@eem.pid, part.pid, cf.id)
+    end
         
-    render_creation_response(@eem.pid, part.pid, cf.id)
   end
   
   #POST /eems/no_pdf
