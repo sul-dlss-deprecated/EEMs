@@ -11,9 +11,11 @@ var dateFormatMask = "yyyy-mm-dd'T'HH:MM:sso";
 $(document).ready(function() {
 	
   $('#eem_payment_fund').autocomplete(data); // load payment fund data
+
   $('#eem_payment_fund').change(function() { 
     toggleSendToTechServices();
   });
+
   $('#eem_paymentType').change(function() {	
 		if ($('#eem_paymentType').val() == 'Paid') {
 		  $('#eem_payment_fund').show();	
@@ -197,6 +199,7 @@ function update() {
 	timeoutId = setTimeout(update, 500);
 }
 
+// Submit to tech services
 function sendToTechServices(pid) {
   var pars = { 'authenticity_token': window._token };
 
@@ -209,6 +212,7 @@ function sendToTechServices(pid) {
 	});
 }
 
+// Enable/disable 'Save to dashboard' button
 function toggleSaveToDashboard() {
   if ($('#eem_title').val() != '' && $('#contentUrl').val() != '' ) {
 	  $('#save_to_dashboard').attr("disabled", false);
@@ -218,10 +222,12 @@ function toggleSaveToDashboard() {
   }
 }
 
+// Enable/disable 'Send to Tech Services' button
 function toggleSendToTechServices() {
-	if ($('#eem_title').val() != '' && ($('#eem_paymentType').val() == 'Free' && ($('#eem_copyrightStatus').val() == 'Public access OK' || $('#eem_copyrightStatus').val() == 'Stanford access OK')) || 
-      ($('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != defaultValues.payment_fund)) {
-    $('#send_to_tech_services').attr("disabled", false);
+  if ($('#eem_title').val() != '' &&  	
+      (($('#eem_paymentType').val() == 'Free' && ( $('#eem_copyrightStatus').val() == 'Public access OK' || $('#eem_copyrightStatus').val() == 'Stanford access OK')) ||  
+	     ($('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != '' && $('#eem_payment_fund').val() != defaultValues.payment_fund))) {
+    $('#send_to_tech_services').removeAttr("disabled");
   }
   else {
  	  $('#send_to_tech_services').attr("disabled", true);

@@ -93,6 +93,7 @@ $(document).ready(function() {
 		pars["authenticity_token"] = token;
 	
 		eemUpdate(pid, pars);
+		toggleSendToTechServices();		
   });
 
   // Payment Status
@@ -123,6 +124,17 @@ $(document).ready(function() {
   // Payment fund 
   $('#eem_payment_fund').result(function(event, data, formatted) { 
 		var value = !data ? "" : formatted;
+		
+		if (value != '' && value != defaultValues.payment_fund) {
+	    var pars = { "eem[paymentFund]" : value, 'authenticity_token': token };
+	    eemUpdate(pid, pars);
+    }
+
+		toggleSendToTechServices();
+  });
+
+  $('#eem_payment_fund').change(function() { 
+		var value = $('#eem_payment_fund').val();
 		
 		if (value != '' && value != defaultValues.payment_fund) {
 	    var pars = { "eem[paymentFund]" : value, 'authenticity_token': token };
@@ -187,12 +199,12 @@ function updateCopyrightDate(data) {
 
 function toggleSendToTechServices() {
   if ($('#input_title').val() != '' && $('#input_title').val() != 'Click to add title' && status != 'Submitted' && 
-       (($('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != '' && 
-         $('#eem_payment_fund').val() != '(Fund name)') || $('#eem_paymentType').val() == 'Free')) {
-    $('#send_to_tech_services_ok').attr("disabled", false);
+      (($('#eem_paymentType').val() == 'Free' && ( $('#eem_copyrightStatus').val() == 'Public access OK' || $('#eem_copyrightStatus').val() == 'Stanford access OK')) ||  
+	     ($('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != '' && $('#eem_payment_fund').val() != '(Fund name)'))) {
+    $('#send_to_tech_services_ok').removeAttr('disabled');
 	}
 	else {
-  	$('#send_to_tech_services_ok').attr("disabled", true);
+  	$('#send_to_tech_services_ok').attr('disabled', true);
 	}	
 }
 
