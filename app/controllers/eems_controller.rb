@@ -42,9 +42,10 @@ class EemsController < ApplicationController
       part.add_relationship(:is_part_of, @eem)
       part.save
       
-      File.open(File.join(content_dir,content_file.original_filename), "wb") { |f| f.write(content_file.read) }
+      filename = Part.normalize_filename(content_file.original_filename)
+      File.open(File.join(content_dir,filename), "wb") { |f| f.write(content_file.read) }
       
-      part.create_content_datastream(content_file.original_filename)
+      part.create_content_datastream(filename)
       part.download_done
       
       render_creation_response(@eem.pid, part.pid)

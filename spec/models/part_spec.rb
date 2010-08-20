@@ -84,4 +84,8 @@ describe Part do
     
   end
   
+  it "#normalize_filename should url-decode strings" do
+    Part.normalize_filename('file%20with%20space%20.blah').should == "file with space .blah"
+  end
+  
 end
