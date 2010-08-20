@@ -14,7 +14,6 @@ module Dor
       
       @c = Curl::Easy.new(@cf.url)
       @filename = nil
-      @counter = 0
       
       tmpdl = Tempfile.new('dlfile', File.join(RAILS_ROOT,'tmp'))
       File.open(tmpdl.path, "wb") do |output|
@@ -46,6 +45,7 @@ module Dor
       end
 
       FileUtils.cp(tmpdl.path, File.join(@cf.filepath,@filename))
+      FileUtils.chmod(0644, File.join(@cf.filepath,@filename))
       tmpdl.delete
             
       part = Part.find(@cf.part_pid)

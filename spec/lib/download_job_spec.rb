@@ -38,7 +38,10 @@ describe Dor::DownloadJob do
       part.datastreams['properties'].done_values.should == ['true']
       part.datastreams['properties'].filename_values.should == ['stanford_title.jpg']
       
-      File.file?(File.join(cf.filepath, 'stanford_title.jpg')).should be_true
+      # File should exist and be world readable
+      filepath = File.join(cf.filepath, 'stanford_title.jpg')
+      File.file?(filepath).should be_true
+      sprintf("%o", File.stat(filepath).mode).should == "100644"
       
       FileUtils.rm_rf(File.join(Sulair::WORKSPACE_DIR, 'druid:123'))
     end
