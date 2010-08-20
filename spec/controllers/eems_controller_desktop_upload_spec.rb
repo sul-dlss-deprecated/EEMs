@@ -11,7 +11,7 @@ describe EemsController do
   
   describe "#create" do
     before(:each) do
-      @file = Tempfile.new(['pre', '.pdf'])
+      @file = Tempfile.new(['pre%20space', '.pdf'])
       @file.stub!(:original_filename).and_return(@file.path.split(/\//).last)
       @eems_params = HashWithIndifferentAccess.new(
         {
@@ -52,10 +52,10 @@ describe EemsController do
     
     it "should create the content datastream and save it" do    
       content_ds = @part.datastreams['content']
-      content_ds[:dsLocation].match(/#{Sulair::WORKSPACE_URL}\/pid:123\/pre.pdf/).should_not be_nil
+      content_ds[:dsLocation].match(/#{Sulair::WORKSPACE_URL}\/pid:123\/pre space.pdf/).should_not be_nil
       
       props_ds = @part.datastreams['properties']
-      props_ds.filename_values.first.should =~ /pre.pdf/
+      props_ds.filename_values.first.should =~ /pre space.pdf/
       
       json = JSON.parse(response.body)
       json.should == {

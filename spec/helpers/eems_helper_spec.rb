@@ -29,5 +29,18 @@ describe EemsHelper do
       helper.shorten_url('http://www.stanford.edu/01.pdf').should == 'http://www.stanford.edu/01.pdf'      
     end 
   end  
+  
+  describe "#get_local_file_path" do
+    it "should return a URI with a url-encoded filename" do
+      parts = stub('parts')
+      eem = stub('eem')
+      eem.stub!(:pid).and_return('etd:123')
+      assigns[:parts] = parts
+      assigns[:eem] = eem
+      parts.stub_chain(:[], :datastreams, :[], :filename_values, :first).and_return('file some space.pdf')
+      
+      helper.get_local_file_path.should == Sulair::WORKSPACE_URL + '/etd:123/file%20some%20space.pdf'
+    end
+  end
     
 end

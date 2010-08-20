@@ -10,6 +10,7 @@
 #   content Datastream
 #     -points to workspace/eems-druid/content.pdf (we can create this even if the job isn't done)
 require 'lyber_core'
+require 'cgi'
 
 class Part < Dor::Base
   
@@ -66,5 +67,9 @@ class Part < Dor::Base
     props_ds.done_values= ['true']
     props_ds.download_date_values = (Time.now).strftime("%Y-%m-%dT%H:%M%z")
     props_ds.save
+  end
+  
+  def Part.normalize_filename(filename)
+    URI::decode(filename)
   end
 end
