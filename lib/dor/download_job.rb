@@ -44,6 +44,8 @@ module Dor
         @filename = @cf.url.split(/\?/).first.split(/\//).last
       end
 
+      @filename = Part.normalize_filename(@filename)
+      
       FileUtils.cp(tmpdl.path, File.join(@cf.filepath,@filename))
       FileUtils.chmod(0644, File.join(@cf.filepath,@filename))
       tmpdl.delete

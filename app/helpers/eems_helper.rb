@@ -1,3 +1,4 @@
+
 module EemsHelper
 
   # Get text field tag for a property
@@ -97,7 +98,7 @@ module EemsHelper
   # Get URL/path to the locally saved filename
   def get_local_file_path 
     value = 'unknown'
-    filename = get_local_filename()
+    filename = URI::escape(get_local_filename())
     
     if (!filename.empty?)
       value = Sulair::WORKSPACE_URL + '/' + @eem.pid + '/' + filename
