@@ -17,6 +17,8 @@ class SubmitToTechServicesController < ApplicationController
     action_log = @eem.datastreams['actionLog']
     action_log.log("Request submitted by #{user.display_name}", params[:comment])
     action_log.save
+    
+    @eem.update_identity_metadata_object_label
 
     @eem.save
     
