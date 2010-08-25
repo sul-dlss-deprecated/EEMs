@@ -33,10 +33,12 @@ describe "Eems show page" do
       :sourceUrl => 'http://something.org/papers',
       :requestDatetime => '1/10/10'
     }
-
+    our_eem = Eem.new
+    Eem.stub!(:new).and_return(our_eem)
+    our_eem.stub!(:save)
+    
 		eem = Eem.from_params(@eem_params)
-		eem.stub!(:save)
-
+		
 		part = Part.from_params(@parts_params)
 		part.stub!(:save)
     part.add_relationship(:is_part_of, @eem)
