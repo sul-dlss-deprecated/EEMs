@@ -13,14 +13,33 @@ describe SubmitToTechServicesController do
   describe "#create" do
   
     before(:each) do
+      @submitted_eem = HashWithIndifferentAccess.new({
+        :copyrightStatusDate => '1/1/10',
+        :copyrightStatus => 'pending',
+        :creatorName => 'Joe Bob',
+        :creatorType => 'person',
+        :language => 'English',
+        :note => 'text of note',
+        :paymentType => 'free|paid',
+        :paymentFund => 'BIOLOGY',
+        :selectorName => 'Bob Smith',
+        :selectorSunetid => 'bsmith',
+        :title => 'Digital Content Title',
+        :sourceUrl => 'http://something.org/papers',
+        :requestDatetime => 'sometimestamp'
+      })
+      
       Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
-      @eem = Eem.new(:pid => 'my:pid123')
+      new_eem = Eem.new(:pid => 'my:pid123')
+      new_eem.stub!(:save)
+      Eem.stub!(:new).and_return(new_eem)
+      @eem = Eem.from_params(@submitted_eem.stringify_keys)
+      
       log = Dor::ActionLogDatastream.new
       @eem.add_datastream(log)
       
       session[:user_id] = 'wmene'
       Eem.should_receive(:find).with('my:pid123').and_return(@eem)
-      @eem.stub!(:save)
 
       Dor::WorkflowService.should_receive(:update_workflow_status).with('dor', 'my:pid123', 'eemsAccessionWF', 'submit-tech-services', 'completed')
     end
@@ -67,6 +86,15 @@ describe SubmitToTechServicesController do
       response.should be_success
       response.status.should == "200 OK"
       response.body.should == 'true'
+    end
+    
+    it "should add objectLabel to the identityMetadata datastream" do
+      id_ds = @eem.datastreams['identityMetadata']
+      id_ds.stub!(:content).and_return('<identityMetadata/>')
+      id_ds.should_receive(:content=).with(/<objectLabel>EEMs: Digital Content Title<\/objectLabel>/)
+      id_ds.stub!(:save)
+      
+      post "create", :eems_id => 'my:pid123'
     end
   end
   
