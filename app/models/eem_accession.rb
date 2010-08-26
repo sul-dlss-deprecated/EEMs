@@ -47,7 +47,7 @@ module EemAccession
   #     <tag>EEM : Dissertation | Thesis</tag>                                  <-- set of tags *
   #   </identityMetadata>
   #
-  def generate_initial_identity_metadata_xml(add_label=false)
+  def generate_initial_identity_metadata_xml(options={:add_label => false})
     builder = Nokogiri::XML::Builder.new do |xml|
       dc_ds = datastreams['DC']
       props_ds = datastreams['eemsProperties']
@@ -55,22 +55,22 @@ module EemAccession
         xml.objectId {
           xml.text(pid)
         }
-        if(add_label)
+        xml.objectType {
+          xml.text("item")
+        }
+        if(options[:add_label])
           xml.objectLabel{
             xml.text(self.label)
           }
         end
-        xml.objectType {
-          xml.text("item")
+        xml.objectAdminClass {
+          xml.text("EEMs")
         }
         xml.agreementId {
           xml.text("druid:fn200hb6598")
         }
         xml.tag {
           xml.text("EEM : 1.0" )
-        }
-        xml.objectAdminClass {
-          xml.text("EEMs")
         }
       }
     end
@@ -87,7 +87,12 @@ module EemAccession
       if(object_label.nil?)
         object_label = Nokogiri::XML::Node.new('objectLabel', id_doc)
         object_label.content = self.label
-        id_doc.root << object_label
+        object_type = id_doc.at_xpath('//objectType')
+        if(object_type)
+          object_type.add_next_sibling(object_label)
+        else
+          id_doc.root << object_label
+        end
       # else replace the old label with the new label  
       elsif(object_label.content != self.label)
         object_label.content = self.label
@@ -96,7 +101,7 @@ module EemAccession
       
     # Create identityXml datastream since it doesn't exist
     else
-       id_ds.content = generate_initial_identity_metadata_xml(true)
+       id_ds.content = generate_initial_identity_metadata_xml(:add_label => true)
     end
     
     id_ds.save

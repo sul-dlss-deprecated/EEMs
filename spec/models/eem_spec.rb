@@ -128,11 +128,10 @@ describe Eem do
     
     it "should initially create identityMetdata with objectId, ojbectType, objectAdminClass, agreementId and tag" do      
       eem = Eem.from_params(@submitted_eem.stringify_keys)
-      initial_id_xml = eem.generate_initial_identity_metadata_xml
-
-      expected = XmlSimple.xml_in(@id_xml)
-      generated = XmlSimple.xml_in(initial_id_xml)
-      generated.should == expected
+      
+      # until we switch to 1.8.7, we have to set our expectation this cheap way
+      eem.generate_initial_identity_metadata_xml.should == "<?xml version=\"1.0\"?>\n<identityMetadata>\n  <objectId>my:pid123</objectId>\n  <objectType>item</objectType>\n  <objectAdminClass>EEMs</objectAdminClass>\n  <agreementId>druid:fn200hb6598</agreementId>\n  <tag>EEM : 1.0</tag>\n</identityMetadata>\n"
+      
     end
   end
   
@@ -200,7 +199,7 @@ describe Eem do
       eem = Eem.from_params(@submitted_eem.stringify_keys)
       id_ds = eem.datastreams['identityMetadata']
       id_ds.stub!(:content).and_return(nil)
-      id_ds.should_receive(:content=).with("<?xml version=\"1.0\"?>\n<identityMetadata>\n  <objectId>my:pid123</objectId>\n  <objectLabel>EEMs: Digital Content Title</objectLabel>\n  <objectType>item</objectType>\n  <agreementId>druid:fn200hb6598</agreementId>\n  <tag>EEM : 1.0</tag>\n  <objectAdminClass>EEMs</objectAdminClass>\n</identityMetadata>\n")
+      id_ds.should_receive(:content=).with("<?xml version=\"1.0\"?>\n<identityMetadata>\n  <objectId>my:pid123</objectId>\n  <objectType>item</objectType>\n  <objectLabel>EEMs: Digital Content Title</objectLabel>\n  <objectAdminClass>EEMs</objectAdminClass>\n  <agreementId>druid:fn200hb6598</agreementId>\n  <tag>EEM : 1.0</tag>\n</identityMetadata>\n")
       id_ds.stub!(:save)
       
       eem.update_identity_metadata_object_label
