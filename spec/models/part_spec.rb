@@ -21,7 +21,6 @@ describe Part do
   
   it "should be a kind of ActiveFedora::Base" do
     @p.should be_kind_of(ActiveFedora::Base)
-    @p.should be_kind_of(Dor::Base)
   end
       
   it "should initialize with url, content_file_id, and set done to false " do

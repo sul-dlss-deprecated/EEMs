@@ -11,20 +11,11 @@
 #     -points to workspace/eems-druid/content.pdf (we can create this even if the job isn't done)
 require 'lyber_core'
 require 'cgi'
+require 'eem_model'
 
-class Part < Dor::Base
-  
-  has_relationship "parents", :is_part_of #relationship between content file and parent Eem
-  
-  has_metadata :name => 'properties', :type => ActiveFedora::MetadataDatastream do |m|
-    m.label = "properties"
-    m.field "url", :string
-    m.field "done", :string
-    m.field "content_file_id", :string
-    m.field "filename", :string
-    m.field "download_date", :string
-  end
-  
+class Part < EemModel::Part
+  include DorBase
+    
   def initialize(attrs={})
     super(attrs)
   end
