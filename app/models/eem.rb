@@ -7,6 +7,8 @@ require 'eem_model'
 class Eem < EemModel::Eem
   include EemModel::EemAccession
   include DorBase
+  
+  
     
   has_metadata :name => 'actionLog', :type => Dor::ActionLogDatastream do |m|
     #nada
