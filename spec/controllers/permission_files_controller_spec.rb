@@ -13,12 +13,12 @@ describe PermissionFilesController do
                                                                           :eem_id => 'eem123'}
   end
   
-  it "#destroy should delete a Part object" do
-    mock_part = mock('part', :null_object => true)
-    mock_part.should_receive(:delete)
-    Part.should_receive(:find).with('partpid').and_return(mock_part)
+  it "#destroy should delete a PermissionFile object" do
+    mock_pf = mock('pf').as_null_object
+    mock_pf.should_receive(:delete)
+    PermissionFile.should_receive(:find).with('pfpid').and_return(mock_pf)
     
-    delete "destroy", :submit_id => 'parentpid', :id => 'partpid'
+    delete "destroy", :submit_id => 'parentpid', :id => 'pfpid'
     
     response.should be_success
     response.should have_text('OK')
