@@ -56,7 +56,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'eems/:eems_id/submit_to_tech_services', :controller => 'submit_to_tech_services', :action => 'create'
   map.connect 'eems/no_pdf', :controller => 'eems', :action => 'no_pdf'
   
-  map.resources :eems
+  map.resources :eems do |s|
+    s.resources :permission_files
+  end
   map.resources :content_files
 
   

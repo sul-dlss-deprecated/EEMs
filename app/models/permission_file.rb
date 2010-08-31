@@ -1,5 +1,7 @@
 
 class PermissionFile < ActiveFedora::Base
+  include DorBase
+  
   has_relationship "permission_file_for", :is_dependent_of          # relationship between permission file and parent etd
     
   has_metadata :name => "properties", :type => ActiveFedora::MetadataDatastream do |m|
