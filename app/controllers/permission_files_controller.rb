@@ -10,7 +10,8 @@ class PermissionFilesController < ApplicationController
   #before_filter :upload_size_check, :only => [:create, :create_supplemental, :create_permission]
   
   attr_accessor :file, :file_name, :eem
-    
+  
+  # Handles http POST  
   def create
     @file= PermissionFile.new()
     @eem = Eem.find(params[:eem_id])
@@ -21,6 +22,17 @@ class PermissionFilesController < ApplicationController
     response = create_response
     Rails.logger.info('=> response: ' + response)
     render :json => response
+  end
+  
+  # Handles http DELETE
+  def destroy
+    part = PermissionFile.find(params[:id])
+    if(part.nil?)
+      render :status => 404, :text => "Cannot find object with id: #{params[:id]}"
+    else
+      part.delete 
+      render :text => 'OK'
+    end
   end
   
   #for stubbing
