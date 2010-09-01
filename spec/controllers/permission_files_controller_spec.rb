@@ -29,12 +29,15 @@ describe PermissionFilesController do
     it "should save a file to local disk and create a datastream for the content file" do
       file_stub = stub('stub_file', :original_filename => 'some_file.pdf', :size => 100000)
       eem_stub = stub('stub_eem', :pid => 'druid:123')
-      datastreams = {'properties' => stub('stub_props_ds').as_null_object }
+      props_ds =  mock('stub_props_ds').as_null_object 
+      datastreams = {'properties' => props_ds }
       pf_stub = stub('stub_pf', :datastreams => datastreams, :save => true, :pid => 'druid:345')
-      params = {:file => file_stub}
+      params = {:file => file_stub, :comment => "some comment"}
       
       controller.file = pf_stub
       controller.eem = eem_stub
+      
+      props_ds.should_receive(:comment_values=).with(["some comment"])
       
       #Save file to local disk
       File.should_receive(:exists?).and_return(true) 

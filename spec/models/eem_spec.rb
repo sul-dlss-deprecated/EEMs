@@ -22,6 +22,10 @@ describe Eem do
     @eem.datastreams['eemsProperties'].should_not be_nil
   end
   
+  it "should have access to permission files" do
+    @eem.should respond_to(:permission_files)
+  end
+  
   it "should have get and set properties" do
     props_ds = @eem.datastreams['eemsProperties']
     props_ds.note_values = ['a note to myself']
