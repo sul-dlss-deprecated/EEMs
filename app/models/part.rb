@@ -17,7 +17,7 @@ class Part < EemModel::Part
   include DorBase
     
   def initialize(attrs={})
-    super(attrs)
+    setup(attrs)
   end
   
   def self.from_params(params={})
