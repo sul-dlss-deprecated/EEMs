@@ -63,6 +63,7 @@ describe PermissionFile do
   it "#set_permission_file_titles should put the parent ETD pid in Fedora label and DC.title" do
     p = PermissionFile.new
     p.add_relationship(:is_dependent_of, @eem)
+    p.datastreams['properties'].comment_values = ['Some comment']
     p.set_permission_file_titles
     
     p.label.should == 'Permission file for Eem pid:345'

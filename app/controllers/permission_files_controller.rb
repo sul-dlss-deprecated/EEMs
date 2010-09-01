@@ -49,7 +49,7 @@ class PermissionFilesController < ApplicationController
     props_ds = @file.datastreams['properties']
     props_ds.file_name_values = [@file_name]
     mime_type = MIME::Types.type_for(@file_name).to_s
-    props_ds.size_values = [params[:file].size]
+    props_ds.comment_values = [params[:comment]] if(params[:comment])
     @file.save
         
     #save file to local disk.  Directory is pid of parent object

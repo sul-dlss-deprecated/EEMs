@@ -8,7 +8,7 @@ class Eem < EemModel::Eem
   include EemModel::EemAccession
   include DorBase
   
-  
+  has_relationship "permission_files", :is_dependent_of, :inbound => true
     
   has_metadata :name => 'actionLog', :type => Dor::ActionLogDatastream do |m|
     #nada
