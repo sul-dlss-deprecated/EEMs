@@ -4,7 +4,7 @@ module DorBase
 
   def setup(attrs = {})
     unless attrs[:pid]
-      attrs = attrs.merge!({:pid=>Services::SuriService.mint_id})  
+      attrs = attrs.merge!({:pid=>Dor::SuriService.mint_id})  
       @new_object=true
     else
       @new_object = attrs[:new_object] == false ? false : true
