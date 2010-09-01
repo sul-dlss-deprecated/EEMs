@@ -138,8 +138,18 @@ describe Eem do
     end
   end
   
-
-  
-  #it "should handle a file that isn't retreived via HTTP GET'"
+  describe "#find" do
+    it "should handle an id without 'druid:'" do
+      Eem.should_receive(:original_find).with('druid:xx123abc')
+      
+      Eem.find('xx123abc')
+    end
+    
+    it "should not touch an id that begins with 'druid:'" do
+      Eem.should_receive(:original_find).with('druid:123abc')
+      
+      Eem.find('druid:123abc')
+    end
+  end
   
 end
