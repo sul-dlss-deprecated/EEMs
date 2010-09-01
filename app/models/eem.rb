@@ -61,9 +61,19 @@ class Eem < EemModel::Eem
     end    
   end
   
+  # Rename Eem.find as Eem.original_find
+  class << self
+    alias original_find find
+  end
+  
+  # Redfine Eem.find to prepend 'druid:' if it isn't in the args
+  def self.find(args)
+    if args.class == String
+      args = 'druid:' + args unless(args =~ /^druid:/)
+    end
+    self.original_find(args)
+  end
 
-  
-  
 end
 
 
