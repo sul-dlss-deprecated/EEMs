@@ -12,6 +12,10 @@ class PermissionFile < ActiveFedora::Base
   has_metadata :name => "DC", :type => ActiveFedora::QualifiedDublinCoreDatastream do |m|
   end
   
+  def initialize(attrs={})
+    setup(attrs)
+  end
+  
   def parent_pid
     permission_file_for(:response_format => :id_array)[0]
   end

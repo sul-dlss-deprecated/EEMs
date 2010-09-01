@@ -15,7 +15,7 @@ class Eem < EemModel::Eem
   end
     
   def initialize(attrs={})
-    super(attrs)
+    setup(attrs)
   end
   
   #TODO this differs from Etd, but I'm not sure why we would need to declare Eem.new outside of this method
