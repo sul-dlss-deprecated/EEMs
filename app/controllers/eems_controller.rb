@@ -125,7 +125,6 @@ class EemsController < ApplicationController
     @eem = Eem.from_params(params[:eem])
     attrs = unescape_keys(params[:eem])
     @eem.update_attributes(attrs)
-    @eem.save
     
     #Add actionLog datastream
     log = Dor::ActionLogDatastream.new
