@@ -19,8 +19,9 @@ class PermissionFilesController < ApplicationController
     @file.set_permission_file_titles
     process_file(params, "Permission File")
     
+    log_uploaded
     response = create_response
-    Rails.logger.info('=> response: ' + response)
+
     render :json => response
   end
   
@@ -30,7 +31,9 @@ class PermissionFilesController < ApplicationController
     if(part.nil?)
       render :status => 404, :text => "Cannot find object with id: #{params[:id]}"
     else
-      part.delete 
+      part.delete
+      @eem = Eem.find(params[:eem_id])
+      log_deleted(part)
       render :text => 'OK'
     end
   end
@@ -67,6 +70,21 @@ class PermissionFilesController < ApplicationController
     @datastream.control_group = 'E'
     @datastream.versionable = false
     @datastream.save
+  end
+  
+  def log_uploaded
+    log('uploaded', params[:file].original_filename)
+  end
+  
+  def log_deleted(permfile)
+    log('deleted', permfile.datastreams['properties'].file_name_values.first)
+  end
+  
+  def log(action, file_name)
+    user = EemsUser.find(session[:user_id])
+    log = @eem.datastreams['actionLog']
+    log.log("Permission file: #{file_name} #{action} by #{user.display_name}")
+    log.save
   end
 
   
