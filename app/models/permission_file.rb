@@ -6,7 +6,7 @@ class PermissionFile < ActiveFedora::Base
     
   has_metadata :name => "properties", :type => ActiveFedora::MetadataDatastream do |m|
     m.field "file_name", :string
-    m.field "label", :string
+    m.field "comment", :string
   end
 
   has_metadata :name => "DC", :type => ActiveFedora::QualifiedDublinCoreDatastream do |m|

@@ -22,6 +22,10 @@ describe Eem do
     @eem.datastreams['eemsProperties'].should_not be_nil
   end
   
+  it "should have access to permission files" do
+    @eem.should respond_to(:permission_files)
+  end
+  
   it "should have get and set properties" do
     props_ds = @eem.datastreams['eemsProperties']
     props_ds.note_values = ['a note to myself']
@@ -134,8 +138,18 @@ describe Eem do
     end
   end
   
-
-  
-  #it "should handle a file that isn't retreived via HTTP GET'"
+  describe "#find" do
+    it "should handle an id without 'druid:'" do
+      Eem.should_receive(:original_find).with('druid:xx123abc')
+      
+      Eem.find('xx123abc')
+    end
+    
+    it "should not touch an id that begins with 'druid:'" do
+      Eem.should_receive(:original_find).with('druid:123abc')
+      
+      Eem.find('druid:123abc')
+    end
+  end
   
 end
