@@ -33,7 +33,7 @@ describe EemsController do
       
       @eem = Eem.new(:pid => 'pid:123')
       @eem.set_properties(@eems_params.stringify_keys)
-      @eem.should_receive(:save).twice
+      @eem.should_receive(:save)
 
       Eem.should_receive(:from_params).with(@eems_params).and_return(@eem)
       Dor::WorkflowService.should_receive(:create_workflow).with('dor', 'pid:123', 'eemsAccessionWF', ACCESSION_WF_XML)
