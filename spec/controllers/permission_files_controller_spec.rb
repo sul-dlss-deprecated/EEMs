@@ -13,12 +13,29 @@ describe PermissionFilesController do
                                                                           :eem_id => 'eem123'}
   end
   
-  it "#destroy should delete a PermissionFile object" do
-    mock_pf = mock('pf').as_null_object
-    mock_pf.should_receive(:delete)
-    PermissionFile.should_receive(:find).with('pfpid').and_return(mock_pf)
+  it "#destroy should delete a PermissionFile object and log that it was deleted" do
+    @eem = Eem.new(:pid => 'my:pid123')
+    log = Dor::ActionLogDatastream.new
+    @eem.add_datastream(log)
     
-    delete "destroy", :submit_id => 'parentpid', :id => 'pfpid'
+    pf = PermissionFile.new
+    pf.should_receive(:delete)
+    
+    props_ds = pf.datastreams['properties']
+    props_ds.file_name_values = ['perm.pdf']
+    
+    PermissionFile.should_receive(:find).with('pfpid').and_return(pf)
+    Eem.should_receive(:find).with('parentpid').and_return(@eem)
+    
+    session[:user_id] = 'wmene'
+    delete "destroy", :eem_id => 'parentpid', :id => 'pfpid'
+    
+    sleep 1
+    log = @eem.datastreams['actionLog']
+    log.each_entry do |ts, action, comment|
+      ts.should < Time.new
+      action.should == 'Permission file: perm.pdf deleted by Willy Mene'
+    end
     
     response.should be_success
     response.should have_text('OK')
@@ -61,6 +78,35 @@ describe PermissionFilesController do
       controller.create_response.should == {:file_name => 'permission.pdf'}
     end
     
+    it "should redirect to /view/{parent_pid}" do
+      
+    end
+    
+  end
+  
+  describe "#log" do
+    before(:each) do
+      Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
+      @eem = Eem.new(:pid => 'my:pid123')
+      log = Dor::ActionLogDatastream.new
+      @eem.add_datastream(log)
+    end
+    it "should add an entry to the action log saying whether the file was uploaded or deleted by the user" do
+      session[:user_id] = 'wmene'
+
+      Eem.should_receive(:find).with('my:pid123').and_return(@eem)
+      controller.stub!(:process_file)
+      controller.stub!(:create_response).and_return({})
+ 
+      post :create, :eem_id => 'my:pid123', :file => stub('uploaded file', :original_filename => 'permission.pdf')
+      
+      sleep 1
+      log = @eem.datastreams['actionLog']
+      log.each_entry do |ts, action, comment|
+        ts.should < Time.new
+        action.should == 'Permission file: permission.pdf uploaded by Willy Mene'
+      end
+    end
   end
   
   
