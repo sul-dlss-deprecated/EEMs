@@ -48,7 +48,9 @@ class EemsController < ApplicationController
       part.create_content_datastream(filename)
       part.download_done
       
-      render_creation_response(@eem.pid, part.pid)
+      #render_creation_response(@eem.pid, part.pid)
+      res = 'eem_pid=' + @eem.pid
+      render :text => res.to_s, :content_type => 'text/plain'
     
     # We will download the file in the background  
     else

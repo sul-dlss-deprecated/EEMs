@@ -1,0 +1,14 @@
+<%
+  @user = EemsUser.find(session[:user_id])
+  widget_name = WIDGET_NAME || 'EEMs Widget'
+%>
+
+<div id="topNavLinks">
+  <%= @user.display_name %> | 
+  <%= mail_to 'eems-feedback@lists.stanford.edu', 'Feedback' %> | 
+  <%= link_to 'Logout', 'https://weblogin.stanford.edu/logout', :title => 'Logout' %>
+</div>      
+
+<script type="text/javascript">
+  var widget_name = '<%= widget_name %>';
+</script>

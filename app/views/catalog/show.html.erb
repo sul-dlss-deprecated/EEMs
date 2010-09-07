@@ -40,6 +40,23 @@
 	        </li>    
         <% end %>
 
+	      <li class="list_style_show">
+	        <%= link_to 'Upload copyright permission',  '#', {:id => 'link_upload_copyright_permission'} %> 
+          <% form_tag("/eems/#{@eem.pid}/permission_files", :method => 'post', :enctype => 'multipart/form-data', :id => 'formlet_upload_copyright_permission', :class => 'comment_formlet') do %>		
+		        <dl>
+			        <dt><%= label_tag 'permission_file_upload', 'Select file (.doc, .pdf, .txt, etc.)' %></dt>
+			        <dd><%= file_field '', '', {:size => 18, :id => 'permission_file_upload', :name => 'file'} %></dd>
+			        <dt><%= label_tag 'permission_desc', 'Description' %></dt>
+			        <dd><input type="text" size="28" style="width: auto;" id="comment" name="comment"></dd>
+			      </dl>
+	          <div style="text-align: right; padding: 0 8px 2px 0;">
+		          <%= image_tag '/images/c_loader.gif', :id => 'permission_files_upload_loader', :class => 'c_loader', :style => 'display: none;' %>
+	            <%= link_to 'Upload', '#', :id => 'upload_copyright_permission_ok', :class => 'sidebar_button'%>
+	            <%= link_to 'Cancel', '#', :id => 'upload_copyright_permission_cancel' %>
+	          </div>
+	        <% end %>    
+	      </li>    
+
         <li class="list_style_show">
           <%= link_to 'Question/comment to selector',  '#', {:id => 'link_comment_to_selector'} %> 
           <div class="comment_formlet" id="formlet_comment_to_selector">

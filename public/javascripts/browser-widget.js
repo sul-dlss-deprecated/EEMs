@@ -9,83 +9,199 @@ var defaultValues = {
 var dateFormatMask = "yyyy-mm-dd'T'HH:MM:sso";
 
 $(document).ready(function() {
-	
-  $('#eem_payment_fund').autocomplete(data); // load payment fund data
+  // payment fund 	
+  $('#eem_bw_payment_fund')
+  .autocomplete(data)
+  .change(function() { toggleSendToTechServices('#eems-browser-widget'); })
+  .focus(function() {
+    if ($('#eem_bw_payment_fund').val() == defaultValues.payment_fund) {
+	    $('#eem_bw_payment_fund').val('');
+     }
+   });
 
-  $('#eem_payment_fund').change(function() { 
-    toggleSendToTechServices();
+  $('#eem_dw_payment_fund')
+  .autocomplete(data)
+  .change(function() { toggleSendToTechServices('#eems-desktop-widget'); })
+  .focus(function() {
+    if ($('#eem_dw_payment_fund').val() == defaultValues.payment_fund) {
+	    $('#eem_dw_payment_fund').val('');
+     }
+   });
+
+  // payment type
+  $('#eem_bw_paymentType').change(function() {	
+		if ($('#eem_bw_paymentType').val() == 'Paid') { $('#eem_bw_payment_fund').show();	}
+		else { $('#eem_bw_payment_fund').hide(); }
+	
+		toggleSendToTechServices('eems-browser-widget');
   });
 
-  $('#eem_paymentType').change(function() {	
-		if ($('#eem_paymentType').val() == 'Paid') {
-		  $('#eem_payment_fund').show();	
-		}
-		else {
-		  $('#eem_payment_fund').hide();	
-		}
+  $('#eem_dw_paymentType').change(function() {	
+		if ($('#eem_dw_paymentType').val() == 'Paid') { $('#eem_dw_payment_fund').show();	}
+		else { $('#eem_dw_payment_fund').hide(); }
 	
-		toggleSendToTechServices();
+		toggleSendToTechServices('eems-browser-widget');
   });
 
-  $('#eem_note').focus(function() {
-    if ($('#eem_note').val() == defaultValues.note) {
-		  $('#eem_note').val('');
+  // note
+  $('#eem_bw_note').focus(function() {
+    if ($('#eem_bw_note').val() == defaultValues.note) {
+		  $('#eem_bw_note').val('');
     }
   });
 
-  $('#eem_payment_fund').focus(function() {
-    if ($('#eem_payment_fund').val() == defaultValues.payment_fund) {
-		  $('#eem_payment_fund').val('');
+  $('#eem_dw_note').focus(function() {
+    if ($('#eem_dw_note').val() == defaultValues.note) {
+		  $('#eem_dw_note').val('');
     }
   });
 
-  $('#eem_title').change(function() {
-    toggleSaveToDashboard();
-    toggleSendToTechServices();
+  // title
+  $('#eem_bw_title').change(function() {
+    toggleSaveToDashboard('eems-browser-widget');
+    toggleSendToTechServices('eems-browser-widget');
   });
 
-  $('#contentUrl').hover(function() {
-    toggleSaveToDashboard();
-    toggleSendToTechServices();
+  $('#eem_dw_title').change(function() {
+    toggleSaveToDashboard('eems-desktop-widget');
+    toggleSendToTechServices('eems-desktop-widget');
   });
 
-  $('#contentUrl').change(function() {
-    toggleSaveToDashboard();
-    toggleSendToTechServices();
+  // contentURL (for browser widget)
+  $('#contentUrl')
+  .hover(function() {
+    toggleSaveToDashboard('eems-browser-widget');
+    toggleSendToTechServices('eems-browser-widget');
+  })
+  .change(function() {
+    toggleSaveToDashboard('eems-browser-widget');
+    toggleSendToTechServices('eems-browser-widget');
   });
 
-  $('#eem_copyrightStatus').change(function() {
-    toggleSendToTechServices();
+  // content_upload (for desktop widget)
+  $('#content_upload').change(function() {
+    toggleSaveToDashboard('eems-desktop-widget');
+    toggleSendToTechServices('eems-desktop-widget');
   });
 
-  $('#save_to_dashboard').click(function() {
+  // copyright status
+  $('#eem_bw_copyrightStatus').change(function() {
+    toggleSendToTechServices('eems-browser-widget');
+  });
+
+  $('#eem_dw_copyrightStatus').change(function() {
+    toggleSendToTechServices('eems-desktop-widget');
+  });
+
+  // payment fund
+  $('#eem_bw_payment_fund').change(function() {
+    toggleSaveToDashboard('eems-browser-widget');
+    toggleSendToTechServices('eems-browser-widget');
+  });
+
+  $('#eem_dw_payment_fund').change(function() {
+    toggleSaveToDashboard('eems-desktop-widget');
+    toggleSendToTechServices('eems-desktop-widget');
+  });
+
+  // save to dashboard - browser widget
+  $('#eem_bw_save_to_dashboard').click(function() {
 	  var selectorName = $('#eem_selectorName').val();
     var logMsg = 'Request created by ' + selectorName;
     var pars = 'eem[status]=Created'; 
     submitEEM(pars, logMsg);
   });
 
-  $('#send_to_tech_services').click(function() {
+  // send to tech services - browser widget
+  $('#eem_bw_send_to_tech_services').click(function() {
 	  var selectorName = $('#eem_selectorName').val();
     var logMsg = 'Request submitted by ' + selectorName;
-    var pars = 'eem[status]=Submitted&eem[requestDatetime]=' + dateFormat(dateFormatMask);
+    var pars = 'eem[requestDatetime]=' + dateFormat(dateFormatMask);
     submitEEM(pars, logMsg);
   });
 
+  // save to dashboard - desktop widget
+  $('#eem_dw_save_to_dashboard').click(function() {
+	  var selectorName = $('#eem_selectorName').val();
+    var logMsg = 'Request created by ' + selectorName;
+    var pars = 'eem[status]=Created'; 
+    submitEEMDesktopUpload(pars, logMsg);
+  });
+
+  // send to tech services - desktop widget
+  $('#eem_dw_send_to_tech_services').click(function() {
+	  var selectorName = $('#eem_selectorName').val();
+    var logMsg = 'Request submitted by ' + selectorName;
+    var pars = 'eem[requestDatetime]=' + dateFormat(dateFormatMask);
+    submitEEMDesktopUpload(pars, logMsg);
+  });
+
 });
+
+// submit EEM object (desktop upload)
+function submitEEMDesktopUpload(pars, logMsg) {
+  var selectorName = $('#eem_selectorName').val();
+
+	var options = {
+    target: '#upload_target',
+    beforeSubmit: function() {
+	    $('#eems-desktop-widget').fadeOut('slow');
+	    $('#eems-loader').show();	 
+	
+		  if ($('#eem_dw_note').val() == defaultValues.note) { $('#eem_dw_note').val(''); }
+		  if ($('#eem_dw_payment_fund').val() == defaultValues.payment_fund) { $('#eem_dw_payment_fund').val(''); }
+		
+		  $('#eem_dw_statusDatetime').val(dateFormat(dateFormatMask));
+		  $('#eem_dw_copyrightStatusDate').val(dateFormat(dateFormatMask));
+		  $('#eem_dw_requestDatetime').val(dateFormat(dateFormatMask));		
+    }, 
+    success: function(data) { 
+	    var data = stripHTMLTags(data);
+	    var eem_pid = data.replace(/^eem_pid=/, '');
+
+	    if (eem_pid != null && eem_pid != undefined) {
+		    $('#eems-loader').hide();		    
+			  $('#details-link').attr('href', '/view/' + eem_pid);				
+		    $('#eems-success').show();						
+			  $('#eems-links').show();
+			
+	      // if 'Send to Technical Services' button is pressed 
+	      if (/Request submitted by/.test(logMsg)) {
+	        sendToTechServices(eem_pid);
+	      } else {
+		      var pars = { entry: logMsg, authenticity_token: token };
+	        addLogEntry(eem_pid, pars, false);					  	
+	      }
+
+		    var pars = { entry: "PDF uploaded by " + selectorName, authenticity_token: token };
+		    addLogEntry(eem_pid, pars, false);					            							
+	    }	
+	    else {
+			  showPDFErrorMsg(); 	
+			}									 		
+	  }	
+  };
+
+  $('#eems-desktop-widget').target = 'upload_target';
+  $('#eems-desktop-widget').ajaxSubmit(options);
+  return false;
+  
+}
+
+
 
 // submit EEM object 	
  function submitEEM(pars, logMsg) { 
    pars = pars + '&eem[statusDatetime]=' + dateFormat(dateFormatMask);
    pars = pars + '&eem[copyrightStatusDate]=' + dateFormat(dateFormatMask);
 
-   $('#eems-new-form-widget').fadeOut('slow');
+   $('#eems-browser-widget').fadeOut('slow');
    $('#eems-loader').show();
 
-   if ($('#eem_note').val() == defaultValues.note) { $('#eem_note').val(''); }
-   if ($('#eem_payment_fund').val() == defaultValues.payment_fund) { $('#eem_payment_fund').val(''); }
+   if ($('#eem_bw_note').val() == defaultValues.note) { $('#eem_bw_note').val(''); }
+   if ($('#eem_bw_payment_fund').val() == defaultValues.payment_fund) { $('#eem_bw_payment_fund').val(''); }
 
-   var eem_data = $('#eems-new-form-widget').serialize() + '&' + pars;
+   var eem_data = $('#eems-browser-widget').serialize() + '&' + pars;
 
    if ($('#contentUrl').val() == '') {
      createEEM_WithoutPDF(eem_data, logMsg);
@@ -213,25 +329,49 @@ function sendToTechServices(pid) {
 }
 
 // Enable/disable 'Save to dashboard' button
-function toggleSaveToDashboard() {
-  if ($('#eem_title').val() != '' && $('#contentUrl').val() != '' ) {
-	  $('#save_to_dashboard').attr("disabled", false);
-  }	
-  else {
-	  $('#save_to_dashboard').attr("disabled", true);
-  }
+function toggleSaveToDashboard(widgetName) {
+	if (widgetName == 'eems-browser-widget') {
+	  if ($('#eem_bw_title').val() != '' && $('#contentUrl').val() != '' ) {
+		  $('#eem_bw_save_to_dashboard').attr("disabled", false);
+	  }	
+	  else {
+		  $('#eem_bw_save_to_dashboard').attr("disabled", true);
+	  }		
+	}
+
+	if (widgetName == 'eems-desktop-widget') {
+	  if ($('#eem_dw_title').val() != '' && $('#content_upload').val() != '' ) {
+		  $('#eem_dw_save_to_dashboard').attr("disabled", false);
+	  }	
+	  else {
+		  $('#eem_dw_save_to_dashboard').attr("disabled", true);
+	  }		
+	}	
 }
 
 // Enable/disable 'Send to Tech Services' button
-function toggleSendToTechServices() {
-  if ($('#eem_title').val() != '' &&  	
-      (($('#eem_paymentType').val() == 'Free' && ( $('#eem_copyrightStatus').val() == 'Public access OK' || $('#eem_copyrightStatus').val() == 'Stanford access OK')) ||  
-	     ($('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != '' && $('#eem_payment_fund').val() != defaultValues.payment_fund))) {
-    $('#send_to_tech_services').removeAttr("disabled");
-  }
-  else {
- 	  $('#send_to_tech_services').attr("disabled", true);
-  }	
+function toggleSendToTechServices(widgetName) {
+	if (widgetName == 'eems-browser-widget') {
+	  if ($('#eem_bw_title').val() != '' && $('#contentUrl').val() != '' && 
+	      (($('#eem_bw_paymentType').val() == 'Free' && ( $('#eem_bw_copyrightStatus').val() == 'Public access OK' || $('#eem_bw_copyrightStatus').val() == 'Stanford access OK')) ||  
+		     ($('#eem_bw_paymentType').val() == 'Paid' && $('#eem_bw_payment_fund').val() != '' && $('#eem_bw_payment_fund').val() != defaultValues.payment_fund))) {
+	    $('#eem_bw_send_to_tech_services').removeAttr("disabled");
+	  }
+	  else {
+	 	  $('#eem_bw_send_to_tech_services').attr("disabled", true);
+	  }			
+	}
+
+	if (widgetName == 'eems-desktop-widget') {
+	  if ($('#eem_dw_title').val() != '' && $('#content_upload').val() != '' && 
+	      (($('#eem_dw_paymentType').val() == 'Free' && ( $('#eem_dw_copyrightStatus').val() == 'Public access OK' || $('#eem_dw_copyrightStatus').val() == 'Stanford access OK')) ||  
+		     ($('#eem_dw_paymentType').val() == 'Paid' && $('#eem_dw_payment_fund').val() != '' && $('#eem_dw_payment_fund').val() != defaultValues.payment_fund))) {
+	    $('#eem_dw_send_to_tech_services').removeAttr("disabled");
+	  }
+	  else {
+	 	  $('#eem_dw_send_to_tech_services').attr("disabled", true);
+	  }			
+	}	
 }
 
 

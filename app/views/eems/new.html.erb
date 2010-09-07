@@ -1,68 +1,42 @@
-<!-- This will render the form needed to create an Eem -->
+<!-->
+<div id="eems-popup">
+	<div id="eems-popup-container"></div>
+	<div id="eems-popup-content">-->
+		<div id="eems-popup-header">
+			<span>EEMs Selection Widget</span>
+			<span class="eems-header-links">
+				<%= mail_to 'eems-feedback@lists.stanford.edu', 'Feedback', :id => 'eems-popup-feedback-link' %>
+			</span>
+		</div>	
+		<div id="eems-widget-tabs">
+			<a href="#" id="eems-browser-widget-toggle">Download from this site</a> 
+			<a href="#" id="eems-desktop-widget-toggle">Upload from desktop</a>
+			<div style="clear: both; height: 1px; border-top: 1px solid #aaa; margin-top: 2px;">
+		</div>
+	  <%= render :partial => 'eems/_widgets/browser_widget' %>
+	  <%= render :partial => 'eems/_widgets/dashboard_widget' %>
+	
+	  <div id="upload_target" name="upload_target" style="display:none;"></div>
+	
+		<div id="eems-success" style="display: none;">Your request has been submitted.</div>
+		<div id="eems-loader" style="display: none;">Please wait...</div>
+		<div id="eems-error" style="display: none;"></div>
 
-<% form_tag({:action => :create}, :id => 'eems-new-form-widget', :name => 'form_widget') do %>
-  <%= hidden_field_tag 'eem[selectorSunetid]', "#{@user.sunetid}"%>
-  <%= hidden_field_tag 'eem[selectorName]', "#{@user.display_name}"%>   
-  
-  <dl>
-    <dt id="dt_sourceUrl"><%= label_tag 'eem[sourceUrl]', 'Found on this site:' %></dt>
-    <dd style="overflow: hidden;"><%= render :partial => 'eems/source_url' %></dd>
+		<div id="eems-upload-progress" style="display: none;">
+		  <div id="upload-progress-text">Your selection is being uploaded... </div>
+		  <div id="upload-complete-text" style="display:none;">Upload complete!</div>
+		  <div style="float: left;width: 300px; height: 10px; background-color: #aaa; margin-top: 4px;">
+		    <img id="progress_bar" src="../images/progress_bar.png" style="width: 0px, height: 10px;" />    
+		  </div>      
+		  <div style="float: left; width: 40px; text-align: left; text-indent: 3px;" id="percent_done"></div>      
+		</div>
 
-    <dt style="width: 325px">Language:</dt>
-    <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :selected => 'eng'} %></dd>
-    
-    <dt><%= label_tag 'eem[title]', 'Title of work:' %></dt>
-    <dd><%= eems_text_field_tag :title, '', {:size => 41} %></dd>
-
-    <dt><%= label_tag 'eem[creatorName]', 'Created by:' %></dt>
-    <dd>
-      <%= eems_text_field_tag :creatorName, '', {:size => 24} %> &nbsp; 
-      <%= render :partial => 'eems/select_options', :locals => {:field => 'creatorType', :selected => ''} %>
-    </dd>
-
-    <dt><%= label_tag 'contentUrl', 'Direct link to PDF:' %></dt>
-    <dd>
-      <%= text_field_tag :contentUrl, '', {:size => 41, :name => 'contentUrl'} %> <br/>
-      <span style="color:#555;">&uarr; Drag and drop the link of the PDF you want to capture</span>
-	</dd>
-
-    <dt style="width: 0px"></dt>
-    <dd><%= text_area_tag 'eem[note]', '(Citation, comments, etc.)', :id => 'eem_note', :rows => 5, :cols => 56 %></dd>
-
-    <dt><%= label_tag 'eem_copyrightStatus', 'Copyright:' %></dt>
-    <dd>
-      <%= render :partial => 'eems/select_options', :locals => {:field => 'copyrightStatusWidget', :id => 'copyrightStatus', :selected => 'Requires request'} %>
-    </dd>
-
-    <dt><%= label_tag 'eem_paymentType', 'Purchase:' %></dt>
-    <dd>
-      <%= render :partial => 'eems/select_options', :locals => {:field => 'paymentType', :selected => ''} %>      
-      <%= eems_text_field_tag :paymentFund, '(Fund name)', {:size => 25, :id => 'eem_payment_fund', :class => 'marginLeft_14px', :style => 'display: none;'} %>         
-    </dd>
-  </dl>
-
-  <div id="submit-buttons">
-	<input type="button" disabled="disabled" id="send_to_tech_services" value="Send to Technical Services">
-	<input type="button" disabled="disabled" id="save_to_dashboard" value="Save to dashboard">
+		<div id="eems-links" style="display: none;">
+			<%= link_to "Detail view", "", :id => "details-link", :target => "_blank" %> | 
+			<%= link_to "View dashboard", "/view", :target => "_blank"  %> | 
+			<%= link_to "Select another EEM", "/eems/new?referrer=" + get_source_url(params[:referrer]), :id => "select-another-eem"  %>
+		</div>
+		<!-->
   </div>
-<% end %>
-
-<div id="eems-success" style="display: none;">Your request has been submitted.</div>
-<div id="eems-loader" style="display: none;">Please wait...</div>
-<div id="eems-error" style="display: none;"></div>
-
-<div id="eems-upload-progress" style="display: none;">
-  <div id="upload-progress-text">Your selection is being uploaded... </div>
-  <div id="upload-complete-text" style="display:none;">Upload complete!</div>
-  <div style="float: left;width: 300px; height: 10px; background-color: #aaa; margin-top: 4px;">
-    <img id="progress_bar" src="../images/progress_bar.png" style="width: 0px, height: 10px;" />    
-  </div>      
-  <div style="float: left; width: 40px; text-align: left; text-indent: 3px;" id="percent_done"></div>      
 </div>
-
-<div id="eems-links" style="display: none;">
-	<%= link_to "Detail view", "", :id => "details-link", :target => "_blank" %> | 
-	<%= link_to "View dashboard", "/view", :target => "_blank"  %> | 
-	<%= link_to "Select another EEM", "/eems/new?referrer=" + get_source_url(params[:referrer]), :id => "select-another-eem"  %>
-</div>
-
+-->
