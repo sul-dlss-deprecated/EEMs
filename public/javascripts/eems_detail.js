@@ -230,3 +230,17 @@ function sendToTechServices() {
 	});
 }
 
+function deletePermissionFile(eem_pid, file_pid) {
+	var uniq_id = file_pid.replace('druid:', '');
+	
+	$('#delete_' + uniq_id).hide();
+	$('#loader_' + uniq_id).show();
+	
+	$.ajax({
+	  url: '/eems/' + eem_pid + '/permission_files/' + file_pid,
+	  type: 'DELETE', 
+	  success: function(status) {
+		  if (status == 'OK') { window.location.reload(); } 
+	  }	
+	});
+}

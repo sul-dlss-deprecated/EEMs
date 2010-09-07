@@ -1,55 +1,59 @@
-    <h1 class="mainTitle" id="text_title" title="Click to edit"><%= print_eems_field('title') %></h1>      
-    <%= text_field_tag "title", print_eems_field('title'), {:size => 30, :class => "mainTitle", :style => "display: none", :id => 'input_title'} %>      
+  <h1 class="mainTitle" id="text_title" title="Click to edit"><%= print_eems_field('title') %></h1>      
+  <%= text_field_tag "title", print_eems_field('title'), {:size => 30, :class => "mainTitle", :style => "display: none", :id => 'input_title'} %>      
+  
+  <dl class="details">
+    <dt>Id :</dt><dd><%= @eem.pid %></dd>
+
+    <dt>PURL :</dt><dd></dd>
     
-    <dl class="details">
-      <dt>Id :</dt><dd><%= @eem.pid %></dd>
+    <dt>Found at this site :</dt>
+    <dd>
+      <%= link_to print_eems_field('sourceUrl'),  print_eems_field('sourceUrl'), {:id => 'link_sourceUrl', :target => '_blank'} %> 
+    </dd>
+      
+    <dt>Language :</dt>
+    <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :selected => print_eems_field('language')} %></dd>
+    
+    <dt>Created by :</dt>
+    <dd>
+      <div id="text_creatorName" title="Click to edit"><%= get_creator_name() %></div>
+      <%= text_field_tag "creatorName", get_creator_name(), {:size => 30, :style => "display: none", :id => 'input_creatorName'} %>
+      <%= render :partial => 'eems/select_options', :locals => {:field => 'creatorType', :selected => get_creator_type()} %> 
+    </dd>
+    
+    <dt>Direct link to PDF :</dt>
+    <dd>
+      <%= link_to print_parts_field('url'),  print_parts_field('url'), {:id => 'link_url', :target => '_blank'} %> 
+    </dd>
+    
+    <dt>Local copy of PDF :</dt>
+    <dd>
+      <%= link_to get_local_filename(),  get_local_file_path(), {:id => 'link_local_file'} %>               
+    </dd>
+    
+    <dt>Citation/comments :</dt>
+    <dd>
+      <div id="text_note" title="Click to edit"><%= escape_tags(print_eems_field('note')) %></div>
+      <textarea id="input_note" rows="5" cols="50" style="display: none;"><%= print_eems_field('note') %></textarea>
+    </dd>      
+    
+    <dt>Copyright :</dt>
+    <dd>
+      <%= render :partial => 'eems/select_options', :locals => {:field => 'copyrightStatusDetailPage', :name => 'copyrightStatus', :id => 'copyrightStatus', :selected => print_eems_field('copyrightStatus')} %> 
+    </dd>
 
-      <dt>PURL :</dt><dd></dd>
-      
-      <dt>Found at this site :</dt>
-      <dd>
-        <%= link_to print_eems_field('sourceUrl'),  print_eems_field('sourceUrl'), {:id => 'link_sourceUrl', :target => '_blank'} %> 
-      </dd>
-        
-      <dt>Language :</dt>
-      <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :selected => print_eems_field('language')} %></dd>
-      
-      <dt>Created by :</dt>
-      <dd>
-        <div id="text_creatorName" title="Click to edit"><%= get_creator_name() %></div>
-        <%= text_field_tag "creatorName", get_creator_name(), {:size => 30, :style => "display: none", :id => 'input_creatorName'} %>
-        <%= render :partial => 'eems/select_options', :locals => {:field => 'creatorType', :selected => get_creator_type()} %> 
-      </dd>
-      
-      <dt>Direct link to PDF :</dt>
-      <dd>
-        <%= link_to print_parts_field('url'),  print_parts_field('url'), {:id => 'link_url', :target => '_blank'} %> 
-      </dd>
-      
-      <dt>Local copy of PDF :</dt>
-      <dd>
-        <%= link_to get_local_filename(),  get_local_file_path(), {:id => 'link_local_file'} %>               
-      </dd>
-      
-      <dt>Citation/comments :</dt>
-      <dd>
-        <div id="text_note" title="Click to edit"><%= escape_tags(print_eems_field('note')) %></div>
-        <textarea id="input_note" rows="5" cols="50" style="display: none;"><%= print_eems_field('note') %></textarea>
-      </dd>      
-      
-      <dt>Copyright :</dt>
-      <dd>
-        <%= render :partial => 'eems/select_options', :locals => {:field => 'copyrightStatusDetailPage', :id => 'copyrightStatus', :selected => print_eems_field('copyrightStatus')} %> 
-      </dd>
-      
-      <dt>Purchase :</dt>
-      <dd>
-        <%= render :partial => 'eems/select_options', :locals => {:field => 'paymentType', :selected => print_eems_field('paymentType')} %>
-        <%= render :partial => 'eems/payment_fund' %>     
-      </dd>      
-    </dl>
+    <dt>Copyright permission :</dt>
+    <dd>
+     <%= render :partial => 'eems/_detail_partials/permission_files', :locals => {:readOnly => false} %>
+   </dd>
+    
+    <dt>Purchase :</dt>
+    <dd>
+      <%= render :partial => 'eems/select_options', :locals => {:field => 'paymentType', :selected => print_eems_field('paymentType')} %>
+      <%= render :partial => 'eems/payment_fund' %>     
+    </dd>      
+  </dl>
 
-		<script src="/javascripts/jquery.autocomplete.js" type="text/javascript"></script>
-    <script src="/javascripts/eems_detail.js" type="text/javascript"></script>
-    <script src="/javascripts/date.format.js" type="text/javascript"></script>
-	
+<script src="/javascripts/jquery.autocomplete.js" type="text/javascript"></script>
+<script src="/javascripts/eems_detail.js" type="text/javascript"></script>
+<script src="/javascripts/date.format.js" type="text/javascript"></script>

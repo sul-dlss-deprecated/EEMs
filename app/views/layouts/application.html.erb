@@ -10,9 +10,8 @@
     <%= render_js_includes %>
     <%= render_stylesheet_includes %>
     <%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
-    <%= stylesheet_link_tag 'application' %>
-    <%= stylesheet_link_tag 'jquery.autocomplete' %>
-    <%= javascript_include_tag 'eems_common', 'eems_detail_actions' %>    
+    <%= stylesheet_link_tag 'application', 'jquery.autocomplete' %>
+    <%= javascript_include_tag 'eems_common', 'eems_detail_actions', 'jquery.autocomplete' %>    
   </head>
   <% if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
     <body onload="$('input#q').focus();">
@@ -20,7 +19,7 @@
     <body>
   <% end %>
   <div id="logo"></div>
-  <%= render :partial => 'eems/user_name_logout' %>    
+  <%= render :partial => 'eems/top_nav_links' %>    
   <div id="doc4" class="yui-t2">
 
       <div id="hd">

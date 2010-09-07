@@ -2,6 +2,7 @@
 $(document).ready(function() {	
 	acquisitionsActionsBindToggle('send_to_tech_services');	 
 	acquisitionsActionsBindToggle('cancel_this_request');
+	acquisitionsActionsBindToggle('upload_copyright_permission');	 
 	acquisitionsActionsBindToggle('comment_to_selector');	 
 	
 	$('#text_comment_to_selector').val('');
@@ -10,6 +11,13 @@ $(document).ready(function() {
 	// cancel this request
   $('#cancel_this_request_ok').click(function() {
     cancelThisRequest();
+  });
+
+	// upload permission file
+  $('#upload_copyright_permission_ok').click(function() {
+	  $('#upload_copyright_permission_ok').hide();
+	  $('#permission_files_upload_loader').show();
+    $('#formlet_upload_copyright_permission').submit();
   });
   
 	// question/comment to selector
