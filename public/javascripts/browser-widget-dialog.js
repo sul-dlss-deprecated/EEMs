@@ -65,7 +65,12 @@ var EEMsWidget = {
     popup.appendChild(popup_container);
     popup.appendChild(popup_content);
     
-    document.getElementsByTagName('body')[0].appendChild(popup);
+    if (document.getElementsByTagName('body')[0] != null && document.getElementsByTagName('body')[0] != undefined) {
+	    document.getElementsByTagName('body')[0].appendChild(popup);	
+    } else {
+	    alert('Sorry, EEMs widget cannot be opened in this page');
+	    return;
+    }
     
     this.setupWidgetDragging();
   },
