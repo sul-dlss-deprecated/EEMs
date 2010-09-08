@@ -7,7 +7,7 @@
 
 <div>                               
   Drag this button to the bookmarks toolbar in your web browser &nbsp;   
-  <a onclick="alert('Just drag this button to the bookmarks toolbar in your web browser.'); return false;" href="javascript:(function(){var w=window;var l=w.location;var d=w.document;var s=d.createElement('script');var e=encodeURIComponent;var x='undefined';var u='<%= base_url %>/javascripts/browser-widget-dialog';if (typeof s!='object')return;function g(){if (d.readyState && d.readyState!='complete'){setTimeout(g,200);}else{if (typeof EEMsWidget == x){s.setAttribute('src',u+'.js?loc='+e(l));d.body.appendChild(s);var jq='<%= base_url %>/javascripts/jquery-1.4.2.min.js'; var jqs=d.createElement('script');jqs.setAttribute('src',jq);d.body.appendChild(jqs);}function f(){if (typeof EEMsWidget == x){setTimeout(f,200);}else{EEMsWidget.showPopOver('<%= base_url %>');}}f();}}g();}())">
+  <a onclick="alert('Just drag this button to the bookmarks toolbar in your web browser.'); return false;" href="javascript:(function(){var w=window;var l=w.location;var d=w.document;var s=d.createElement('script');var e=encodeURIComponent;var x='undefined';var u='<%= base_url %>/javascripts/browser-widget-dialog';if (typeof s!='object')return;function g(){if (d.readyState && d.readyState!='complete'){setTimeout(g,200);}else{if (typeof EEMsWidget == x){s.setAttribute('src',u+'.js?loc='+e(l));d.body.appendChild(s);}function f(){if (typeof EEMsWidget == x){setTimeout(f,200);}else{EEMsWidget.showPopOver('<%= base_url %>');}}f();}}g();}())">
     <img border="0" align="absmiddle" width="100" height="25" name="<%= widget_name %>" alt="<%= widget_name %>" title="<%= widget_name %>" src="/images/eems-widget-button.png">
   </a>                    
 </div>
