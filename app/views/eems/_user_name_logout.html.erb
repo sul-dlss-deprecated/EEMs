@@ -1,6 +1,0 @@
-<% @user = EemsUser.find(session[:user_id])  %>
-
-<div id="userNameBox">
-  <%= @user.display_name %> | 
-  <%= link_to 'Logout', 'https://weblogin.stanford.edu/logout', :title => 'Logout' %>
-</div>      

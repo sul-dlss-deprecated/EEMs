@@ -58,6 +58,8 @@ function showBrowserWidget() {
 	$('#eems-desktop-widget-toggle').removeClass('eems-widget-tab-active');
 	$('#eems-desktop-widget').fadeOut();
 	$('#eems-browser-widget').fadeIn();
+	$('#eems-upload-progress').hide();	  	
+	$('#eems-links').hide();	  	
 }
 
 function showDesktopWidget() {
@@ -65,6 +67,8 @@ function showDesktopWidget() {
 	$('#eems-browser-widget-toggle').removeClass('eems-widget-tab-active');
 	$('#eems-browser-widget').fadeOut();	
 	$('#eems-desktop-widget').fadeIn();
+	$('#eems-upload-progress').hide();	  	
+	$('#eems-links').hide();	  	
 }
 
 
