@@ -2,7 +2,7 @@
 $(document).ready(function() {	
 	acquisitionsActionsBindToggle('send_to_tech_services');	 
 	acquisitionsActionsBindToggle('cancel_this_request');
-	acquisitionsActionsBindToggle('upload_copyright_permission');	 
+	acquisitionsActionsBindToggle('upload_copyright_attachment');	 
 	acquisitionsActionsBindToggle('comment_to_selector');	 
 	
 	$('#text_comment_to_selector').val('');
@@ -14,12 +14,20 @@ $(document).ready(function() {
   });
 
 	// upload permission file
-  $('#upload_copyright_permission_ok').click(function() {
-	  $('#upload_copyright_permission_ok').hide();
+  $('#upload_copyright_attachment_ok').click(function() {
+	  $('#upload_copyright_attachment_ok').hide();
 	  $('#permission_files_upload_loader').show();
-    $('#formlet_upload_copyright_permission').submit();
+    $('#formlet_upload_copyright_attachment').submit();
   });
   
+  $('#permission_file_upload').change(function() {
+	  if ($('#permission_file_upload').val() != '') {
+		  $('#upload_copyright_attachment_ok').removeAttr('disabled');
+	  }	else {
+		  $('#upload_copyright_attachment_ok').attr('disabled', 'disabled');		
+	  }
+  });
+
 	// question/comment to selector
   $('#comment_to_selector_ok').click(function() {
     questionOrCommentToSelector();
@@ -33,7 +41,29 @@ $(document).ready(function() {
 	  }	else {
 		  $('#comment_to_selector_ok').attr('disabled', 'disabled');		
 	  }
+	});
+	
+	$('#send_to_tech_services_cancel').click(function() {
+		cancelAction('send_to_tech_services');
 	});  
+
+	$('#cancel_this_request_cancel').click(function() {
+		cancelAction('cancel_this_request');
+	});  
+	
+	$('#upload_copyright_attachment_cancel').click(function() {
+		$('#formlet_upload_copyright_attachment')[0].reset();
+		$('#permission_files_upload_loader').hide();
+		$('upload_copyright_attachment_ok').show();
+		$('#link_upload_copyright_attachment').click();		
+    $('#permission_file_upload').change();		
+	});  
+
+	$('#comment_to_selector_cancel').click(function() {
+		cancelAction('comment_to_selector');
+    $('#text_comment_to_selector').keyup();		
+	});  
+
 });
 
 function acquisitionsActionsBindToggle(name) { 
@@ -41,11 +71,11 @@ function acquisitionsActionsBindToggle(name) {
 		$('#link_' + name).toggle(
 			function() {
 				$('#formlet_' + name).show();	
-				$('#link_' + name).parents('li').removeClass('list_style_show').addClass('list_style_hide');	
+				$('#link_' + name).removeClass('action_box_show').addClass('action_box_hide');	
 			}, 
 			function() {
 				$('#formlet_' + name).hide();	
-				$('#link_' + name).parents('li').removeClass('list_style_hide').addClass('list_style_show');	
+				$('#link_' + name).removeClass('action_box_hide').addClass('action_box_show');	
 			}
 		);		
 	}
@@ -85,4 +115,8 @@ function questionOrCommentToSelector() {
 	}
 }
 
+function cancelAction(name) {
+	$('#text_' + name).val('');
+	$('#link_' + name).click();		
+}
 

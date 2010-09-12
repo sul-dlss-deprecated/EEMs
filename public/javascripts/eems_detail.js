@@ -5,7 +5,7 @@ var data = "ABBASI ABBOTT ABERCROMB ABRAHAMSW ACKERMANR AFRICA AFRICADOC AHNE AN
 var defaultValues = {
   "title" : "Click to add title", 
   "creatorName" : "Click to add creator name", 
-  "note" : "Click to add citations, comments, etc.",
+  "note" : "Click to add citations, comments, copyright notes, etc.",
   "payment_fund" : "(Fund name)"
 };
 var dateFormatMask = "yyyy-mm-dd'T'HH:MM:sso";

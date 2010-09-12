@@ -156,11 +156,12 @@ dl.actionLog dt, dl.actionLog dd {
 }
 
 ul#acquisitions_actions {
-  padding: 5px 0 5px 15px;	
+  padding: 5px 0;	
 }
 
 ul#acquisitions_actions li {
   padding: 4px 0;	
+  list-style: none;
 }
 
 ul#acquisitions_actions textarea {
@@ -169,12 +170,14 @@ ul#acquisitions_actions textarea {
   margin-bottom: 4px;
 }
 
-.list_style_show {
-  list-style-image: url('/images/icon_list_show.png');			
+.action_box_show {
+  background: transparent url('/images/icon_list_show.png') no-repeat left center;
+  padding-left: 14px;
 }
 
-.list_style_hide {
-  list-style-image: url('/images/icon_list_hide.png');			
+.action_box_hide {
+  background: transparent url('/images/icon_list_hide.png') no-repeat left center;
+  padding-left: 14px;
 }
 
 .comment_formlet {
@@ -185,16 +188,16 @@ ul#acquisitions_actions textarea {
   display: none;	
 }
 
-#formlet_upload_copyright_permission dl {
+#formlet_upload_copyright_attachment dl {
 	margin: 5px 0 10px 0;
 }
 
-#formlet_upload_copyright_permission label {
+#formlet_upload_copyright_attachment label {
 	color: #555;
 	font-weight: normal;
 }
 
-#formlet_upload_copyright_permission dd {
+#formlet_upload_copyright_attachment dd {
 	margin-left: 0;
 }
 
