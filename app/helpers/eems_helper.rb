@@ -45,7 +45,7 @@ module EemsHelper
 
   # Get shortened source URL (max length = 50 characters)
   def shorten_url(url)
-    max_length = 50
+    max_length = 40
     
     if url.length > max_length
       url = url[0, max_length] + '...'
