@@ -37,7 +37,7 @@ input, textarea, select, form, dl, dt, dd, textarea {
 	text-decoration: none;
 }
 
-.eems-header-links {
+#eems-popup-feedback-link {
 	background-color: transparent;
 	border-width: 0; 
 	padding: 4px; 
@@ -81,6 +81,13 @@ a#eems-popup-feedback-link, a:link#eems-popup-feedback {
 	margin: 0 10px;
 }
 
+#eems-widget-tabs-border-bottom {
+	border-top: 1px solid #aaa; 
+	clear: both; 
+	height: 1px; 
+	margin-top: 2px;
+}
+
 #eems-widget-tabs a, #eems-widget-tabs a:link {
 	color: #333;
 	outline: none;
@@ -100,6 +107,26 @@ a#eems-popup-feedback-link, a:link#eems-popup-feedback {
 	border-left: 0px solid #aaa;
 	border-right: 0px solid #aaa;
 	padding: 4px 8px;	
+}
+
+#eems-progress-bar-box {
+  background-color: #aaa; 
+  float: left;
+  height: 10px; 
+  margin-top: 4px;
+  width: 300px; 
+}
+
+#eems-progress-bar {
+	height: 10px;	
+	width: 0px; 
+}
+
+#eems-percent-done {
+	float: left; 
+	text-align: left; 
+	text-indent: 3px;
+	width: 40px; 
 }
 
 #eems-browser-widget dd, #eems-desktop-widget dd {
