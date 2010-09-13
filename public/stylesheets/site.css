@@ -152,6 +152,10 @@ a#eems-popup-feedback-link, a:link#eems-popup-feedback {
   margin: 0 auto;
 }
 
+#details-link {
+	font-weight: bold;
+}
+
 #eems-links a, #eems-links a:link{
   color: #770000;
   text-decoration: underline;
