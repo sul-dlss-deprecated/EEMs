@@ -189,9 +189,7 @@ function submitEEMDesktopUpload(pars, logMsg) {
   
 }
 
-
-
-// submit EEM object 	
+// submit EEM object (browser upload)	
  function submitEEM(pars, logMsg) { 
    pars = pars + '&eem[statusDatetime]=' + dateFormat(dateFormatMask);
    pars = pars + '&eem[copyrightStatusDate]=' + dateFormat(dateFormatMask);
