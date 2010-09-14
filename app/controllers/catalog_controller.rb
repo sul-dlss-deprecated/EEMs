@@ -23,7 +23,7 @@ class CatalogController < ApplicationController
   #   flash[:notice] = "Sorry, I don't understand your search."
   #   redirect_to catalog_index_path
   # }
-  
+       
   # get search results from the solr index
   def index
     @extra_controller_params ||= {}
@@ -46,6 +46,8 @@ class CatalogController < ApplicationController
   
   # get single document from the solr index
   def show
+    params[:id] = 'druid:' + params[:id] unless params[:id] =~ /^druid:/ 
+    
     @response, @document = get_solr_response_for_doc_id
     @eem = Eem.find(@document[:id].to_s)
     @parts = @eem.parts unless (@eem.parts.nil?)
