@@ -145,6 +145,7 @@ function submitEEMDesktopUpload(pars, logMsg) {
 
 	var options = {
     target: '#upload_target',
+    timeout: 10000,
     beforeSubmit: function() {
 	    $('#eems-desktop-widget').fadeOut('slow');
 	    $('#eems-loader').show();	 
@@ -160,9 +161,9 @@ function submitEEMDesktopUpload(pars, logMsg) {
 	    var data = stripHTMLTags(data);
 	    var eem_pid = data.replace(/^eem_pid=/, '');
 
-	    if (eem_pid != null && eem_pid != undefined) {
+	    if (eem_pid != null && eem_pid != undefined && (/^druid:\w{11}/.test(eem_pid))) {
 		    $('#eems-loader').hide();		    
-			  $('#details-link').attr('href', '/view/' + eem_pid);				
+			  $('#details-link').attr('href', '/view/' + trimmedId(eem_pid));				
 		    $('#eems-success').show();						
 			  $('#eems-links').show();
 			
@@ -180,7 +181,8 @@ function submitEEMDesktopUpload(pars, logMsg) {
 	    else {
 			  showPDFErrorMsg(); 	
 			}									 		
-	  }	
+	  },
+	  error: function() { showEEMsErrorMsg(); }		
   };
 
   $('#eems-desktop-widget').target = 'upload_target';
@@ -223,10 +225,10 @@ function createEEM_WithPDF(eem_data, logMsg) {
 	    $('#eems-loader').hide();
 			$('#eems-upload-progress').show();	  
 		  				
-			if (eem != null) {
+			if (eem != null && eem.eem_pid != null && (/^druid:\w{11}/.test(eem.eem_pid))) {
 		    var selectorName = $('#eem_selectorName').val();
 
-			  $('#details-link').attr('href', '/view/' + eem.eem_pid);	
+			  $('#details-link').attr('href', '/view/' + trimmedId(eem.eem_pid));	
 	      content_file_id = eem.content_file_id;		
 
 	      // if 'Send to Technical Services' button is pressed 
@@ -258,10 +260,10 @@ function createEEM_WithoutPDF(eem_data, logMsg) {
 	  timeout: 10000, 
 	  data: eem_data, 
 	  success: function(eem) {			
-			if (eem != null) {
+			if (eem != null && eem.eem_pid != null && (/^druid:\w{11}/.test(eem.eem_pid))) {				
 				var pars = { entry: logMsg, authenticity_token: token };
 	      addLogEntry(eem.eem_pid, pars, false);		
-			  $('#details-link').attr('href', '/view/' + eem.eem_pid);	
+			  $('#details-link').attr('href', '/view/' + trimmedId(eem.eem_pid));	
 		    $('#eems-loader').hide();	
 		    $('#eems-success').show();			
 		    $('#eems-links').show();							  
@@ -382,5 +384,12 @@ function toggleSendToTechServices(widgetName) {
 	}	
 }
 
-
+function trimmedId(id) {
+	if (id != null && id != undefined) {
+		return id.replace(/^druid:/, '');		
+	}
+	else {
+		return '';
+	}
+}
 

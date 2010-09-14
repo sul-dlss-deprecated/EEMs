@@ -8,7 +8,9 @@ module EemsHelper
 
   # Get value for a given eem field
   def print_eems_field(name, msg = '') 
-    value = eval("@eem.fields[:#{name.to_s}][:values].first")
+    if (!@eem.nil?)
+      value = eval("@eem.fields[:#{name.to_s}][:values].first")
+    end
     
     if (value.nil? || value.empty?)
       value = msg
