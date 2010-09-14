@@ -118,6 +118,10 @@ h1.mainTitle {
   color: #9b0100;
 }
 
+input#input_title {
+	width: 500px;
+}
+
 h3 {
   font-size: 1.2em;
   font-weight: bold;
