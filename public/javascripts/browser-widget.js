@@ -145,7 +145,7 @@ function submitEEMDesktopUpload(pars, logMsg) {
 
 	var options = {
     target: '#upload_target',
-    timeout: 10000,
+    timeout: 180000,
     beforeSubmit: function() {
 	    $('#eems-desktop-widget').fadeOut('slow');
 	    $('#eems-loader').show();	 
