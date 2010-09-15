@@ -1,6 +1,7 @@
+
 var EEMsWidget = { 
   popup_width : 490, 
-  popup_height : 490, 
+  popup_height : 510, 
   
   showPopOver : function(baseUrl){                      
     if (document.getElementById('eems_popup') != null) {
@@ -11,7 +12,7 @@ var EEMsWidget = {
     var popup = document.createElement('div');
     var popup_style = 'overflow: auto; top: 10px; position: fixed; text-align: left; ' + 
       'font: normal normal normal 9px/1.5 Tahoma,Arial; z-index: 100000; border-color: 1px solid blue';
-    popup.id = 'eems_popup';
+    popup.id = 'eems-popup';
     popup.setAttribute('style', popup_style);
     popup.style.left = (document.body.clientWidth - this.popup_width - 10) + 'px';
     popup.style.width = this.popup_width + 'px';
@@ -38,25 +39,20 @@ var EEMsWidget = {
     popup_content.style.backgroundColor = '#fff';
     
     var close_link = document.createElement('a');
-    var close_link_style = 'color: #770000; font-weight: bold; position: absolute; ' +
-      'right: 15px; top: 6px; padding: 4px; text-decoration: none; border-width: 0; background-color: transparent;';    
+    var close_link_style = 'background-color: #a46666; color: #fff; font-weight: bold; position: absolute; -moz-border-radius: 3px; -webkit-border-radius: 3px;' +
+      'right: 6px; top: 6px; padding: 0 5px 2px 5px; text-decoration: none; border-width: 0;';    
     close_link.setAttribute('style', close_link_style);
     close_link.setAttribute('href', '#');
-    close_link.setAttribute('onclick', "javascript:(function(){elemWidget=document.getElementById('eems_popup');elemWidget.parentNode.removeChild(elemWidget);}())");
+    close_link.setAttribute('onmouseover', "this.style.backgroundColor = '#770000';");
+    close_link.setAttribute('onmouseout', "this.style.backgroundColor = '#a46666';");
+    close_link.setAttribute('onclick', "javascript:(function(){elemWidget=document.getElementById('eems-popup');elemWidget.parentNode.removeChild(elemWidget);}())");
     
     close_link.innerHTML = 'x';
     popup_content.appendChild(close_link);
     
-    var popup_title = document.createElement('div');
-    var popup_title_style = 'font-weight: bold; padding: 8px 4px; color: #770000; border-bottom: 1px solid #777; margin: 5px;'
-    popup_title.setAttribute('style', popup_title_style);
-    
-    var popup_title_text = document.createTextNode('EEMs Selection Widget');
-    popup_title.appendChild(popup_title_text);    
-
     var iframeForm = document.createElement('iframe');
     iframeForm.style.width = (this.popup_width - 50) + 'px';
-    iframeForm.style.height = (this.popup_height - 70) + 'px';
+    iframeForm.style.height = (this.popup_height - 40) + 'px';
     iframeForm.style.overflow = "hidden";
     iframeForm.style.marginLeft = '5px';
     iframeForm.style.borderWidth = 0;
@@ -64,13 +60,17 @@ var EEMsWidget = {
     iframeForm.name = 'iframeForm';
     iframeForm.src = baseUrl + '/eems/new?referrer=' + parent.location.href;
 
-    popup_content.appendChild(popup_title);
     popup_content.appendChild(iframeForm);
     
     popup.appendChild(popup_container);
     popup.appendChild(popup_content);
     
-    document.getElementsByTagName('body')[0].appendChild(popup);
+    if (document.getElementsByTagName('body')[0] != null && document.getElementsByTagName('body')[0] != undefined) {
+	    document.getElementsByTagName('body')[0].appendChild(popup);	
+    } else {
+	    alert('Sorry, EEMs widget cannot be opened in this page');
+	    return;
+    }
     
     this.setupWidgetDragging();
   },
@@ -89,7 +89,7 @@ var EEMsWidget = {
       top : { min : 0, max: (this.f_clientHeight() - this.popup_height) }
     };
 
-    var elemPopup = document.getElementById('eems_popup');
+    var elemPopup = document.getElementById('eems-popup');
          
     var startWidgetMove = function(event) {
       if (!event) event = window.event; // required for IE

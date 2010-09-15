@@ -26,6 +26,11 @@
 	<dt>Copyright :</dt>
 	<dd><%= @document[:copyrightStatus_field].to_s %> <%= @document[:copyrightDate_field].to_s %></dd>
 
+  <dt>Copyright permission :</dt>
+  <dd>
+    <%= render :partial => 'eems/_detail_partials/permission_files', :locals => {:readOnly => true} %>
+  </dd>
+
 	<dt>Purchase :</dt>
 	<dd><%= @document[:paymentType_field].to_s %> <%= @document[:paymentFund_field].to_s %></dd>            
 </dl>

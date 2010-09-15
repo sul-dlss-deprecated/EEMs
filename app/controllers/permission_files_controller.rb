@@ -22,7 +22,7 @@ class PermissionFilesController < ApplicationController
     log_uploaded
     response = create_response
 
-    render :json => response
+    redirect_to "/view/#{@eem.pid}"
   end
   
   # Handles http DELETE

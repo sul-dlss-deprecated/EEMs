@@ -28,32 +28,109 @@ input, textarea, select, form, dl, dt, dd, textarea {
   line-height: 1.6;    
 }
 
-#eems-new-form-widget textarea {
+#eems-popup-header {
+	border-bottom: 1px dotted #bbb; 
+	color: #333;
+	font-weight: bold;
+	margin: 4px 8px;
+	padding: 5px; 
+	text-decoration: none;
+}
+
+#eems-popup-feedback-link {
+	background-color: transparent;
+	border-width: 0; 
+	padding: 4px; 
+	position: absolute; 
+	right: 10px; 
+	top: 7px; 
+}
+
+a#eems-popup-feedback-link, a:link#eems-popup-feedback {
+	color: #770000;
+	font-weight: normal;
+	margin-right: 16px;
+	text-decoration: none;
+}
+
+#eems-browser-widget textarea, #eems-desktop-widget textarea {
   border: 1px solid #999;
   background-color: #fff;
   color: #555;
 }
 
-#eems-new-form-widget {
+#eems-browser-widget, #eems-desktop-widget {
   border: 0px solid #ccc;
-  height: 400px;
-  width: 420px;
+  height: 420px;
+  overflow: auto;
   padding: 10px;
+  width: 420px;
 }
 
-#eems-new-form-widget dt, #eems-new-form-widget dd {
-  float: left;
-}
-
-#eems-new-form-widget dt {
+#eems-browser-widget dt, #eems-desktop-widget dt {
   clear: left;
+  float: left;
   padding: 4px 8px 4px 0;
   width: 110px;
   text-align: right;
   color: #555; 
 }
 
-#eems-new-form-widget dd {
+#eems-widget-tabs {
+	padding-top: 10px;
+	margin: 0 10px;
+}
+
+#eems-widget-tabs-border-bottom {
+	border-top: 1px solid #aaa; 
+	clear: both; 
+	height: 1px; 
+	margin-top: 2px;
+}
+
+#eems-widget-tabs a, #eems-widget-tabs a:link {
+	color: #333;
+	outline: none;
+	text-decoration: none;
+	margin-left: 10px;
+}
+
+.eems-widget-tab-active {
+	background: #fff url('/images/widget_tab_bg.png') repeat-x top left;	
+	border-left: 1px solid #aaa;
+	border-right: 1px solid #aaa;
+	padding: 5px 10px;
+}
+
+.eems-widget-tab-inactive {
+	background-image: none;
+	border-left: 0px solid #aaa;
+	border-right: 0px solid #aaa;
+	padding: 4px 8px;	
+}
+
+#eems-progress-bar-box {
+  background-color: #aaa; 
+  float: left;
+  height: 10px; 
+  margin-top: 4px;
+  width: 300px; 
+}
+
+#eems-progress-bar {
+	height: 10px;	
+	width: 0px; 
+}
+
+#eems-percent-done {
+	float: left; 
+	text-align: left; 
+	text-indent: 3px;
+	width: 40px; 
+}
+
+#eems-browser-widget dd, #eems-desktop-widget dd {
+  float: left;
   margin: 0;
   padding: 4px 0;
 }
@@ -100,6 +177,16 @@ input, textarea, select, form, dl, dt, dd, textarea {
   width: 350px;
   padding: 60px 0 0 0;	
   margin: 0 auto;
+}
+
+#details-link {
+	font-weight: bold;
+}
+
+#eems-links a, #eems-links a:link{
+  color: #770000;
+  text-decoration: underline;
+  margin: 0;
 }
 
 .marginLeft_14px {

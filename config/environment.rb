@@ -30,6 +30,7 @@ Rails::Initializer.run do |config|
   config.gem 'json'
   config.gem 'authlogic', :version=>'2.1.2'
   config.gem 'eem_model', :version=>'0.0.2'
+
   #config.gem 'lyber_core'
   
   # Only load the plugins named here, in the order given (default is alphabetical).

@@ -15,8 +15,8 @@
       <h3>Actions</h3> 
       <ul id="acquisitions_actions">
 			  <% if is_eem_editable(print_eems_field('status')) %>
-	        <li class="list_style_show">
-	          <%= link_to 'Send to Technical Services',  '#', {:id => 'link_send_to_tech_services'} %> 
+	        <li>
+	          <%= link_to 'Send to Technical Services',  '#', {:id => 'link_send_to_tech_services', :class => 'action_box_show'} %> 
 	          <div class="comment_formlet" id="formlet_send_to_tech_services">
 	            <textarea id="text_send_to_acquistions" rows="5" cols="28"></textarea>
 	            <div style="text-align: right; padding-right: 8px;">
@@ -28,8 +28,8 @@
         <% end %>
 
 			  <% if is_eem_editable(print_eems_field('status')) %>
-	        <li class="list_style_show">
-	          <%= link_to 'Cancel this request',  '#', {:id => 'link_cancel_this_request'} %> 
+	        <li>
+	          <%= link_to 'Cancel this request',  '#', {:id => 'link_cancel_this_request', :class => 'action_box_show'} %> 
 	          <div class="comment_formlet" id="formlet_cancel_this_request">
 	            <textarea id="text_cancel_this_request" rows="5" cols="28"></textarea>
 	            <div style="text-align: right; padding-right: 8px;">
@@ -40,8 +40,25 @@
 	        </li>    
         <% end %>
 
-        <li class="list_style_show">
-          <%= link_to 'Question/comment to selector',  '#', {:id => 'link_comment_to_selector'} %> 
+	      <li>
+	        <%= link_to 'Upload copyright attachment',  '#', {:id => 'link_upload_copyright_attachment', :class => 'action_box_show'} %> 
+          <% form_tag("/eems/#{@eem.pid}/permission_files", :method => 'post', :enctype => 'multipart/form-data', :id => 'formlet_upload_copyright_attachment', :class => 'comment_formlet') do %>		
+		        <dl>
+			        <dt><%= label_tag 'permission_file_upload', 'Select file (.doc, .pdf, .txt, etc.)' %></dt>
+			        <dd><%= file_field '', '', {:size => 18, :id => 'permission_file_upload', :name => 'file'} %></dd>
+			        <dt><%= label_tag 'permission_desc', 'Description' %></dt>
+			        <dd><input type="text" size="28" style="width: auto;" id="comment" name="comment"></dd>
+			      </dl>
+	          <div style="text-align: right; padding: 0 8px 2px 0;">
+		          <%= image_tag '/images/c_loader.gif', :id => 'permission_files_upload_loader', :class => 'c_loader', :style => 'display: none;' %>
+	    	      <input type="button" disabled="disabled" id="upload_copyright_attachment_ok" value="Upload">
+	            <%= link_to 'Cancel', '#', :id => 'upload_copyright_attachment_cancel' %>
+	          </div>
+	        <% end %>    
+	      </li>    
+
+        <li>
+          <%= link_to 'Question/comment to selector',  '#', {:id => 'link_comment_to_selector', :class => 'action_box_show'} %> 
           <div class="comment_formlet" id="formlet_comment_to_selector">
             <textarea id="text_comment_to_selector" rows="5" cols="28"></textarea>
             <div style="text-align: right; padding-right: 8px;">

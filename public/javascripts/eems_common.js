@@ -42,3 +42,44 @@ function eemUpdate(pid, pars) {
 
   return false;
 }
+
+
+function stripHTMLTags(strInputCode){
+ 	strInputCode = strInputCode.replace(/&(lt|gt);/g, function (strMatch, p1){
+	 	return (p1 == "lt")? "<" : ">";
+	});
+	var strTagStrippedText = strInputCode.replace(/<\/?[^>]+(>|$)/g, "");
+  return strTagStrippedText;	
+}
+
+
+function showBrowserWidget() {
+	$('#eems-browser-widget-toggle').addClass('eems-widget-tab-active');
+	$('#eems-desktop-widget-toggle').removeClass('eems-widget-tab-active');
+	$('#eems-desktop-widget').fadeOut();
+	$('#eems-browser-widget').fadeIn();
+	$('#eems-upload-progress').hide();	  	
+	$('#eems-links').hide();	  	
+}
+
+function showDesktopWidget() {
+	$('#eems-desktop-widget-toggle').addClass('eems-widget-tab-active');
+	$('#eems-browser-widget-toggle').removeClass('eems-widget-tab-active');
+	$('#eems-browser-widget').fadeOut();	
+	$('#eems-desktop-widget').fadeIn();
+	$('#eems-upload-progress').hide();	  	
+	$('#eems-links').hide();	  	
+}
+
+
+$(document).ready(function() {
+	$('#eems-browser-widget-toggle').click(function() {
+		showBrowserWidget();
+	});
+
+	$('#eems-desktop-widget-toggle').click(function() {
+		showDesktopWidget();
+	});	
+	
+	showBrowserWidget();
+});

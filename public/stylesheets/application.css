@@ -48,7 +48,7 @@ input, textarea, select, form, dl, dt, dd, textarea {
   width: 140px;
 }
 
-#userNameBox {
+#topNavLinks {
   width: 920px;	
   text-align: right;
   padding: 0 5px 5px 0;
@@ -118,6 +118,10 @@ h1.mainTitle {
   color: #9b0100;
 }
 
+input#input_title {
+	width: 500px;
+}
+
 h3 {
   font-size: 1.2em;
   font-weight: bold;
@@ -156,11 +160,12 @@ dl.actionLog dt, dl.actionLog dd {
 }
 
 ul#acquisitions_actions {
-  padding: 5px 0 5px 15px;	
+  padding: 5px 0;	
 }
 
 ul#acquisitions_actions li {
   padding: 4px 0;	
+  list-style: none;
 }
 
 ul#acquisitions_actions textarea {
@@ -169,12 +174,14 @@ ul#acquisitions_actions textarea {
   margin-bottom: 4px;
 }
 
-.list_style_show {
-  list-style-image: url('/images/icon_list_show.png');			
+.action_box_show {
+  background: transparent url('/images/icon_list_show.png') no-repeat left center;
+  padding-left: 14px;
 }
 
-.list_style_hide {
-  list-style-image: url('/images/icon_list_hide.png');			
+.action_box_hide {
+  background: transparent url('/images/icon_list_hide.png') no-repeat left center;
+  padding-left: 14px;
 }
 
 .comment_formlet {
@@ -184,6 +191,20 @@ ul#acquisitions_actions textarea {
   padding: 5px;
   display: none;	
 }
+
+#formlet_upload_copyright_attachment dl {
+	margin: 5px 0 10px 0;
+}
+
+#formlet_upload_copyright_attachment label {
+	color: #555;
+	font-weight: normal;
+}
+
+#formlet_upload_copyright_attachment dd {
+	margin-left: 0;
+}
+
 
 div#action_log {
   float: clear;
@@ -259,4 +280,23 @@ a.edit_link, a.sidebar_button {
 	padding: 2px 0;
 	color: #555;
 	font-style: italic;
+}
+
+.c_loader {
+	border: 0; 
+	margin: 0 4px -2px 0;
+}
+
+ul#list_permission_files {
+  margin: 0;
+  padding: 0;	
+}
+
+ul#list_permission_files li {
+	padding: 0; 
+	margin: 0 0 0 15px;
+}
+
+a.delete_permission_file_link, a:link.delete_permission_file_link {
+	color: #bb0000;
 }

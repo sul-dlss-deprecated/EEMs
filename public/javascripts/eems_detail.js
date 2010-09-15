@@ -5,7 +5,7 @@ var data = "ABBASI ABBOTT ABERCROMB ABRAHAMSW ACKERMANR AFRICA AFRICADOC AHNE AN
 var defaultValues = {
   "title" : "Click to add title", 
   "creatorName" : "Click to add creator name", 
-  "note" : "Click to add citations, comments, etc.",
+  "note" : "Click to add citations, comments, copyright notes, etc.",
   "payment_fund" : "(Fund name)"
 };
 var dateFormatMask = "yyyy-mm-dd'T'HH:MM:sso";
@@ -230,3 +230,17 @@ function sendToTechServices() {
 	});
 }
 
+function deletePermissionFile(eem_pid, file_pid) {
+	var uniq_id = file_pid.replace('druid:', '');
+	
+	$('#delete_' + uniq_id).hide();
+	$('#loader_' + uniq_id).show();
+	
+	$.ajax({
+	  url: '/eems/' + eem_pid + '/permission_files/' + file_pid,
+	  type: 'DELETE', 
+	  success: function(status) {
+		  if (status == 'OK') { window.location.reload(); } 
+	  }	
+	});
+}
