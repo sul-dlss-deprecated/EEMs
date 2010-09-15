@@ -24,8 +24,8 @@ describe EemsHelper do
   end  
 
   describe "#shorten_url" do
-    it "should return a shortened URL (if length is less than 50 chars) for a given URL" do
-      helper.shorten_url('http://www.irs.gov/app/picklist/list/formsPublications.html').should == 'http://www.irs.gov/app/picklist/list/formsPublicat...'
+    it "should return a shortened URL (if length is less than 40 chars) for a given URL" do
+      helper.shorten_url('http://www.irs.gov/app/picklist/list/formsPublications.html').should == 'http://www.irs.gov/app/picklist/list/for...'
       helper.shorten_url('http://www.stanford.edu/01.pdf').should == 'http://www.stanford.edu/01.pdf'      
     end 
   end  
