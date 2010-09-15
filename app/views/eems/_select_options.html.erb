@@ -28,9 +28,10 @@
   }
   
   id = field if id.nil?
+  name = field if name.nil?
 %>
 
-<select name="eem[<%= id %>]" id="eem_<%= id %>">
+<select name="eem[<%= name %>]" id="<%= id %>">
     
 <% list_options["#{field.to_s}"].each { |status| %>
   <% status.each { |value, label| %>    

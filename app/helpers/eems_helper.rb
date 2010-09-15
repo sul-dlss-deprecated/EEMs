@@ -8,7 +8,9 @@ module EemsHelper
 
   # Get value for a given eem field
   def print_eems_field(name, msg = '') 
-    value = eval("@eem.fields[:#{name.to_s}][:values].first")
+    if (!@eem.nil?)
+      value = eval("@eem.fields[:#{name.to_s}][:values].first")
+    end
     
     if (value.nil? || value.empty?)
       value = msg
@@ -45,7 +47,7 @@ module EemsHelper
 
   # Get shortened source URL (max length = 50 characters)
   def shorten_url(url)
-    max_length = 50
+    max_length = 40
     
     if url.length > max_length
       url = url[0, max_length] + '...'

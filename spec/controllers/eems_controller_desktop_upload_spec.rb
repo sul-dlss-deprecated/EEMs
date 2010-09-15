@@ -57,11 +57,7 @@ describe EemsController do
       props_ds = @part.datastreams['properties']
       props_ds.filename_values.first.should =~ /pre space.pdf/
       
-      json = JSON.parse(response.body)
-      json.should == {
-        'eem_pid' => 'pid:123',
-        'part_pid'=> 'part:345'
-        }
+      response.body.should == 'eem_pid=pid:123'
     end
     
   end

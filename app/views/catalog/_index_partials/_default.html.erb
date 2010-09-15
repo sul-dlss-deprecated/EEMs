@@ -4,7 +4,7 @@
     <% if document.get solr_fname %>
 
         <% if solr_fname == 'title_field' %>
-          <%= link_to_document document, :label=>document_show_link_field %>
+          <%= link_to document.get('title_field'), :controller => "catalog", :action => "show", :id => document.get('id').gsub(/^druid:/, '')%>
 	      <% elsif solr_fname == 'system_create_date' || solr_fname == 'requestDatetime_field' %>
 	          <%= formatSearchResultsTimestamp(document.get(solr_fname)) %>
         <% else %>
