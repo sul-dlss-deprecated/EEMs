@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   config.gem 'delayed_job', :version => '2.0.3'
   config.gem 'curb'
   config.gem "active-fedora", :version => "1.1.13"
-  config.gem 'ruby-fedora', :version => '1.0.7'
+  config.gem "lyber-core", :lib => 'lyber_core', :version => "0.9.3.9"
   #config.gem 'rspec-rails', :version => '1.3.2'
   #config.gem 'rspec', :version => '1.3.0'
   config.gem 'json'
