@@ -129,12 +129,14 @@ describe EemsController do
   
   describe "user_required filter" do
     describe "with no user" do
-      before(:each) do
-        get "show", :id => 'dontcare', :referrer => "http://someurl.com"
-      end
-
       it "should redirect to /login and pass the referrer" do
+        get "show", :id => 'dontcare', :referrer => "http://someurl.com"
         response.should redirect_to('/login?referrer=http://someurl.com')
+      end
+      
+      it "and no referrer should redirect to /login and pass '/' as the referrer" do
+        get "show", :id => 'dontcare'
+        response.should redirect_to('/login?referrer=/')
       end
     end
     

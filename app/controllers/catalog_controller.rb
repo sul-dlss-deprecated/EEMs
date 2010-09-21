@@ -3,6 +3,8 @@ class CatalogController < ApplicationController
   include Blacklight::SolrHelper
   
   before_filter :require_fedora, :require_solr, :search_session, :history_session
+  before_filter :user_required
+  before_filter :authorized_user
   before_filter :delete_or_assign_search_session_params,  :only=>:index
   after_filter :set_additional_search_session_values, :only=>:index
   

@@ -50,5 +50,24 @@ class ApplicationController < ActionController::Base
       end
       h
     end
+    
+    def user_required
+      if(session[:user_id].blank?)
+        ref = params[:referrer]
+        ref = '/' unless(ref)
+        redirect_to '/login' + '?referrer=' + ref
+        return false
+      end
+      true
+    end
+
+    def authorized_user
+      if(EemsUser.valid?(session[:user_id]))
+        return true
+      else
+        render :status => 401, :text => "You are unauthorized to use this application"
+        return false
+      end
+    end
   
 end

@@ -106,23 +106,6 @@ class EemsController < ApplicationController
   end
   
   protected
-  def user_required
-    if(session[:user_id].blank?)
-      redirect_to '/login' + '?referrer=' + params[:referrer]
-      return false
-    end
-    true
-  end
-  
-  def authorized_user
-    if(EemsUser.valid?(session[:user_id]))
-      return true
-    else
-      render :status => 401, :text => "You are unauthorized to use this application"
-      return false
-    end
-  end
-  
   def create_eem_and_log
     @eem = Eem.from_params(params[:eem])
     attrs = unescape_keys(params[:eem])
