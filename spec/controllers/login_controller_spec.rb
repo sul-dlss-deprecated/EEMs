@@ -16,7 +16,7 @@ describe LoginController do
     it "should redirect to /login/webauth if the referrer is '/'" do
       get 'new', :referrer => '/'
       
-      response.should redirect_to('http://test.host/login/webauth?referrer=%2F')
+      response.should redirect_to('/login/webauth/?referrer=/')
     end
 
   end
