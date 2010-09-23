@@ -2,6 +2,11 @@
 class LoginController < ApplicationController
 
   def new
+    # Automatically redirect requrests to the /login/webauth path if the referrer == '/'
+    # This means the request came from the home page, and we do not want to render the login/new.erb vie
+    if(params[:referrer] == '/')
+      redirect_to :controller => 'login', :action => 'webauth', :referrer => '/'
+    end
   end
   
   #This method protected by webauth as configured in apache
