@@ -9,6 +9,9 @@ class Eem < EemModel::Eem
   include DorBase
   
   has_relationship "permission_files", :is_dependent_of, :inbound => true
+  
+  has_metadata :name => "DC", :type => ActiveFedora::QualifiedDublinCoreDatastream do |m|
+  end
     
   has_metadata :name => 'actionLog', :type => Dor::ActionLogDatastream do |m|
     #nada
@@ -55,6 +58,15 @@ class Eem < EemModel::Eem
   end
   
   def set_dc_and_fedora_metadata(props_ds)
+    dc = datastreams['DC']
+    dc.title_values = props_ds.title_values
+    dc.identifier_append self.pid
+    if(props_ds.creatorPerson_values != [])
+      dc.creator_values = props_ds.creatorPerson_values
+    else
+      dc.creator_values = props_ds.creatorOrg_values
+    end
+    
     title = props_ds.title_values.first
 		if(title)
       self.label = 'EEMs: ' + title.gsub(/[\s\v\b]+/, " ")

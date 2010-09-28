@@ -12,6 +12,22 @@ describe Eem do
     @eem = Eem.new(:pid => 'my:pid123')
     Eem.stub!(:new).and_return(@eem)
     @eem.stub!(:save)
+    
+    @submitted_eem = HashWithIndifferentAccess.new({
+      :copyrightStatusDate => '1/1/10',
+      :copyrightStatus => 'pending',
+      :creatorName => 'Joe Bob',
+      :creatorType => 'person',
+      :language => 'English',
+      :note => 'text of note',
+      :paymentType => 'free|paid',
+      :paymentFund => 'BIOLOGY',
+      :selectorName => 'Bob Smith',
+      :selectorSunetid => 'bsmith',
+      :title => 'Digital Content Title',
+      :sourceUrl => 'http://something.org/papers',
+      :requestDatetime => 'sometimestamp'
+    })
   end
   
   it "should be a kind of ActiveFedora::Base" do
@@ -20,6 +36,10 @@ describe Eem do
   
   it "should have a eemsProperties datastream" do
     @eem.datastreams['eemsProperties'].should_not be_nil
+  end
+  
+  it "should have a DC datastream" do
+    @eem.datastreams['DC'].should_not be_nil
   end
   
   it "should have access to permission files" do
@@ -37,25 +57,6 @@ describe Eem do
   end
   
   describe "creator initialization" do
-    before(:each) do
-      @submitted_eem = HashWithIndifferentAccess.new({
-        :copyrightStatusDate => '1/1/10',
-        :copyrightStatus => 'pending',
-        :creatorName => 'Joe Bob',
-        :creatorType => 'person',
-        :language => 'English',
-        :note => 'text of note',
-        :paymentType => 'free|paid',
-        :paymentFund => 'BIOLOGY',
-        :selectorName => 'Bob Smith',
-        :selectorSunetid => 'bsmith',
-        :title => 'Digital Content Title',
-        :sourceUrl => 'http://something.org/papers',
-        :requestDatetime => 'sometimestamp'
-      })
-      
-      
-    end
     
     it "should initialize an eem with a creator type of person" do
       eem = Eem.from_params(@submitted_eem.stringify_keys)
@@ -76,27 +77,33 @@ describe Eem do
   end
   
   describe "labels" do
-    before(:each) do
-      @submitted_eem = HashWithIndifferentAccess.new({
-        :copyrightStatusDate => '1/1/10',
-        :copyrightStatus => 'pending',
-        :creatorName => 'Joe Bob',
-        :creatorType => 'person',
-        :language => 'English',
-        :note => 'text of note',
-        :paymentType => 'free|paid',
-        :paymentFund => 'BIOLOGY',
-        :selectorName => 'Bob Smith',
-        :selectorSunetid => 'bsmith',
-        :title => 'Digital Content Title',
-        :sourceUrl => 'http://something.org/papers',
-        :requestDatetime => 'sometimestamp'
-      })
-    end
+
     
     it "should set the fedora object label to 'EEMs: {title}" do
       eem = Eem.from_params(@submitted_eem.stringify_keys)
       eem.label.should == 'EEMs: Digital Content Title'
+    end
+  end
+  
+  describe "Dublin Core" do
+    it "should be initialized with creator, title, and identifier" do
+      eem = Eem.from_params(@submitted_eem.stringify_keys)
+      
+      dc = eem.datastreams['DC']
+      dc.creator_values.should == ['Joe Bob']
+      dc.identifier_values.should == ['my:pid123']
+      dc.title_values.should == ['Digital Content Title']
+    end
+    
+    it "should handle either personCreator or orgCreator" do
+      @submitted_eem[:creatorType] = 'organization'
+      @submitted_eem[:creatorName] = 'US Geological Survey'
+      
+      eem = Eem.from_params(@submitted_eem.stringify_keys)
+      dc = eem.datastreams['DC']
+      dc.creator_values.should == ['US Geological Survey']
+      dc.identifier_values.should == ['my:pid123']
+      dc.title_values.should == ['Digital Content Title']
     end
   end
   
