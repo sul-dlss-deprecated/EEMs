@@ -42,5 +42,33 @@ describe EemsHelper do
       helper.get_local_file_path.should == Sulair::WORKSPACE_URL + '/etd:123/file%20some%20space.pdf'
     end
   end
+  
+  describe "#print_url_decoded" do
+    before(:each) do
+      @parts = stub('parts')
+      eem = stub('eem')
+      eem.stub!(:pid).and_return('etd:123')
+      assigns[:parts] = @parts
+      assigns[:eem] = eem
+    end
+    
+    it "should url-decode the url to the original content" do
+      @parts.stub_chain(:[], :datastreams, :[], :url_values, :first).and_return('http://research-repository.st-andrews.ac.uk/bitstream/10023/967/1/The%20Segur%20Reform%20of%20the%20French%20Army%20_Bien_.pdf')
+    
+      helper.print_url_decoded.should == 'http://research-repository.st-andrews.ac.uk/bitstream/10023/967/1/The Segur Reform of the French Army _Bien_.pdf'
+    end
+    
+    it "should url-decode an empty string without failing" do
+      @parts.stub_chain(:[], :datastreams, :[], :url_values, :first).and_return('')
+    
+      helper.print_url_decoded.should == ''
+    end
+    
+    it "should url-decode nil without failing" do
+      @parts.stub_chain(:[], :datastreams, :[], :url_values, :first).and_return(nil)
+    
+      helper.print_url_decoded.should == ''
+    end
+  end
     
 end

@@ -15,7 +15,7 @@
 	<dd><%= render :partial => 'catalog/_show_partials/creator_name', :locals => {:document => @document} %></dd>
 
 	<dt>Direct link to PDF :</dt>
-	<dd><%= link_to print_parts_field('url'),  print_parts_field('url'), {:id => 'link_url', :target => '_blank'} %></dd>
+	<dd><%= link_to print_url_decoded,  print_parts_field('url'), {:id => 'link_url', :target => '_blank'} %></dd>
 
 	<dt>Local copy of PDF :</dt>
 	<dd><%= link_to get_local_filename(),  get_local_file_path(), {:id => 'link_local_file'} %></dd>
