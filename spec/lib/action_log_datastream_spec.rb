@@ -91,7 +91,7 @@ describe Dor::ActionLogDatastream do
     end
     
     it "can create itself from fedora datastream xml" do
-      doc = REXML::Document.new(@dsfoxml).root
+      doc = Nokogiri::XML(@dsfoxml).root
       ds = Dor::ActionLogDatastream.from_xml(Dor::ActionLogDatastream.new, doc)
       
       timestamps, actions, comments = [], [], []

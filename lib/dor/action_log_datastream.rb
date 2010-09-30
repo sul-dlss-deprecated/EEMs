@@ -1,6 +1,6 @@
 require 'active_fedora'
-require 'rexml/document'
 require 'nokogiri'
+require 'time'
 
 module Dor
   class ActionLogDatastream < ActiveFedora::Datastream
@@ -35,12 +35,16 @@ module Dor
     ########################################################################
     # Fedora datastream marshalling
     
-    def self.from_xml(tmpl, el)
+    # Build an ActionLog from the Fedora persisted instance
+    # tmpl ActiveFedora::Datastream
+    # node   Nokogiri::Node
+    def self.from_xml(tmpl, node)
       entries = []
-      el.elements.each("./foxml:datastreamVersion[last()]/foxml:xmlContent/actionLog/entry") do |node|
-        entry = {:timestamp => Time.parse(node.attributes["timestamp"]), 
-                 :action => node.elements["action"].text}
-        entry[:comment] = node.elements["comment"].text if(node.elements["comment"])
+      node.xpath("./foxml:datastreamVersion[last()]/foxml:xmlContent/actionLog/entry").each do |entry_node|
+        entry = {:timestamp => Time.parse(entry_node["timestamp"]), 
+                 :action => entry_node.at_xpath("./action").text}
+        comment = entry_node.at_xpath("./comment")
+        entry[:comment] = comment.text if(comment)
         entries << entry
       end
       
