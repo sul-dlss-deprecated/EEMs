@@ -32,6 +32,12 @@ module EemsHelper
     end
     
     return value
+  end
+  
+  # Print the url decoded
+  def print_url_decoded
+    url = print_parts_field('url')
+    URI::decode(url)
   end 
 
   # Get source URL from referrer (or return empty string if nil)
