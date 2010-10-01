@@ -37,6 +37,8 @@ describe EemsController do
       Eem.should_receive(:from_params).with(@eems_params).and_return(@eem)
       Dor::WorkflowService.should_receive(:create_workflow).with('dor', 'pid:123', 'eemsAccessionWF', ACCESSION_WF_XML)
       
+      @log = Dor::ActionLogDatastream.new
+      Dor::ActionLogDatastream.should_receive(:new).and_return(@log)
       @eem.should_receive(:add_datastream).with(an_instance_of(Dor::ActionLogDatastream))
       
       @part = Part.new(:pid => 'part:345')
@@ -45,8 +47,8 @@ describe EemsController do
       Part.should_receive(:new).and_return(@part)
       
       
-      session[:user_id] = 'somesunetid'
-      EemsUser.stub!(:valid?).with('somesunetid').and_return(true)
+      session[:user_id] = 'wmene'
+
       post "create", :eem => @eems_params, :content_upload => @file
     end
     
@@ -56,6 +58,10 @@ describe EemsController do
       
       props_ds = @part.datastreams['properties']
       props_ds.filename_values.first.should =~ /pre space.pdf/
+      
+      @log.entries.size.should == 2
+      entry = @log.entries[1]
+      entry[:action].should == "PDF uploaded by Willy Mene"
       
       response.body.should == 'eem_pid=pid:123'
     end

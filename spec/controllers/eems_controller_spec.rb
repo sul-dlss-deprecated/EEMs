@@ -39,6 +39,8 @@ describe EemsController do
 
       Eem.should_receive(:from_params).with(@eems_params).and_return(@eem)
       
+      @log = Dor::ActionLogDatastream.new
+      Dor::ActionLogDatastream.should_receive(:new).and_return(@log)
       @eem.should_receive(:add_datastream).with(an_instance_of(Dor::ActionLogDatastream))
       
       @cf = ContentFile.new
@@ -52,13 +54,12 @@ describe EemsController do
       Part.should_receive(:new).and_return(@part)
       
       job = Dor::DownloadJob.new(@cf.id)
-      Dor::DownloadJob.should_receive(:new).with(@cf.id).and_return(job)
+      Dor::DownloadJob.should_receive(:new).with(@cf.id, 'wmene').and_return(job)
       Delayed::Job.should_receive(:enqueue).with(job)
       
       Dor::WorkflowService.should_receive(:create_workflow).with('dor', 'pid:123', 'eemsAccessionWF', ACCESSION_WF_XML)
       
-      session[:user_id] = 'somesunetid'
-      EemsUser.stub!(:valid?).with('somesunetid').and_return(true)
+      session[:user_id] = 'wmene'
       post "create", :eem => @eems_params, :contentUrl => @content_url
       
     end
@@ -97,8 +98,13 @@ describe EemsController do
         }
     end
     
-    it "should create an ActionLog datastream" do
-      
+    it "should create an ActionLog datastream with an entry saying 'Request created by {user}'" do
+      sleep 1
+      @log.entries.size.should == 1
+      entry = @log.entries.first
+      entry[:timestamp].should < Time.new
+      entry[:action].should == "Request created by Willy Mene"
+      entry[:comment].should be_nil
     end
     
     it "should set the number of ContentFile attempts to 1" do

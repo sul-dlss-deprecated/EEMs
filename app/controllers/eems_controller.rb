@@ -47,6 +47,8 @@ class EemsController < ApplicationController
       
       part.create_content_datastream(filename)
       part.download_done
+      @log.log("PDF uploaded by #{@user.display_name}")  # @log and @user were set in #create_eem_and_log
+      @log.save
       
       #render_creation_response(@eem.pid, part.pid)
       res = 'eem_pid=' + @eem.pid
@@ -67,7 +69,7 @@ class EemsController < ApplicationController
       cf.part_pid = part.pid
       cf.save
       
-      job = Dor::DownloadJob.new(cf.id)
+      job = Dor::DownloadJob.new(cf.id, @user.sunetid)
       Delayed::Job.enqueue(job)
       
       render_creation_response(@eem.pid, part.pid, cf.id)
@@ -111,9 +113,11 @@ class EemsController < ApplicationController
     attrs = unescape_keys(params[:eem])
     @eem.update_attributes(attrs)
     
+    @user = EemsUser.find(session[:user_id])
     #Add actionLog datastream
-    log = Dor::ActionLogDatastream.new
-    @eem.add_datastream(log)
+    @log = Dor::ActionLogDatastream.new
+    @log.log("Request created by #{@user.display_name}")
+    @eem.add_datastream(@log)
     @eem.save
     
     #Create the workflow datastream
