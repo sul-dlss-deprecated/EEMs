@@ -41,8 +41,8 @@ describe EemsController do
       @eem.should_receive(:add_datastream).with(an_instance_of(Dor::ActionLogDatastream))
 
       
-      session[:user_id] = 'somesunetid'
-      EemsUser.stub!(:valid?).with('somesunetid').and_return(true)
+      session[:user_id] = 'wmene'
+      EemsUser.stub!(:valid?).with('wmene').and_return(true)
       post "no_pdf", :eem => @eems_params
       
     end

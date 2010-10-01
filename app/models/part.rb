@@ -60,7 +60,15 @@ class Part < EemModel::Part
     props_ds.save
   end
   
+  def log_download_complete(display_name)
+    e = Eem.find(parent_pid)
+    action_log = e.datastreams['actionLog']
+    action_log.log("PDF uploaded by #{display_name}")
+    action_log.save
+  end
+  
   def Part.normalize_filename(filename)
     URI::decode(filename)
   end
+  
 end

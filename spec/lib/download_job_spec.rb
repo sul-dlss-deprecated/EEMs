@@ -27,11 +27,17 @@ describe Dor::DownloadJob do
       part.stub!(:parent_pid).and_return('parent:pid')
       
       ContentFile.stub!(:find).and_return(cf)
-      #Curl::Easy.should_receive(:download).with(cf.url, cf.filepath).and_yield(curl)
-      #curl.should_receive(:on_progress).and_yield(100, 33, 0, 0)
       Part.should_receive(:find).with(cf.part_pid).and_return(part)
       
-      job = Dor::DownloadJob.new(1)
+      # Setup an Eem with an ActionLog
+      # The Eem is the parent of this Part object
+      eem = Eem.new(:pid => 'druid:123')
+      log = Dor::ActionLogDatastream.new
+      eem.add_datastream(log)
+      part.add_relationship(:is_part_of, eem)
+      Eem.should_receive(:find).with('parent:pid').and_return(eem)
+      
+      job = Dor::DownloadJob.new(1, 'wmene')
       job.perform
       
       part.datastreams.has_key?('content').should be_true
@@ -44,6 +50,11 @@ describe Dor::DownloadJob do
       sprintf("%o", File.stat(filepath).mode).should == "100644"
       
       FileUtils.rm_rf(File.join(Sulair::WORKSPACE_DIR, 'druid:123'))
+      
+      # Should log that download is complete
+      log.entries.size.should == 1
+      log.entries.first[:action].should == 'PDF uploaded by Willy Mene'
+      
     end
   end
   
