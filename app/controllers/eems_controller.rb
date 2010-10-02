@@ -1,6 +1,8 @@
 require 'dor/workflow_service'
 
 class EemsController < ApplicationController
+  include ContentUpload
+  
   before_filter :require_fedora
   before_filter :require_solr
   before_filter :user_required, :except => :index
@@ -31,24 +33,11 @@ class EemsController < ApplicationController
   #Assume we receive the standard Rails hash of all the form params
   def create
     create_eem_and_log
-    
-    content_dir = File.join(Sulair::WORKSPACE_DIR, @eem.pid)
-    FileUtils.mkdir(content_dir) unless (File.exists?(content_dir))
+    create_content_dir
     
     # The file was uploaded with the POST
     if(!params[:content_upload].nil?) 
-      content_file = params[:content_upload]
-      part = Part.from_params()
-      part.add_relationship(:is_part_of, @eem)
-      part.save
-      
-      filename = Part.normalize_filename(content_file.original_filename)
-      File.open(File.join(content_dir,filename), "wb") { |f| f.write(content_file.read) }
-      
-      part.create_content_datastream(filename)
-      part.download_done
-      @log.log("PDF uploaded by #{@user.display_name}")  # @log and @user were set in #create_eem_and_log
-      @log.save
+      create_part_from_upload_and_log
       
       #render_creation_response(@eem.pid, part.pid)
       res = 'eem_pid=' + @eem.pid
@@ -59,7 +48,7 @@ class EemsController < ApplicationController
       cf = ContentFile.new
       cf.url = params[:contentUrl]
       
-      cf.filepath = content_dir
+      cf.filepath = @content_dir
       cf.attempts = 1
       cf.save
     
