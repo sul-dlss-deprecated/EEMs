@@ -58,6 +58,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :eems do |s|
     s.resources :permission_files
+    s.resources :parts
   end
   map.resources :content_files
 
