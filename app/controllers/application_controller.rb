@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
       if(EemsUser.valid?(session[:user_id]))
         return true
       else
-        render :status => 401, :text => "You are unauthorized to use this application"
+        render :status => 401, :partial => "eems/_error/not_authorized"        
         return false
       end
     end

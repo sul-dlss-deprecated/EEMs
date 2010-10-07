@@ -18,7 +18,7 @@
 	        <li>
 	          <%= link_to 'Send to Technical Services',  '#', {:id => 'link_send_to_tech_services', :class => 'action_box_show'} %> 
 	          <div class="comment_formlet" id="formlet_send_to_tech_services">
-	            <textarea id="text_send_to_acquistions" rows="5" cols="28"></textarea>
+	            <textarea id="text_send_to_acquistions" rows="5" cols="28" disabled="disabled"></textarea>
 	            <div style="text-align: right; padding-right: 8px;">
 		    	      <input type="button" disabled="disabled" id="send_to_tech_services_ok" value="Send">
 	              <%= link_to 'Cancel', '#', :id => 'send_to_tech_services_cancel' %>
@@ -27,18 +27,16 @@
 	        </li>    
         <% end %>
 
-			  <% if is_eem_editable(print_eems_field('status')) %>
-	        <li>
-	          <%= link_to 'Cancel this request',  '#', {:id => 'link_cancel_this_request', :class => 'action_box_show'} %> 
-	          <div class="comment_formlet" id="formlet_cancel_this_request">
-	            <textarea id="text_cancel_this_request" rows="5" cols="28"></textarea>
-	            <div style="text-align: right; padding-right: 8px;">
-		    	      <input type="button" id="cancel_this_request_ok" value="Confirm">
-	              <%= link_to 'Cancel', '#', :id => 'cancel_this_request_cancel' %>
-	            </div>
-	          </div>    
-	        </li>    
-        <% end %>
+        <li>
+          <%= link_to 'Cancel this request',  '#', {:id => 'link_cancel_this_request', :class => 'action_box_show'} %> 
+          <div class="comment_formlet" id="formlet_cancel_this_request">
+            <textarea id="text_cancel_this_request" rows="5" cols="28"></textarea>
+            <div style="text-align: right; padding-right: 8px;">
+	    	      <input type="button" id="cancel_this_request_ok" value="Confirm">
+              <%= link_to 'Cancel', '#', :id => 'cancel_this_request_cancel' %>
+            </div>
+          </div>    
+        </li>    
 
 	      <li>
 	        <%= link_to 'Upload copyright attachment',  '#', {:id => 'link_upload_copyright_attachment', :class => 'action_box_show'} %> 

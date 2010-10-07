@@ -202,9 +202,13 @@ function toggleSendToTechServices() {
       (($('#eem_paymentType').val() == 'Free' && ( $('#eem_copyrightStatus').val() == 'Public access OK' || $('#eem_copyrightStatus').val() == 'Stanford access OK')) ||  
 	     ($('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != '' && $('#eem_payment_fund').val() != '(Fund name)'))) {
     $('#send_to_tech_services_ok').removeAttr('disabled');
+  	$('#text_send_to_acquistions').val('');
+    $('#text_send_to_acquistions').removeAttr('disabled');
 	}
 	else {
   	$('#send_to_tech_services_ok').attr('disabled', true);
+  	$('#text_send_to_acquistions').val('This item can\'t be sent to Technical Services until copyright permission is received.');
+  	$('#text_send_to_acquistions').attr('disabled', true);
 	}	
 }
 

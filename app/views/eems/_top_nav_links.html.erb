@@ -5,6 +5,7 @@
 
 <div id="topNavLinks">
   <%= @user.display_name %> | 
+  <%= link_to 'Help', 'https://consul.stanford.edu/display/EEMs4all/Home', :title => 'Help', :target => '_blank' %> |  
   <%= mail_to 'eems-feedback@lists.stanford.edu', 'Feedback' %> | 
   <%= link_to 'Logout', 'https://weblogin.stanford.edu/logout', :title => 'Logout' %>
 </div>      

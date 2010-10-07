@@ -1,4 +1,6 @@
 body {
+  font-family: "lucida grande",tahoma,Arial,Helvetica,sans-serif;
+  font-size: 11px;	
   background: #f6f2e6 url('/images/bgTopBar_1x48.png') repeat-x;
   line-height: 1.6;
 }

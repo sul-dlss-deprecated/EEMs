@@ -19,7 +19,7 @@ module ContentUpload
     
     part.create_content_datastream(filename)
     part.download_done
-    @log.log("PDF uploaded by #{@user.display_name}")
+    @log.log("File uploaded by #{@user.display_name}")
     @log.save
   end
   

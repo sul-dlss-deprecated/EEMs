@@ -32,6 +32,7 @@ CERT_FILE = File.join(RAILS_ROOT, "config", "certs", "etd-prod.crt")
 KEY_FILE = File.join(RAILS_ROOT, "config", "certs", "etd-prod.key")
 KEY_PASS = ***REMOVED***
 WIDGET_NAME = 'EEMs Widget'
+WIDGET_PREFIX = ''
 
 module Sulair
   WORKSPACE_URL = 'https://eems.stanford.edu/workspace'

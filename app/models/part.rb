@@ -63,7 +63,7 @@ class Part < EemModel::Part
   def log_download_complete(display_name)
     e = Eem.find(parent_pid)
     action_log = e.datastreams['actionLog']
-    action_log.log("PDF uploaded by #{display_name}")
+    action_log.log("File uploaded by #{display_name}")
     action_log.save
   end
   
