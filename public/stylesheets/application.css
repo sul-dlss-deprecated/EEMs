@@ -102,6 +102,11 @@ table#searchResults tr.searchResultsRow2 {
 .searchResultsDropDown { width: 15px; }
 .searchResultsTitle { width: 200px; }
 
+.widget_button {
+	border: 0;
+	margin: 5px 0 0 0;
+}
+
 /* details page */
 #details_container {
   margin: -50px 0 0 -230px;	
@@ -205,9 +210,14 @@ ul#acquisitions_actions textarea {
 	margin-left: 0;
 }
 
+div.startover_link {
+	float: left; 
+	margin: 0 0 20px 10px;
+	width: 270px; 
+}
 
 div#action_log {
-  float: clear;
+  float: left;
   margin: 6px 0 0 0;
   border-top: 1px solid #ccc;
   padding-top: 4px;

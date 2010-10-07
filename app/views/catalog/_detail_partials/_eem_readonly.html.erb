@@ -3,6 +3,8 @@
 <dl class="details">
 	<dt>Id :</dt><dd><%= @document[:id].to_s %></dd>    
 
+	<dt>Catalog key :</dt><dd><%= get_catkey() %></dd>
+
 	<dt>PURL :</dt><dd></dd>    
 
 	<dt>Found at this site :</dt>
@@ -14,10 +16,10 @@
 	<dt>Created by :</dt>
 	<dd><%= render :partial => 'catalog/_show_partials/creator_name', :locals => {:document => @document} %></dd>
 
-	<dt>Direct link to PDF :</dt>
+	<dt>Direct link to file :</dt>
 	<dd><%= link_to print_url_decoded,  print_parts_field('url'), {:id => 'link_url', :target => '_blank'} %></dd>
 
-	<dt>Local copy of PDF :</dt>
+	<dt>Local copy of file :</dt>
 	<dd><%= link_to get_local_filename(),  get_local_file_path(), {:id => 'link_local_file'} %></dd>
 
 	<dt>Citation/comments :</dt>

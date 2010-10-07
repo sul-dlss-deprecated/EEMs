@@ -99,7 +99,7 @@ module EemsHelper
       value = @parts[0].datastreams['properties'].filename_values.first
       fname = value unless(value.nil?)
     end
-        
+
     return fname
   end
   
@@ -135,6 +135,19 @@ module EemsHelper
     return value
   end     
     
+  # Get catkey for detail page
+  def get_catkey
+    catkey = ''
+    
+    @eem.datastreams['DC'].identifier_values.each do |value|
+      if value && value =~ /catkey:(\w+)/i
+        catkey = $1
+      end
+    end
+    
+    return catkey  
+  end
+    
   # check if the eem is editable (i.e., eem is not sent to tech services)
   def is_eem_editable(status)    
     if status =~ /Created/i
@@ -156,7 +169,7 @@ module EemsHelper
   end
     
   # format action log timestamp
-  def formatActionLogTimestamp(timestamp)
+  def format_action_log_timestamp(timestamp)
     if !timestamp.nil?
       return timestamp.strftime("%d-%b-%Y %I:%M %p")
     end
@@ -165,7 +178,7 @@ module EemsHelper
   end
   
   # format action log message
-  def formatActionLogMessage(msg)    
+  def format_action_log_message(msg)    
     if (!msg.nil? && msg =~ /^(.*? by )(.*)$/)
       msg = $1 + '<a href="/?f%5BselectorName_facet%5D%5B%5D=' + $2 + '">' + $2 + '</a>'
     end
@@ -174,7 +187,7 @@ module EemsHelper
   end
 
   # format download date timestamp to store in part child object
-  def formatDownloadDateTimestamp(timestamp)
+  def format_download_date_timestamp(timestamp)
     if !timestamp.nil?
       return timestamp.strftime("%Y-%m-%dT%H:%M%z")
     end

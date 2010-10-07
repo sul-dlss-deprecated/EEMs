@@ -1,10 +1,14 @@
+<%
+  widget_suffix = WIDGET_SUFFIX || ''
+%>
+
 <div id="eems-popup-header">
-	EEMs Selection Widget
+	EEMs<%= widget_suffix %> Selection Widget
 	<%= mail_to 'eems-feedback@lists.stanford.edu', 'Feedback', :id => 'eems-popup-feedback-link' %>
 </div>	
 
 <div id="eems-widget-tabs">
-	<%= link_to "Download from this site", "#", :id => "eems-browser-widget-toggle" %>
+	<%= link_to "Capture from this site", "#", :id => "eems-browser-widget-toggle" %>
 	<%= link_to "Upload from desktop", "#", :id => "eems-desktop-widget-toggle" %>
 	<div id="eems-widget-tabs-border-bottom">
 </div>

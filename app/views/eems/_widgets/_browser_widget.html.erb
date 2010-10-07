@@ -18,10 +18,10 @@
       <%= render :partial => 'eems/select_options', :locals => {:field => 'creatorType', :id => 'eem_bw_creatorType',  :selected => ''} %>
     </dd>
 
-    <dt><%= label_tag 'contentUrl', 'Direct link to PDF:' %></dt>
+    <dt><%= label_tag 'contentUrl', 'Direct link to file:' %></dt>
     <dd>
       <%= text_field_tag :contentUrl, '', {:size => 41, :name => 'contentUrl', :id => 'contentUrl'} %> <br/>
-      <span style="color:#555;">&uarr; Drag and drop the link of the PDF you want to capture</span>
+      <span style="color:#555;">&uarr; Drag and drop the link of the file you want to capture</span>
 	  </dd>
 
     <dt style="width: 0px"></dt>

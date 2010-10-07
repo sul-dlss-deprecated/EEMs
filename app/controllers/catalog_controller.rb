@@ -36,7 +36,8 @@ class CatalogController < ApplicationController
     @user = EemsUser.find(session[:user_id])   
 
     if @user.nil?
-      render :text => "Sorry, you are not authorized to view this page."
+      #render :text => "Sorry, you are not authorized to view this page."
+      render :partial => "eems/_error/not_authorized"
       return
     end
 
