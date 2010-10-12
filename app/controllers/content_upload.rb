@@ -14,6 +14,8 @@ module ContentUpload
     part.add_relationship(:is_part_of, @eem)
     part.save
     
+    Rails.logger.debug("Part pid: #{part.pid}")
+    
     filename = Part.normalize_filename(content_file.original_filename)
     File.open(File.join(@content_dir,filename), "wb") { |f| f.write(content_file.read) }
     
