@@ -166,7 +166,7 @@ describe EemsController do
       controller.should_receive(:user_required).and_return(true)
       get "show", :id => 'pid:123'
       
-      response.body.should =~ /unauthorized/
+      response.should render_template('eems/_error/_not_authorized')
       response.status.should == '401 Unauthorized'
     end
   end
