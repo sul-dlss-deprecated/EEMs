@@ -439,11 +439,11 @@
      <str name="q.alt">*:*</str>
      <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
      <str name="qf_dismax">
-		title_field creatorPerson_s creatorOrg_s selectorName_s text
+		title_t creatorPerson_t creatorOrg_t selectorName_t text
      </str>
 
      <str name="pf_dismax">
-       title_field
+       title_t
      </str>
 <!--
      <int name="ps">3</int>
