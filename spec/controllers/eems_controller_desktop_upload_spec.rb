@@ -61,7 +61,7 @@ describe EemsController do
       
       @log.entries.size.should == 2
       entry = @log.entries[1]
-      entry[:action].should == "PDF uploaded by Willy Mene"
+      entry[:action].should == "File uploaded by Willy Mene"
       
       response.body.should == 'eem_pid=pid:123'
     end
