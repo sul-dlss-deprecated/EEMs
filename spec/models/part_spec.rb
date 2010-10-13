@@ -103,7 +103,7 @@ describe Part do
     @part.log_download_complete('Display Name')
     
     @log.entries.size.should == 1
-    @log.entries.first[:action].should == 'PDF uploaded by Display Name'
+    @log.entries.first[:action].should == 'File uploaded by Display Name'
   end
   
 end

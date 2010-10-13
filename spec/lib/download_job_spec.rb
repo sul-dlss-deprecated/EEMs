@@ -53,7 +53,7 @@ describe Dor::DownloadJob do
       
       # Should log that download is complete
       log.entries.size.should == 1
-      log.entries.first[:action].should == 'PDF uploaded by Willy Mene'
+      log.entries.first[:action].should == 'File uploaded by Willy Mene'
       
     end
   end
