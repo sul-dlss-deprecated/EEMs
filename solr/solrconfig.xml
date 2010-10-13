@@ -432,14 +432,14 @@
  <requestHandler name="search_eems" class="solr.SearchHandler" >
    <lst name="defaults">
      <str name="defType">lucene</str>
-	 <str name="df">active_fedora_model_field</str>     <!-- default field for lucene query parser -->
+	 <str name="df">active_fedora_model_s</str>     <!-- default field for lucene query parser -->
 	 <str name="q.op">AND</str>
 
      <str name="echoParams">explicit</str>
      <str name="q.alt">*:*</str>
      <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
      <str name="qf_dismax">
-		title_field creatorPerson_field creatorOrg_field selectorName_field text
+		title_field creatorPerson_s creatorOrg_s selectorName_s text
      </str>
 
      <str name="pf_dismax">
@@ -452,16 +452,16 @@
      <!-- NOT using marc_display because it is large and will slow things down for search results -->
      <str name="fl">
        id,
-       title_field,
-	   sourceUrl_field,
-	   language_field,
-	   selectorName_field,
-	   paymentType_field,
-	   copyrightStatus_field, 
-	   status_field,
-	   requestDatetime_field,
-	   system_create_date,
-	   active_fedora_model_field
+       title_t,
+	   sourceUrl_t,
+	   language_t,
+	   selectorName_t,
+	   paymentType_t,
+	   copyrightStatus_t, 
+	   status_t,
+	   requestDatetime_t,
+	   system_create_dt,
+	   active_fedora_model_t
    <!-- go through everything -->
 
      </str>
@@ -470,10 +470,10 @@
 
      <str name="facet.mincount">1</str>
      <str name="facet.limit">10</str>
-     <str name="facet.field">language_field</str>
-<str name="facet.field">selectorName_field</str>
-<str name="facet.field">paymentType_field</str>
-<str name="facet.field">copyrightStatus_field</str>
+     <str name="facet.field">language_t</str>
+<str name="facet.field">selectorName_t</str>
+<str name="facet.field">paymentType_t</str>
+<str name="facet.field">copyrightStatus_t</str>
      <!-- config[:facet] -->
 
    </lst>

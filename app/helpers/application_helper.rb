@@ -37,6 +37,12 @@ module ApplicationHelper
         
     return ''    
   end
+  
+  # Because title_t is indexed twice, and returned from solr in one comma delimited string
+  # We will return the substring of half the string before the comma
+  def parse_solr_title_t(title_t)
+    title_t[0..title_t.size/2 - 2]
+  end
 
 end
 

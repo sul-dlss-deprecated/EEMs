@@ -221,11 +221,11 @@
    <dynamicField name="*_i"  type="sint"    indexed="true"  stored="true"/>
    <dynamicField name="*_s"  type="string"  indexed="true"  stored="true" multiValued="true"/>
    <dynamicField name="*_l"  type="slong"   indexed="true"  stored="true"/>
-   <dynamicField name="*_t"  type="string"    indexed="true"  stored="true" multiValued="true"/>
+   <dynamicField name="*_t"  type="text"    indexed="true"  stored="true" multiValued="false"/>
    <dynamicField name="*_b"  type="boolean" indexed="true"  stored="true"/>
    <dynamicField name="*_f"  type="sfloat"  indexed="true"  stored="true"/>
    <dynamicField name="*_d"  type="sdouble" indexed="true"  stored="true"/>
-   <dynamicField name="*_dt" type="date"    indexed="true"  stored="true"/>   
+   <dynamicField name="*_dt" type="date"    indexed="true"  stored="true"/>
  </fields>
 
  <!-- field to use to determine and enforce document uniqueness. -->
@@ -243,15 +243,15 @@
   <!-- copyField commands copy one field to another at the time a document
         is added to the index.  It's used either to index the same field differently,
         or to add multiple fields to the same field for easier/faster searching.  -->
- <copyField source="*_date" dest="date"/>
- <copyField source="*_text" dest="text"/>
+ <copyField source="*_dt" dest="date"/>
+ <copyField source="*_t" dest="text"/>
  <copyField source="*_facet" dest="text"/>
- <copyField source="*_field" dest="*_facet"/>
+ <copyField source="*_t" dest="*_facet"/>
 
   <!-- populate the sort fields -->
- <copyField source="title_field" dest="title_sort"/>
- <copyField source="requestDatetime_field" dest="requestDatetime_sort"/>
- <copyField source="system_create_date" dest="system_create_date_sort"/>
+ <copyField source="title_t" dest="title_sort"/>
+ <copyField source="requestDatetime_t" dest="requestDatetime_sort"/>
+ <copyField source="system_create_dt" dest="system_create_date_sort"/>
 
  <!-- Similarity is the scoring routine for each document vs. a query.
       A custom similarity may be specified here, but the default is fine

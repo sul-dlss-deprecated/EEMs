@@ -52,14 +52,14 @@ Blacklight.configure(:shared) do |config|
 
   # solr field values given special treatment in the show (single result) view
   config[:show] = {
-    :html_title => "title_field",
-    :heading => "title_field",
+    :html_title => "title_t",
+    :heading => "title_t",
     :display_type => "format"
   }
 
   # solr fld values given special treatment in the index (search results) view
   config[:index] = {
-    :show_link => "title_field",
+    :show_link => "title_t",
     :num_per_page => 10,
     :record_display_type => "format"
   }
@@ -93,20 +93,20 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:index_fields] = {
     :field_names => [
-      "title_field",
-      "system_create_date", 
-      "requestDatetime_field", 
-      "selectorName_field", 
-      "copyrightStatus_field",
-      "status_field"
+      "title_t",
+      "system_create_dt", 
+      "requestDatetime_t", 
+      "selectorName_t", 
+      "copyrightStatus_t",
+      "status_t"
     ],
     :labels => {
-      "title_field" => "Title", 
-      "system_create_date" => "Created", 
-      "requestDatetime_field" => "Submitted",
-      "selectorName_field" => "Selector", 
-      "copyrightStatus_field" => "Copyright",
-      "status_field" => "Status"
+      "title_t" => "Title", 
+      "system_create_dt" => "Created", 
+      "requestDatetime_t" => "Submitted",
+      "selectorName_t" => "Selector", 
+      "copyrightStatus_t" => "Copyright",
+      "status_t" => "Status"
     }
   }
 
@@ -114,33 +114,33 @@ Blacklight.configure(:shared) do |config|
   #   The ordering of the field names is the order of the display 
   config[:show_fields] = {
     :field_names => [
-      "title_field",
-      "sourceUrl_field",
-      "language_field", 
-      "creatorPerson_field",
-      "creatorOrg_field", 
-      "url_field", 
-      "note_field",
-      "copyrightStatus_field", 
-      "copyrightStatusDate_field", 
-      "paymentType_field",
-      "paymentFund_field", 
-      "selectorSunetid_field", 
+      "title_t",
+      "sourceUrl_t",
+      "language_t", 
+      "creatorPerson_t",
+      "creatorOrg_t", 
+      "url_t", 
+      "note_t",
+      "copyrightStatus_t", 
+      "copyrightStatusDate_t", 
+      "paymentType_t",
+      "paymentFund_t", 
+      "selectorSunetid_t", 
       "id"
     ],
     :labels => {
-      "title_field" => "Title",
-      "sourceUrl_field" => "Found at this site",
-      "language_field" => "Language",
-      "creatorPerson_field" => "Creator",
-      "creatorOrg_field" => "Creator", 
-      "url_field" => "Direct link to PDF", 
-      "note_field" => "Citation/Comments", 
-      "copyrightStatus_field" => "Copyright", 
-      "copyrightStatusDate_field" => "Copyright date", 
-      "paymentType_field" => "Purchase", 
-      "paymentFund_field" => "Payment fund", 
-      "selectorSunetid_field" => "Selector SUNet id", 
+      "title_t" => "Title",
+      "sourceUrl_t" => "Found at this site",
+      "language_t" => "Language",
+      "creatorPerson_t" => "Creator",
+      "creatorOrg_t" => "Creator", 
+      "url_t" => "Direct link to PDF", 
+      "note_t" => "Citation/Comments", 
+      "copyrightStatus_t" => "Copyright", 
+      "copyrightStatusDate_t" => "Copyright date", 
+      "paymentType_t" => "Purchase", 
+      "paymentFund_t" => "Payment fund", 
+      "selectorSunetid_t" => "Selector SUNet id", 
       "id" => "Id"
     }
   }
