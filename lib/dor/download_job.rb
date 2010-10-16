@@ -21,7 +21,7 @@ module Dor
           if(hdr =~ /content-disposition.*filename\s*=\s*\"?([^\"]*)\"?/i)
             @filename = $1
           end
-          Rails.logger.info(hdr)
+          Rails.logger.info("Response header: #{hdr}")
           hdr.length
         end
         
@@ -34,7 +34,20 @@ module Dor
           @cf.update_progress(dl_total, dl_now)
           true
         end
+        
         @c.follow_location = true
+        
+        @c.on_complete do |curb|
+          code = curb.response_code
+          unless(code < 400)
+            raise "Curb Download Error- #{code.to_s}"
+          end      
+        end
+        
+        @c.on_success do |curb|
+          Rails.logger.info("Download Successful: #{curb.response_code.to_s} Bytes: #{curb.downloaded_bytes}")
+          @cf.update_progress(curb.downloaded_bytes, curb.downloaded_bytes)
+        end
         
         @c.perform
       end
