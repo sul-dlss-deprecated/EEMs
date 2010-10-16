@@ -67,7 +67,7 @@ describe Dor::DownloadJob do
             
       ContentFile.stub!(:find).and_return(cf)
       Tempfile.should_receive(:new).and_raise(Exception.new)
-      job = Dor::DownloadJob.new(1)
+      job = Dor::DownloadJob.new(1, 'wmene')
       cf.should_receive(:attempts=).with(2)
       cf.should_receive(:save)
       lambda{ job.perform }.should raise_exception
@@ -82,11 +82,22 @@ describe Dor::DownloadJob do
             
       ContentFile.stub!(:find).and_return(cf)
       Tempfile.should_receive(:new).and_raise(Exception.new)
-      job = Dor::DownloadJob.new(1)
+      job = Dor::DownloadJob.new(1, 'wmene')
       cf.should_not_receive(:attempts=)
       cf.should_not_receive(:save)
+      job.should_not be_nil
       lambda{ job.perform }.should raise_exception
             
+    end
+    
+    it "should throw an exception if the download fails" do
+      cf = ContentFile.new
+      cf.url = 'http://lyberservices-dev.stanford.edu/junk'
+      cf.attempts = 1
+
+      ContentFile.stub!(:find).and_return(cf)
+      job = Dor::DownloadJob.new(1, 'wmene')
+      lambda{ job.perform }.should raise_exception
     end
   end
 end
