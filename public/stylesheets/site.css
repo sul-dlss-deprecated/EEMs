@@ -47,19 +47,19 @@ input, textarea, select, form, dl, dt, dd, textarea {
 	text-decoration: none;
 }
 
-#eems-popup-feedback-link {
+#eems-popup-links {
 	background-color: transparent;
 	border-width: 0; 
 	padding: 4px; 
 	position: absolute; 
 	right: 10px; 
+	margin-right: 15px;
 	top: 7px; 
 }
 
-a#eems-popup-feedback-link, a:link#eems-popup-feedback {
+#eems-popup-links a, #eems-popup-links a:link {
 	color: #770000;
 	font-weight: normal;
-	margin-right: 16px;
 	text-decoration: none;
 }
 

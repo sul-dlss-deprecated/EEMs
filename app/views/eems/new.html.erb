@@ -4,7 +4,10 @@
 
 <div id="eems-popup-header">
 	EEMs<%= widget_suffix %> Selection Widget
-	<%= mail_to 'eems-feedback@lists.stanford.edu', 'Feedback', :id => 'eems-popup-feedback-link' %>
+	<div id="eems-popup-links">
+	<%= link_to 'Help', 'https://consul.stanford.edu/display/EEMs4all/Home', :target => 'blank' %>	| 
+	<%= mail_to 'eems-feedback@lists.stanford.edu', 'Feedback' %>
+	</div>
 </div>	
 
 <div id="eems-widget-tabs">
