@@ -10,7 +10,8 @@ class ContentFilesController < ApplicationController
     else
       pdone['attempts'] = @cf.attempts.to_s
     end
-
+    
+    Rails.logger.debug("pdone: #{pdone.inspect}")
     render :json => pdone.to_json 
 
   end
