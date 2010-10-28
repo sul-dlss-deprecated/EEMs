@@ -133,44 +133,6 @@ describe EemsController do
     end
   end
   
-  describe "user_required filter" do
-    describe "with no user" do
-      it "should redirect to /login and pass the referrer" do
-        get "show", :id => 'dontcare', :referrer => "http://someurl.com"
-        response.should redirect_to('/login?referrer=http://someurl.com')
-      end
-      
-      it "and no referrer should redirect to /login and pass '/' as the referrer" do
-        get "show", :id => 'dontcare'
-        response.should redirect_to('/login?referrer=/')
-      end
-    end
-    
-    describe "with user" do
-      it "should return true" do
-        session[:user_id] = 'somesunetid'
-        controller.send(:user_required).should be_true
-      end
-    end
-  end
-  
-  
-  describe "authorized_user filter" do
-    it "should validate that session[:user_id] is authorized" do
-      session[:user_id] = 'wmene'
-      controller.send(:authorized_user).should be_true
-    end
-    
-    it "should return a 401 unauthorized error if the sunetid is not authorized" do
-      session[:user_id] = 'joeblow'
-      controller.should_receive(:user_required).and_return(true)
-      get "show", :id => 'pid:123'
-      
-      response.should render_template('eems/_error/_not_authorized')
-      response.status.should == '401 Unauthorized'
-    end
-  end
-  
   describe "#index" do
     it "returns 'OK' as a testable response for nagios" do
       get "index"

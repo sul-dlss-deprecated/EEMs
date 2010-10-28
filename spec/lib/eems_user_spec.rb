@@ -14,4 +14,41 @@ describe EemsUser do
     EemsUser.should_not respond_to(:valid?)
   end
   
+  context ".load_from_session" do
+    it "loads an EemsUser from the session" do
+      u = {:display_name => "display name", :sunetid => 'sun123'}
+      session = {:eems_user => u}
+      
+      user = EemsUser.load_from_session(session)
+      user.display_name.should == 'display name'
+      user.sunetid.should == 'sun123'
+    end
+  end
+  
+  context "#save_to_session" do
+    it "saves itself to the passed in session" do
+      sess = {}
+      u = EemsUser.new('first last', 'idsunet')
+      u.save_to_session(sess)
+      u_hash = sess[:eems_user]
+      u_hash[:display_name].should == 'first last'
+      u_hash[:sunetid].should == 'idsunet'
+    end
+  end
+  
+  context ".user_webauthed?" do
+    it "returns true if an EemsUser has been loaded into the session" do
+      u = {:display_name => "display name", :sunetid => 'sun123'}
+      session = {:eems_user => u}
+      
+      EemsUser.user_webauthed?(session).should be_true
+    end
+    
+    it "returns false if an EemsUser has not been loaded into the session" do
+      session = {}      
+      EemsUser.user_webauthed?(session).should be_false
+    end
+    
+  end
+  
 end

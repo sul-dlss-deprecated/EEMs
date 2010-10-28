@@ -15,9 +15,14 @@ class ApplicationController < ActionController::Base
       if params[:wau]
         logger.warn("Setting WEBAUTH_USER in dev mode!")
         request.env['WEBAUTH_USER']=params[:wau]
+        request.env['WEBAUTH_LDAP_DISPLAYNAME']=params[:wau]
+        request.env['WEBAUTH_LDAPPRIVGROUP'] = Sulair::AUTHORIZED_EEMS_PRIVGROUP
       end
     end
-    session[:user_id]=request.env['WEBAUTH_USER'] unless request.env['WEBAUTH_USER'].blank?
+    unless request.env['WEBAUTH_USER'].blank?
+      user = EemsUser.new(request.env['WEBAUTH_LDAP_DISPLAYNAME'], request.env['WEBAUTH_USER'])
+      user.save_to_session(session)
+    end
   end
 
   # Scrub sensitive parameters from your log
@@ -51,8 +56,10 @@ class ApplicationController < ActionController::Base
       h
     end
     
+    # if session[:user_id] was not set by the :set_current_user filter
+    # then redirect to the /login path
     def user_required
-      if(session[:user_id].blank?)
+      unless(EemsUser.user_webauthed?(session))
         ref = params[:referrer]
         ref = '/' unless(ref)
         redirect_to '/login' + '?referrer=' + ref
@@ -61,8 +68,10 @@ class ApplicationController < ActionController::Base
       true
     end
 
+    # The WEBAUTH_LDAPPRIVGROUP environment variable is set if the user is a member of the
+    # privgroup specified by the WebauthLdapPrivgroup Apache directive
     def authorized_user
-      if(EemsUser.valid?(session[:user_id]))
+      if(request.env['WEBAUTH_LDAPPRIVGROUP'] =~ /#{Sulair::AUTHORIZED_EEMS_PRIVGROUP}/ )
         return true
       else
         render :status => 401, :partial => "eems/_error/not_authorized"        
