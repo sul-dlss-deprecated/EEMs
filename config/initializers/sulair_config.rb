@@ -2,7 +2,7 @@ require 'dor/download_job'
 
 module Sulair
   WORKSPACE_DIR = File.join(RAILS_ROOT, 'workspace')
-  
+  AUTHORIZED_EEMS_PRIVGROUP = 'sulair:eems-users'
 end
 
 unless(File.exists?(Sulair::WORKSPACE_DIR))
