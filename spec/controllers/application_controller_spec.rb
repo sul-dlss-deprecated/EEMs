@@ -9,11 +9,13 @@ describe EemsController do
       it "saves the EemsUser into the session" do
         request.env['WEBAUTH_LDAP_DISPLAYNAME'] = 'My Name'
         request.env['WEBAUTH_USER'] = 'mysunetid'
+        request.env['WEBAUTH_LDAPPRIVGROUP'] = 'mygroup'
         
         controller.send(:set_current_user)
         user = EemsUser.load_from_session(session)
         user.display_name.should == 'My Name'
         user.sunetid.should == 'mysunetid'
+        user.privgroup.should == 'mygroup'
       end
     end
     
@@ -25,9 +27,9 @@ describe EemsController do
     end
     
     # The lyberapps-dev environment does not use the webauthldap Apache module
-    # so we have to set the EemsUser#display_name and WEBAUTH_LDAPPRIVGROUP environment variable
+    # so we have to set the EemsUser#display_name and EemsUser#privgroup
     context "when running in the ladev environment" do
-      it "sets EemsUser#display_name and the WEBAUTH_LDAPPRIVGROUP environment variable" do
+      it "sets EemsUser#display_name and the EemsUser#privgroup" do
         Rails.stub!(:env).and_return('ladev')
         request.env['WEBAUTH_USER'] = 'mysunetid'
         
@@ -35,8 +37,7 @@ describe EemsController do
         user = EemsUser.load_from_session(session)
         user.display_name.should == 'mysunetid'
         user.sunetid.should == 'mysunetid'
-        
-        request.env['WEBAUTH_LDAPPRIVGROUP'].should == 'sulair:eems-users'
+        user.privgroup.should == 'sulair:eems-users'
       end
     end
   end
@@ -65,13 +66,16 @@ describe EemsController do
   
   
   describe "authorized_user filter" do
-    it "checks to see if the WEBAUTH_LDAPPRIVGROUP environent variable contains the authorized privgroup" do
-      request.env['WEBAUTH_LDAPPRIVGROUP'] = 'sulair:eems-users'
+    it "checks to see if the user's privgroup contains the authorized privgroup" do
+      user = EemsUser.new('dname', 'sunet', 'sulair:eems-users')
+      user.save_to_session(session)
       controller.send(:authorized_user).should be_true
     end
     
-    it "returns a 401 unauthorized error if WEBAUTH_LDAPPRIVGROUP environent variable is not set" do
+    it "returns a 401 unauthorized error if the user does not have privgroup set" do
       controller.should_receive(:user_required).and_return(true)
+      user = EemsUser.new('dname', 'sunet')
+      user.save_to_session(session)
       get "show", :id => 'pid:123'
       
       response.should render_template('eems/_error/_not_authorized')
