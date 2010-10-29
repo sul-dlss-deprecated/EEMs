@@ -25,7 +25,7 @@ class EemsController < ApplicationController
   #GET /eems/new
   #render the page to create a new Eem
   def new
-    @user = EemsUser.find(session[:user_id])   
+    @user = EemsUser.load_from_session(session)  
   end
   
   #POST /eems
