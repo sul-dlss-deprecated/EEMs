@@ -6,6 +6,11 @@ describe EemsUser do
     u.display_name.should == 'first last'
   end
   
+  it "stores the WEBAUTH_LDAPPRIVGROUP" do
+    u = EemsUser.new('first last', 'sunetid', 'sulair:eems-users')
+    u.privgroup.should == 'sulair:eems-users'
+  end
+  
   it "does not have a #find method" do
     EemsUser.should_not respond_to(:find)
   end
@@ -16,23 +21,45 @@ describe EemsUser do
   
   context ".load_from_session" do
     it "loads an EemsUser from the session" do
-      u = {:display_name => "display name", :sunetid => 'sun123'}
+      u = {:display_name => "display name", :sunetid => 'sun123', :privgroup => 'sulair:eems-users'}
       session = {:eems_user => u}
       
       user = EemsUser.load_from_session(session)
       user.display_name.should == 'display name'
       user.sunetid.should == 'sun123'
+      user.privgroup.should == 'sulair:eems-users'
+    end
+    
+    it "loads an EemsUser without privgroup" do
+       u = {:display_name => "display name", :sunetid => 'sun123'}
+        session = {:eems_user => u}
+
+        user = EemsUser.load_from_session(session)
+        user.display_name.should == 'display name'
+        user.sunetid.should == 'sun123'
+        user.privgroup.should_not be
     end
   end
   
   context "#save_to_session" do
     it "saves itself to the passed in session" do
       sess = {}
+      u = EemsUser.new('first last', 'idsunet', 'mygroup')
+      u.save_to_session(sess)
+      u_hash = sess[:eems_user]
+      u_hash[:display_name].should == 'first last'
+      u_hash[:sunetid].should == 'idsunet'
+      u_hash[:privgroup].should == 'mygroup'
+    end
+    
+    it "saves itself to the passed in session without a privgroup" do
+      sess = {}
       u = EemsUser.new('first last', 'idsunet')
       u.save_to_session(sess)
       u_hash = sess[:eems_user]
       u_hash[:display_name].should == 'first last'
       u_hash[:sunetid].should == 'idsunet'
+      u_hash[:privgroup].should_not be
     end
   end
   
