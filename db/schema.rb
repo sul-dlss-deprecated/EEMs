@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100702215015) do
+ActiveRecord::Schema.define(:version => 20101029180439) do
 
   create_table "bookmarks", :force => true do |t|
     t.integer  "user_id",     :null => false
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20100702215015) do
     t.string   "filepath"
     t.string   "part_pid"
     t.integer  "attempts"
+    t.string   "user_display_name"
   end
 
   create_table "delayed_jobs", :force => true do |t|

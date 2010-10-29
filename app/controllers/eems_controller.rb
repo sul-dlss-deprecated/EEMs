@@ -50,6 +50,7 @@ class EemsController < ApplicationController
       
       cf.filepath = @content_dir
       cf.attempts = 1
+      cf.user_display_name = @user.display_name
       cf.save
     
       part = Part.from_params(:url => params[:contentUrl], :content_file_id => cf.id)
@@ -58,7 +59,7 @@ class EemsController < ApplicationController
       cf.part_pid = part.pid
       cf.save
       
-      job = Dor::DownloadJob.new(cf.id, @user.sunetid)
+      job = Dor::DownloadJob.new(cf.id)
       Delayed::Job.enqueue(job)
       
       render_creation_response(@eem.pid, part.pid, cf.id)
