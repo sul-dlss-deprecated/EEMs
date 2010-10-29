@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   # The user is created from the following environment variables set by the mod_webauthldap Apache module:
   # - <b>WEBAUTH_USER</b> - Sunetid id of the user
   # - <b>WEBAUTH_LDAP_DISPLAYNAME</b> - Display name
+  # - <b>WEBAUTH_LDAPPRIVGROUP</b> - This variable is set if the user is a member of the privgroup specified by the WebauthLdapPrivgroup Apache directive 
   #
   # == 'wau' Paramater to simulate WebAuth
   # When running in development mode without apache or webauth, you can set the necessary environment variables by
@@ -23,7 +24,7 @@ class ApplicationController < ActionController::Base
   # == Using an Apache instance with WebAuth but no LDAP access
   # The lyberapps-dev environment uses the plain mod_webauth Apache module, without LDAP access.
   # When running in the 'ladev' environment, this filter will set the EemsUser.display_name to the sunetid of the authenticated user.
-  # It will also set the WEBAUTH_LDAPPRIVGROUP environment variable so that the #authorized_user filter will pass
+  # It will also set the EemsUser#privgroup attribute so that the #authorized_user filter will pass
   def set_current_user
     unless Rails.env =~ /production/ 
       if params[:wau]
@@ -36,11 +37,12 @@ class ApplicationController < ActionController::Base
     unless request.env['WEBAUTH_USER'].blank?
       if(Rails.env =~ /ladev/)
         user_display_name = request.env['WEBAUTH_USER']
-        request.env['WEBAUTH_LDAPPRIVGROUP'] = Sulair::AUTHORIZED_EEMS_PRIVGROUP
+        privgroup = Sulair::AUTHORIZED_EEMS_PRIVGROUP
       else
         user_display_name = request.env['WEBAUTH_LDAP_DISPLAYNAME']
+        privgroup = request.env['WEBAUTH_LDAPPRIVGROUP']
       end
-      user = EemsUser.new(user_display_name, request.env['WEBAUTH_USER'])
+      user = EemsUser.new(user_display_name, request.env['WEBAUTH_USER'], privgroup)
       user.save_to_session(session)
     end
   end
@@ -76,7 +78,7 @@ class ApplicationController < ActionController::Base
       h
     end
     
-    # if session[:user_id] was not set by the :set_current_user filter
+    # if the EemsUser was not stored in the session by the :set_current_user filter
     # then redirect to the /login path
     def user_required
       unless(EemsUser.user_webauthed?(session))
@@ -88,10 +90,10 @@ class ApplicationController < ActionController::Base
       true
     end
 
-    # The WEBAUTH_LDAPPRIVGROUP environment variable is set if the user is a member of the
-    # privgroup specified by the WebauthLdapPrivgroup Apache directive
+    # Tests the value the EemsUser#privgroup to see if it contains an authorized privgroup 
     def authorized_user
-      if(request.env['WEBAUTH_LDAPPRIVGROUP'] =~ /#{Sulair::AUTHORIZED_EEMS_PRIVGROUP}/ )
+      user = EemsUser.load_from_session(session)
+      if( user.privgroup =~ /#{Sulair::AUTHORIZED_EEMS_PRIVGROUP}/ )
         return true
       else
         render :status => 401, :partial => "eems/_error/not_authorized"        
