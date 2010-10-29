@@ -33,7 +33,7 @@ class CatalogController < ApplicationController
         
     (@response, @document_list) = get_search_results(@extra_controller_params.merge!(:q=>q))
     @filters = params[:f] || []
-    @user = EemsUser.find(session[:user_id])   
+    @user = EemsUser.load_from_session(session)   
 
     if @user.nil?
       #render :text => "Sorry, you are not authorized to view this page."

@@ -6,6 +6,8 @@ describe EemsController do
     ActiveFedora::SolrService.register(SOLR_URL)
     Fedora::Repository.register(FEDORA_URL)
     Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
+    @user = EemsUser.new('Willy Mene', 'wmene')
+    
   end
   
   it "should be restful" do
@@ -59,7 +61,8 @@ describe EemsController do
       
       Dor::WorkflowService.should_receive(:create_workflow).with('dor', 'pid:123', 'eemsAccessionWF', ACCESSION_WF_XML)
       
-      session[:user_id] = 'wmene'
+      request.env['WEBAUTH_LDAPPRIVGROUP'] = Sulair::AUTHORIZED_EEMS_PRIVGROUP
+      @user.save_to_session(session)
       post "create", :eem => @eems_params, :contentUrl => @content_url
       
     end
@@ -124,8 +127,10 @@ describe EemsController do
       @part.add_relationship(:is_part_of, @eem)
       Eem.should_receive(:find).with('pid:123').and_return(@eem)
       @eem.should_receive(:parts).and_return([@part])
-      session[:user_id] = 'somesunetid'
-      EemsUser.stub!(:valid?).with('somesunetid').and_return(true)
+      
+      request.env['WEBAUTH_LDAPPRIVGROUP'] = Sulair::AUTHORIZED_EEMS_PRIVGROUP
+      @user.save_to_session(session)
+      
       get "show", :id => 'pid:123'
       
       assigns[:eem].should == @eem

@@ -28,7 +28,7 @@ describe PermissionFilesController do
     Eem.should_receive(:find).with('parentpid').and_return(@eem)
     
     session[:user_id] = 'wmene'
-    delete "destroy", :eem_id => 'parentpid', :id => 'pfpid'
+    delete "destroy", :eem_id => 'parentpid', :id => 'pfpid', :wau => 'Willy Mene'
     
     sleep 1
     log = @eem.datastreams['actionLog']
@@ -94,14 +94,13 @@ describe PermissionFilesController do
       log = Dor::ActionLogDatastream.new
       @eem.add_datastream(log)
     end
-    it "should add an entry to the action log saying whether the file was uploaded or deleted by the user" do
-      session[:user_id] = 'wmene'
+    it "adds an entry to the action log saying whether the file was uploaded or deleted by the user" do
 
       Eem.should_receive(:find).with('my:pid123').and_return(@eem)
       controller.stub!(:process_file)
       controller.stub!(:create_response).and_return({})
  
-      post :create, :eem_id => 'my:pid123', :file => stub('uploaded file', :original_filename => 'permission.pdf')
+      post :create, :eem_id => 'my:pid123', :file => stub('uploaded file', :original_filename => 'permission.pdf'), :wau => 'Willy Mene'
       
       sleep 1
       log = @eem.datastreams['actionLog']

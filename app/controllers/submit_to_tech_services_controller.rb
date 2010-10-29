@@ -13,7 +13,7 @@ class SubmitToTechServicesController < ApplicationController
     @props_ds.statusDatetime_values = [now]
     @props_ds.requestDatetime_values = [now]
 
-    user = EemsUser.find(session[:user_id])
+    user = EemsUser.load_from_session(session)
     action_log = @eem.datastreams['actionLog']
     action_log.log("Request submitted by #{user.display_name}", params[:comment])
     action_log.save

@@ -5,6 +5,8 @@ class PermissionFilesController < ApplicationController
   
   before_filter :require_fedora
   before_filter :require_solr
+  before_filter :user_required
+  before_filter :authorized_user
   
   #before_filter :duplicate_file_check, :only => [:create, :create_supplemental, :create_permission]
   #before_filter :upload_size_check, :only => [:create, :create_supplemental, :create_permission]
@@ -81,7 +83,7 @@ class PermissionFilesController < ApplicationController
   end
   
   def log(action, file_name)
-    user = EemsUser.find(session[:user_id])
+    user = EemsUser.load_from_session(session)
     log = @eem.datastreams['actionLog']
     log.log("Permission file: #{file_name} #{action} by #{user.display_name}")
     log.save
