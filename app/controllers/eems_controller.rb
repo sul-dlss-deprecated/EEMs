@@ -15,7 +15,7 @@ class EemsController < ApplicationController
   
   #GET /eems/{:id}
   def show
-    @user = EemsUser.find(session[:user_id])   
+    @user = EemsUser.load_from_session(session)   
     @eem = Eem.find(params[:id])
     @parts = @eem.parts
     
@@ -102,7 +102,7 @@ class EemsController < ApplicationController
     attrs = unescape_keys(params[:eem])
     @eem.update_attributes(attrs)
     
-    @user = EemsUser.find(session[:user_id])
+    @user = EemsUser.load_from_session(session)
     #Add actionLog datastream
     @log = Dor::ActionLogDatastream.new
     @log.log("Request created by #{@user.display_name}")

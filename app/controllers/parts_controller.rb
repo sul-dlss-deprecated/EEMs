@@ -11,7 +11,7 @@ class PartsController < ApplicationController
   def create
     @eem = Eem.find(params[:eem_id])
     @log = @eem.datastreams['actionLog']
-    @user = EemsUser.find(session[:user_id])
+    @user = EemsUser.load_from_session(session)
     
     create_content_dir
     

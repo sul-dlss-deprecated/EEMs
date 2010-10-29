@@ -30,7 +30,7 @@ describe LoginController do
       get 'webauth', :wau => 'wmene', :referrer => 'http://cnn.com'
       
       response.should redirect_to('http://cnn.com')
-      session[:user_id].should == 'wmene'
+      
     end
   end
 

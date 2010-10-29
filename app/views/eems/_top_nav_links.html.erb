@@ -1,5 +1,5 @@
 <%
-  @user = EemsUser.find(session[:user_id])
+  @user = EemsUser.load_from_session(session)
   widget_name = WIDGET_NAME || 'EEMs Widget'
 %>
 

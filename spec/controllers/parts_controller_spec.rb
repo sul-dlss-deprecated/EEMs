@@ -29,9 +29,11 @@ describe PartsController do
       @log = Dor::ActionLogDatastream.new
       @eem.stub_chain(:datastreams, :[]).and_return(@log)
       
-      session[:user_id] = 'wmene'
+      # @user = EemsUser.new('Willy Mene', 'wmene')
+      #       @user.save_to_session(session)
+      #       request.env['WEBAUTH_LDAPPRIVGROUP'] = Sulair::AUTHORIZED_EEMS_PRIVGROUP
 
-      post "create", :eem_id => 'pid:123', :content_upload => @file
+      post "create", :eem_id => 'pid:123', :content_upload => @file, :wau => 'Willy Mene'
     end
     
     it "should create the content datastream and save it" do    

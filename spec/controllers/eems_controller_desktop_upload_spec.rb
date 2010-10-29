@@ -46,10 +46,8 @@ describe EemsController do
       
       Part.should_receive(:new).and_return(@part)
       
-      
-      session[:user_id] = 'wmene'
 
-      post "create", :eem => @eems_params, :content_upload => @file
+      post "create", :eem => @eems_params, :content_upload => @file, :wau => 'Willy Mene'
     end
     
     it "should create the content datastream and save it" do    

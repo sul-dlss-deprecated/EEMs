@@ -38,7 +38,10 @@ describe SubmitToTechServicesController do
       log = Dor::ActionLogDatastream.new
       @eem.add_datastream(log)
       
-      session[:user_id] = 'wmene'
+      request.env['WEBAUTH_LDAPPRIVGROUP'] = Sulair::AUTHORIZED_EEMS_PRIVGROUP
+      @user = EemsUser.new('Willy Mene', 'wmene')
+      @user.save_to_session(session)
+   
       Eem.should_receive(:find).with('my:pid123').and_return(@eem)
 
       Dor::WorkflowService.should_receive(:update_workflow_status).with('dor', 'my:pid123', 'eemsAccessionWF', 'submit-tech-services', 'completed')

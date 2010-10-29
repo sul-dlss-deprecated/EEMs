@@ -12,7 +12,8 @@ class LoginController < ApplicationController
   #This method protected by webauth as configured in apache
   #We should only get here after a user has succesfully authenticated
   def webauth
-    Rails.logger.info("Session user_id is: " << session[:user_id])
+    user = EemsUser.load_from_session(session)
+    Rails.logger.info("Session user_id is: " << user.sunetid)
     redirect_to params[:referrer]
   end
 end
