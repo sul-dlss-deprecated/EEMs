@@ -13,48 +13,63 @@ describe Dor::DownloadJob do
   end
     
   describe "perform" do
-    it "should download the content file using Curl and update progress percentage and set the Part as download_done" do
+    before(:each) do
       FileUtils.mkdir(File.join(Sulair::WORKSPACE_DIR, 'druid:123')) unless (File.exists?(File.join(Sulair::WORKSPACE_DIR, 'druid:123')))
       
-      cf = ContentFile.new
-      cf.url = 'http://stanford.edu/images/stanford_title.jpg'
-      cf.filepath = File.join(Sulair::WORKSPACE_DIR, 'druid:123')
-      cf.user_display_name = 'Willy Mene'
-      cf.part_pid = 'part:123'
+      @cf = ContentFile.new
+      @cf.url = 'http://stanford.edu/images/stanford_title.jpg'
+      @cf.filepath = File.join(Sulair::WORKSPACE_DIR, 'druid:123')
+      @cf.user_display_name = 'Willy Mene'
+      @cf.part_pid = 'part:123'
       
-      part = Part.from_params(:url => cf.url, :content_file_id => 12)
-      part.stub!(:save)
-      part.stub!(:parent_pid).and_return('parent:pid')
+      Dor::SuriService.stub!(:mint_id).and_return('part:123')
+      @part = Part.from_params(:url => @cf.url, :content_file_id => 12)
+      @part.stub!(:save)
+      @part.stub!(:parent_pid).and_return('parent:pid')
       
-      ContentFile.stub!(:find).and_return(cf)
-      Part.should_receive(:find).with(cf.part_pid).and_return(part)
+      ContentFile.stub!(:find).and_return(@cf)
+      Part.should_receive(:find).with(@cf.part_pid).and_return(@part)
       
       # Setup an Eem with an ActionLog
       # The Eem is the parent of this Part object
       eem = Eem.new(:pid => 'druid:123')
-      log = Dor::ActionLogDatastream.new
-      eem.add_datastream(log)
-      part.add_relationship(:is_part_of, eem)
+      @log = Dor::ActionLogDatastream.new
+      eem.add_datastream(@log)
+      @part.add_relationship(:is_part_of, eem)
       Eem.should_receive(:find).with('parent:pid').and_return(eem)
       
       job = Dor::DownloadJob.new(1)
       job.perform
+    end
+        
+    it "creates the content datastream setting done and filename" do
+      @part.datastreams.has_key?('content').should be_true
+      @part.datastreams['properties'].done_values.should == ['true']
+      @part.datastreams['properties'].filename_values.should == ['stanford_title.jpg']
+    end
+    
+    context "downloaded content file" do
+      before(:each) do
+        @filepath = File.join(@cf.filepath, 'stanford_title.jpg')
+      end
       
-      part.datastreams.has_key?('content').should be_true
-      part.datastreams['properties'].done_values.should == ['true']
-      part.datastreams['properties'].filename_values.should == ['stanford_title.jpg']
+      it "copies the downloaded file to the workspace" do
+        File.file?(@filepath).should be_true
+      end
       
-      # File should exist and be world readable
-      filepath = File.join(cf.filepath, 'stanford_title.jpg')
-      File.file?(filepath).should be_true
-      sprintf("%o", File.stat(filepath).mode).should == "100644"
+      it "sets the file permissions for owner read/write and read only for group and world" do
+        sprintf("%o", File.stat(@filepath).mode).should == "100644"
+      end
       
+    end
+    
+    it "logs that the download is complete" do
+      @log.entries.size.should == 1
+      @log.entries.first[:action].should == 'File uploaded by Willy Mene'
+    end
+      
+    after(:each) do
       FileUtils.rm_rf(File.join(Sulair::WORKSPACE_DIR, 'druid:123'))
-      
-      # Should log that download is complete
-      log.entries.size.should == 1
-      log.entries.first[:action].should == 'File uploaded by Willy Mene'
-      
     end
   end
   
