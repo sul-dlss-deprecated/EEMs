@@ -10,6 +10,20 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
   protected
+  
+  # Creates an EemsUser and saves the user in the session
+  # The user is created from the following environment variables set by the mod_webauthldap Apache module:
+  # - <b>WEBAUTH_USER</b> - Sunetid id of the user
+  # - <b>WEBAUTH_LDAP_DISPLAYNAME</b> - Display name
+  #
+  # == 'wau' Paramater to simulate WebAuth
+  # When running in development mode without apache or webauth, you can set the necessary environment variables by
+  # appending ?wau=somesunetid to your url string like http://localhost:3000/?wau=wmene
+  #
+  # == Using an Apache instance with WebAuth but no LDAP access
+  # The lyberapps-dev environment uses the plain mod_webauth Apache module, without LDAP access.
+  # When running in the 'ladev' environment, this filter will set the EemsUser.display_name to the sunetid of the authenticated user.
+  # It will also set the WEBAUTH_LDAPPRIVGROUP environment variable so that the #authorized_user filter will pass
   def set_current_user
     unless Rails.env =~ /production/ 
       if params[:wau]
@@ -20,7 +34,13 @@ class ApplicationController < ActionController::Base
       end
     end
     unless request.env['WEBAUTH_USER'].blank?
-      user = EemsUser.new(request.env['WEBAUTH_LDAP_DISPLAYNAME'], request.env['WEBAUTH_USER'])
+      if(Rails.env =~ /ladev/)
+        user_display_name = request.env['WEBAUTH_USER']
+        request.env['WEBAUTH_LDAPPRIVGROUP'] = Sulair::AUTHORIZED_EEMS_PRIVGROUP
+      else
+        user_display_name = request.env['WEBAUTH_LDAP_DISPLAYNAME']
+      end
+      user = EemsUser.new(user_display_name, request.env['WEBAUTH_USER'])
       user.save_to_session(session)
     end
   end

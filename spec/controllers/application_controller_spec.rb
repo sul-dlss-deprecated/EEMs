@@ -23,6 +23,22 @@ describe EemsController do
         session[:eems_user].should be_nil
       end
     end
+    
+    # The lyberapps-dev environment does not use the webauthldap Apache module
+    # so we have to set the EemsUser#display_name and WEBAUTH_LDAPPRIVGROUP environment variable
+    context "when running in the ladev environment" do
+      it "sets EemsUser#display_name and the WEBAUTH_LDAPPRIVGROUP environment variable" do
+        Rails.stub!(:env).and_return('ladev')
+        request.env['WEBAUTH_USER'] = 'mysunetid'
+        
+        controller.send(:set_current_user)
+        user = EemsUser.load_from_session(session)
+        user.display_name.should == 'mysunetid'
+        user.sunetid.should == 'mysunetid'
+        
+        request.env['WEBAUTH_LDAPPRIVGROUP'].should == 'sulair:eems-users'
+      end
+    end
   end
   
   describe "user_required filter" do
