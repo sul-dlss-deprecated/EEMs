@@ -19,8 +19,8 @@ describe Dor::DownloadJob do
       cf = ContentFile.new
       cf.url = 'http://stanford.edu/images/stanford_title.jpg'
       cf.filepath = File.join(Sulair::WORKSPACE_DIR, 'druid:123')
+      cf.user_display_name = 'Willy Mene'
       cf.part_pid = 'part:123'
-      #curl = mock('curl')
       
       part = Part.from_params(:url => cf.url, :content_file_id => 12)
       part.stub!(:save)
@@ -37,7 +37,7 @@ describe Dor::DownloadJob do
       part.add_relationship(:is_part_of, eem)
       Eem.should_receive(:find).with('parent:pid').and_return(eem)
       
-      job = Dor::DownloadJob.new(1, 'wmene')
+      job = Dor::DownloadJob.new(1)
       job.perform
       
       part.datastreams.has_key?('content').should be_true
@@ -67,7 +67,7 @@ describe Dor::DownloadJob do
             
       ContentFile.stub!(:find).and_return(cf)
       Tempfile.should_receive(:new).and_raise(Exception.new)
-      job = Dor::DownloadJob.new(1, 'wmene')
+      job = Dor::DownloadJob.new(1)
       cf.should_receive(:attempts=).with(2)
       cf.should_receive(:save)
       lambda{ job.perform }.should raise_exception
@@ -82,7 +82,7 @@ describe Dor::DownloadJob do
             
       ContentFile.stub!(:find).and_return(cf)
       Tempfile.should_receive(:new).and_raise(Exception.new)
-      job = Dor::DownloadJob.new(1, 'wmene')
+      job = Dor::DownloadJob.new(1)
       cf.should_not_receive(:attempts=)
       cf.should_not_receive(:save)
       job.should_not be_nil
@@ -96,7 +96,7 @@ describe Dor::DownloadJob do
       cf.attempts = 1
 
       ContentFile.stub!(:find).and_return(cf)
-      job = Dor::DownloadJob.new(1, 'wmene')
+      job = Dor::DownloadJob.new(1)
       lambda{ job.perform }.should raise_exception
     end
   end

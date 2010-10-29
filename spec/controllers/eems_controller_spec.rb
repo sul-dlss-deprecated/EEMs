@@ -56,7 +56,7 @@ describe EemsController do
       Part.should_receive(:new).and_return(@part)
       
       job = Dor::DownloadJob.new(@cf.id)
-      Dor::DownloadJob.should_receive(:new).with(@cf.id, 'wmene').and_return(job)
+      Dor::DownloadJob.should_receive(:new).with(@cf.id).and_return(job)
       Delayed::Job.should_receive(:enqueue).with(job)
       
       Dor::WorkflowService.should_receive(:create_workflow).with('dor', 'pid:123', 'eemsAccessionWF', ACCESSION_WF_XML)
@@ -116,6 +116,10 @@ describe EemsController do
     
     it "should create the eemsAccessionWF datastream" do
       
+    end
+    
+    it "sets the ContentFile user_display_name from the display name of the logged in user" do
+      @cf.user_display_name.should == 'Willy Mene'
     end
     
   end

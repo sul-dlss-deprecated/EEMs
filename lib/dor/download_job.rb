@@ -5,7 +5,7 @@ ActiveFedora::SolrService.register(SOLR_URL)
 Fedora::Repository.register(FEDORA_URL)
 
 module Dor
-  class DownloadJob < Struct.new(:content_file_id, :user_id)
+  class DownloadJob < Struct.new(:content_file_id)
     
     #TODO figure out if it isn't an http GET
     #TODO if job fails, dj retries perform?  Should test if file exists
@@ -68,8 +68,7 @@ module Dor
       part.download_done
       
       # Log that the download completed
-      user = EemsUser.find(user_id)
-      part.log_download_complete(user.display_name)
+      part.log_download_complete(@cf.user_display_name)
       
     rescue Exception => e
       msg = e.message
