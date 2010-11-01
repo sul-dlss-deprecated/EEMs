@@ -11,7 +11,7 @@ describe EemsController do
   
   describe "#create" do
     before(:each) do
-      @file = Tempfile.new(['pre%20space', '.pdf'])
+      @file = File.new(File.join(RAILS_ROOT, 'tmp', 'pre%20space.pdf'), "w+")
       @file.stub!(:original_filename).and_return(@file.path.split(/\//).last)
       @eems_params = HashWithIndifferentAccess.new(
         {
@@ -62,6 +62,10 @@ describe EemsController do
       entry[:action].should == "File uploaded by Willy Mene"
       
       response.body.should == 'eem_pid=pid:123'
+    end
+    
+    after(:each) do
+      FileUtils.rm(@file.path)
     end
     
   end
