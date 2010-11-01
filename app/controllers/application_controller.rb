@@ -93,6 +93,7 @@ class ApplicationController < ActionController::Base
     # Tests the value the EemsUser#privgroup to see if it contains an authorized privgroup 
     def authorized_user
       user = EemsUser.load_from_session(session)
+      Rails.logger.info("User: #{user.inspect}")
       if( user.privgroup =~ /#{Sulair::AUTHORIZED_EEMS_PRIVGROUP}/ )
         return true
       else
