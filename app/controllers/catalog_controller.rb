@@ -55,7 +55,7 @@ class CatalogController < ApplicationController
     @eem = Eem.find(@document[:id].to_s)
     @parts = @eem.parts unless (@eem.parts.nil?)
     @log = @eem.datastreams['actionLog']        
-    @user = EemsUser.find(session[:user_id])   
+    @user = EemsUser.load_from_session(session)   
     
     respond_to do |format|
       format.html {setup_next_and_previous_documents}
