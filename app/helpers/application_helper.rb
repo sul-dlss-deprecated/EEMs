@@ -9,6 +9,10 @@ module ApplicationHelper
   def render_document_heading
     '<h1>' + document_heading.to_s + '</h1>'
   end
+  
+  def eem_title_heading
+    @eem.fields[:title][:values].first
+  end
     
   # Get value for a given eem field
   def print_solr_field(name, msg = '') 
