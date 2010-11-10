@@ -95,10 +95,18 @@ module EemsHelper
   def get_local_filename
     fname = ''
     
-    if (!@parts[0].nil?)
-      value = @parts[0].datastreams['properties'].filename_values.first
-      fname = value unless(value.nil?)
-    end
+    @parts.each do |part| 
+      part_ds = part.datastreams['properties']
+      
+      if (!part_ds.nil? && part_ds.done_values.first == 'true')
+        fname = part_ds.filename_values.first || ''
+      end      
+    end 
+    
+    #if (!@parts[0].nil?)
+      #value = @parts[0].datastreams['properties'].filename_values.first
+      #fname = value unless(value.nil?)
+    #end
 
     return fname
   end
@@ -152,7 +160,7 @@ module EemsHelper
   def is_eem_editable(status)    
     if status =~ /Created/i
       return true
-    end
+    end    
     
     return false
   end
@@ -179,8 +187,8 @@ module EemsHelper
   
   # format action log message
   def format_action_log_message(msg)    
-    if (!msg.nil? && msg =~ /^(.*? by )(.*)$/)
-      msg = $1 + '<a href="/?f%5BselectorName_facet%5D%5B%5D=' + $2 + '">' + $2 + '</a>'
+    if (!msg.nil? && msg =~ /^(.*? (by|for) )(.*)$/)
+      msg = $1 + '<a href="/?f%5BselectorName_facet%5D%5B%5D=' + $2 + '">' + $3 + '</a>'
     end
     
     return msg || ''

@@ -28,6 +28,19 @@ $(document).ready(function() {
 	
 	toggleSendToTechServices();
 
+  $('#btn_detail_file_upload').click(function() {
+	  $('#detail_file_upload_loader').show();	
+	  $('#detail_file_upload').submit();
+  });
+
+  $('#content_upload').change(function() {
+	  if ($('#content_upload').val() != '') {
+		  $('#btn_detail_file_upload').removeAttr('disabled');
+	  } else {
+		  $('#btn_detail_file_upload').attr('disabled', 'disabled');
+	  } 
+  });
+
   // send to tech services
   $('#send_to_tech_services_ok').click(function() {
 	  $('#send_to_tech_services_ok').attr('disabled', 'disabled');
@@ -198,7 +211,7 @@ function updateCopyrightDate(data) {
 }
 
 function toggleSendToTechServices() {
-  if ($('#input_title').val() != '' && $('#input_title').val() != 'Click to add title' && status != 'Submitted' && 
+  if ($('#input_title').val() != '' && $('#input_title').val() != 'Click to add title' && status != 'Submitted' && $('#detail_file_upload').length == 0 && 
       (($('#eem_paymentType').val() == 'Free' && ( $('#eem_copyrightStatus').val() == 'Public access OK' || $('#eem_copyrightStatus').val() == 'Stanford access OK')) ||  
 	     ($('#eem_paymentType').val() == 'Paid' && $('#eem_payment_fund').val() != '' && $('#eem_payment_fund').val() != '(Fund name)'))) {
     $('#send_to_tech_services_ok').removeAttr('disabled');
@@ -210,6 +223,11 @@ function toggleSendToTechServices() {
   	$('#text_send_to_acquistions').val('This item can\'t be sent to Technical Services until copyright permission is received.');
   	$('#text_send_to_acquistions').attr('disabled', true);
 	}	
+	
+	// no local pdf file exists. hence, #detail_file_upload form element exists 
+	if ($('#detail_file_upload').length != 0) {
+  	$('#text_send_to_acquistions').val('This item can\'t be sent to Technical Services until a local copy of the file is uploaded.');		
+	}
 }
 
 function sendToTechServices() {
