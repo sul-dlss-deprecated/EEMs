@@ -20,8 +20,9 @@ class PartsController < ApplicationController
       create_part_from_upload_and_log
       
       #render_creation_response(@eem.pid, part.pid)
-      res = 'eem_pid=' + @eem.pid
-      render :text => res.to_s, :content_type => 'text/plain'
+      #res = 'eem_pid=' + @eem.pid
+      #render :text => res.to_s, :content_type => 'text/plain'
+      redirect_to "/view/#{@eem.pid}"
     else
         # TODO There was no content uploaded, throw an error
     end

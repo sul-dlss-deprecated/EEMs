@@ -30,7 +30,15 @@
     
     <dt>Local copy of file :</dt>
     <dd>
-      <%= link_to get_local_filename(),  get_local_file_path(), {:id => 'link_local_file'} %>               
+	    <% if get_local_file_path() != 'unknown' %> 
+        <%= link_to get_local_filename(),  get_local_file_path(), {:id => 'link_local_file'} %>               
+      <% else %>
+        <% form_tag("/eems/#{@eem.pid}/parts", :method => 'post', :id => 'detail_file_upload', :name => 'detail_file_upload', :enctype => 'multipart/form-data') do %>
+		      <%= file_field '', '', {:size => 31, :id => 'content_upload', :name => 'content_upload'} %> <br/>
+  	      <input type="button" disabled="disabled" id="btn_detail_file_upload" value="Upload">
+          <%= image_tag '/images/c_loader.gif', :id => 'detail_file_upload_loader', :class => 'c_loader', :style => 'display: none;' %>
+				<% end %>
+      <% end %> 
     </dd>
     
     <dt>Citation/comments :</dt>

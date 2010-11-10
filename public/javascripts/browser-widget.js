@@ -120,7 +120,8 @@ $(document).ready(function() {
   $('#eem_bw_send_to_tech_services').click(function() {
 	  var selectorName = $('#eem_selectorName').val();
     var logMsg = 'Request submitted by ' + selectorName;
-    var pars = 'eem[requestDatetime]=' + dateFormat(dateFormatMask);
+    //var pars = 'eem[requestDatetime]=' + dateFormat(dateFormatMask);
+    var pars;
     submitEEM(pars, logMsg);
   });
 
@@ -165,6 +166,7 @@ function submitEEMDesktopUpload(pars, logMsg) {
 	    var eem_pid = data.replace(/^eem_pid=/, '');
 
 	    if (eem_pid != null && eem_pid != undefined && (/^druid:\w{11}/.test(eem_pid))) {
+			  window._pid = eem_pid;  
 		    $('#eems-loader').hide();		    
 			  $('#details-link').attr('href', '/view/' + trimmedId(eem_pid));				
 		    $('#eems-success').show();						
@@ -229,23 +231,25 @@ function createEEM_WithPDF(eem_data, logMsg) {
 	  type: 'POST', 
 	  datatype: 'json', 
 	  timeout: 10000, 
-	  data: eem_data, 
+	  data: eem_data, 	  
 	  success: function(eem) {			
 	    $('#eems-loader').hide();
 			$('#eems-upload-progress').show();	  
 		  				
 			if (eem != null && eem.eem_pid != null && (/^druid:\w{11}/.test(eem.eem_pid))) {
+				window._pid = eem.eem_pid;  
+			  
 		    var selectorName = $('#eem_selectorName').val();
 
 			  $('#details-link').attr('href', '/view/' + trimmedId(eem.eem_pid));	
 	      content_file_id = eem.content_file_id;		
 
-	      // if 'Send to Technical Services' button is pressed 
-	      if (/Request submitted by/.test(logMsg)) {
-	        sendToTechServices(eem.eem_pid);
-	      } 
-
 		    update();
+		
+	      // if 'Send to Technical Services' button is pressed 
+	      if (/Request submitted by/.test(logMsg) && eem.content_file_id != undefined) {
+	        sendToTechServices(eem.eem_pid);
+	      } 			
 			} 
 			else {
 			  showPDFErrorMsg(); 	
@@ -269,9 +273,7 @@ function createEEM_WithoutPDF(eem_data, logMsg) {
 		    $('#eems-loader').hide();	
 		    $('#eems-success').show();			
 		    $('#eems-links').show();							  
-			} else {
-			  showPDFErrorMsg(); 	
-			}
+			} 
 	  },
 		error: function() { showEEMsErrorMsg(); },  			
 	});	
@@ -291,9 +293,23 @@ function showEEMsErrorMsg() {
 
 // Error uploading PDF
 function showPDFErrorMsg() {
+	var msg = "Unable to uploading the requested file. The EEMs record has been created and the request should not be tried again."
   $('#eems-loader').hide();				
   $('#eems-upload-progress').hide();
-  $('#eems-error').html("<span class=\"errorMsg\">Error uploading file.</span>").show();							  						
+  $('#eems-error').html("<span class=\"errorMsg\">" + msg + "</span>").show();							  						
+
+	var eem_pid = window._pid; 
+
+  if (eem_pid != undefined) {
+	  var pars1 = { 'authenticity_token': window._token, 'eem[status]': 'Created', 'eem[requestDatetime]': '' };
+    eemUpdate(eem_pid, pars1);
+
+	  var selectorName = $('#eem_selectorName').val();
+    var logMsg = 'File upload failure for ' + selectorName;
+    var pars2 = { 'authenticity_token': window._token, 'entry': logMsg };
+    addLogEntry(eem_pid, pars2, false);
+  }
+
 }
 
 // Update file upload progress bar
@@ -301,8 +317,8 @@ function update() {
 	$.getJSON('/content_files/' + content_file_id, function(data) { 
 		
 		if (data == null || data.attempts == 'failed') {
-		 showPDFErrorMsg(); 
-		 return;
+		  showPDFErrorMsg(); 
+		  return;
 		}  
 		
 	  var percent = parseInt(data.percent_done);	  
