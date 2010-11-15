@@ -293,20 +293,28 @@ function showEEMsErrorMsg() {
 
 // Error uploading PDF
 function showPDFErrorMsg() {
+	var eem_pid = window._pid; 
+		
+  $('#eems-loader').hide();				
+  $('#eems-upload-progress').hide();
+
 	var msg = 
 	  "Unable to uploading the requested file. The EEMs record has been created and the request should not be tried again." + 
 	  "<p>What you can do:</p>" + 
-	  "<ol><li>Upload the file to your desktop from the web site. It is likely that the way in which the web site delivers " + 
+	  "<ol><li>Download the file to your desktop from the web site. It is likely that the way in which the web site delivers " + 
 	  "the file to the user makes it impossible for the EEMs application to upload it on your behalf.</li>" + 
-	  "<li>Upload the file into the existing request by going to the detail view for this request and using the Browse button " + 
-	  "next to the empty \"Local copy of this file\" field.</li></ul>"
+	  "<li>Upload the file into the existing request by going to the <a href=\"/view\" target=\"_blank\">EEMs Dashboard</a>, finding the ";  
 	
-  $('#eems-loader').hide();				
-  $('#eems-upload-progress').hide();
-  $('#eems-error').html("<div class=\"errorMsgPDF\">" + msg + "</div>").show();
-  $('#eems-links').css({'padding': '10px 0 0'}).show();
+	if (eem_pid != undefined) {
+		msg = msg + "<a href=\"/view/" + trimmedId(eem_pid) + "\" target=\"_blank\">record of this request</a>";
+	} else {
+		msg = msg + "record of this request";
+	}
+	
+	msg = msg + " and using the \'Browse\' button " + 
+	  "next to the empty \"Local copy of this file\" field.</li></ul>"
 
-	var eem_pid = window._pid; 
+  $('#eems-error').html("<div class=\"errorMsgPDF\">" + msg + "</div>").show();
 
   if (eem_pid != undefined) {
 	  var pars1 = { 'authenticity_token': window._token, 'eem[status]': 'Created', 'eem[requestDatetime]': '' };

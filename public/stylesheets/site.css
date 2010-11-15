@@ -202,7 +202,7 @@ input, textarea, select, form, dl, dt, dd, textarea {
 	font-weight: bold;
 }
 
-#eems-links a, #eems-links a:link{
+#eems-links a, #eems-links a:link, #eems-error a, #eems-error a:link {
   color: #770000;
   text-decoration: underline;
   margin: 0;
