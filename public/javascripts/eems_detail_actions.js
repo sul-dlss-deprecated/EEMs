@@ -51,6 +51,8 @@ $(document).ready(function() {
 		cancelAction('cancel_this_request');
 	});  
 	
+	$('#cancel_this_request_ok').removeAttr('disabled');
+	
 	$('#upload_copyright_attachment_cancel').click(function() {
 		$('#formlet_upload_copyright_attachment')[0].reset();
 		$('#permission_files_upload_loader').hide();

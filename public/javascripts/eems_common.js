@@ -1,3 +1,5 @@
+var dateFormatMask = "yyyy-mm-dd'T'HH:MM:sso";
+
 function addLogEntry(pid, pars, reload) {
 	if (pid == undefined) { pid = window._pid; }
 
