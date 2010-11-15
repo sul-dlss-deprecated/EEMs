@@ -11,7 +11,7 @@
     <%= render_stylesheet_includes %>
     <%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
     <%= stylesheet_link_tag 'application', 'jquery.autocomplete' %>
-    <%= javascript_include_tag 'eems_common', 'eems_detail_actions', 'jquery.autocomplete' %>    
+    <%= javascript_include_tag 'eems_common', 'eems_detail_actions', 'jquery.autocomplete', 'date.format' %>    
   </head>
   <% if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
     <body onload="$('input#q').focus();">
