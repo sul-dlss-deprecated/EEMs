@@ -165,6 +165,16 @@ module EemsHelper
     return false
   end
 
+  # check if the eem is canceled 
+  def is_eem_canceled(status)    
+    if status =~ /Canceled/i
+      return true
+    end    
+    
+    return false
+  end
+
+
   # get external language name from given code
   def get_language_name(code) 
     language = {

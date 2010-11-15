@@ -293,10 +293,18 @@ function showEEMsErrorMsg() {
 
 // Error uploading PDF
 function showPDFErrorMsg() {
-	var msg = "Unable to uploading the requested file. The EEMs record has been created and the request should not be tried again."
+	var msg = 
+	  "Unable to uploading the requested file. The EEMs record has been created and the request should not be tried again." + 
+	  "<p>What you can do:</p>" + 
+	  "<ol><li>Upload the file to your desktop from the web site. It is likely that the way in which the web site delivers " + 
+	  "the file to the user makes it impossible for the EEMs application to upload it on your behalf.</li>" + 
+	  "<li>Upload the file into the existing request by going to the detail view for this request and using the Browse button " + 
+	  "next to the empty \"Local copy of this file\" field.</li></ul>"
+	
   $('#eems-loader').hide();				
   $('#eems-upload-progress').hide();
-  $('#eems-error').html("<span class=\"errorMsg\">" + msg + "</span>").show();							  						
+  $('#eems-error').html("<div class=\"errorMsgPDF\">" + msg + "</div>").show();
+  $('#eems-links').css({'padding': '10px 0 0'}).show();
 
 	var eem_pid = window._pid; 
 

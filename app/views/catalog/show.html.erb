@@ -27,16 +27,18 @@
 	        </li>    
         <% end %>
 
-        <li>
-          <%= link_to 'Cancel this request',  '#', {:id => 'link_cancel_this_request', :class => 'action_box_show'} %> 
-          <div class="comment_formlet" id="formlet_cancel_this_request">
-            <textarea id="text_cancel_this_request" rows="5" cols="28"></textarea>
-            <div style="text-align: right; padding-right: 8px;">
-	    	      <input type="button" id="cancel_this_request_ok" value="Confirm">
-              <%= link_to 'Cancel', '#', :id => 'cancel_this_request_cancel' %>
-            </div>
-          </div>    
-        </li>    
+			  <% if !is_eem_canceled(print_eems_field('status')) %>
+	        <li>
+	          <%= link_to 'Cancel this request',  '#', {:id => 'link_cancel_this_request', :class => 'action_box_show'} %> 
+	          <div class="comment_formlet" id="formlet_cancel_this_request">
+	            <textarea id="text_cancel_this_request" rows="5" cols="28"></textarea>
+	            <div style="text-align: right; padding-right: 8px;">
+		    	      <input type="button" id="cancel_this_request_ok" value="Confirm">
+	              <%= link_to 'Cancel', '#', :id => 'cancel_this_request_cancel' %>
+	            </div>
+	          </div>    
+	        </li>    
+	      <% end %>
 
 	      <li>
 	        <%= link_to 'Upload copyright attachment',  '#', {:id => 'link_upload_copyright_attachment', :class => 'action_box_show'} %> 
