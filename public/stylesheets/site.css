@@ -166,14 +166,22 @@ input, textarea, select, form, dl, dt, dd, textarea {
 }
 
 #eems-error {
-  margin: 60px auto 0 auto;
+  margin: 40px auto 0 auto;
   text-align: center;
   width: 350px;
 }
 
-.errorMsg {
+.errorMsg, .errorMsgPDF {
 	background: transparent url('/images/error.png') no-repeat left 0;
 	padding: 2px 0 2px 25px;
+}
+
+.errorMsgPDF {
+	text-align: left;
+}
+
+.errorMsgPDF li {
+	padding-bottom: 5px;
 }
 
 #eems-upload-progress {
