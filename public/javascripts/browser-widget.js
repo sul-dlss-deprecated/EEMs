@@ -299,7 +299,7 @@ function showPDFErrorMsg() {
   $('#eems-upload-progress').hide();
 
 	var msg = 
-	  "Unable to uploading the requested file. The EEMs record has been created and the request should not be tried again." + 
+	  "Unable to upload the requested file. The EEMs record has been created and the request should not be tried again." + 
 	  "<p>What you can do:</p>" + 
 	  "<ol><li>Download the file to your desktop from the web site. It is likely that the way in which the web site delivers " + 
 	  "the file to the user makes it impossible for the EEMs application to upload it on your behalf.</li>" + 
