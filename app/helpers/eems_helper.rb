@@ -95,18 +95,10 @@ module EemsHelper
   def get_local_filename
     fname = ''
     
-    @parts.each do |part| 
-      part_ds = part.datastreams['properties']
-      
-      if (!part_ds.nil? && part_ds.done_values.first == 'true')
-        fname = part_ds.filename_values.first || ''
-      end      
-    end 
-    
-    #if (!@parts[0].nil?)
-      #value = @parts[0].datastreams['properties'].filename_values.first
-      #fname = value unless(value.nil?)
-    #end
+    if (!@parts[0].nil?)
+      value = @parts[0].datastreams['properties'].filename_values.first
+      fname = value unless(value.nil?)
+    end
 
     return fname
   end

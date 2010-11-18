@@ -19,12 +19,10 @@ class PartsController < ApplicationController
     if(!params[:content_upload].nil?) 
       create_part_from_upload_and_log
       
-      #render_creation_response(@eem.pid, part.pid)
-      #res = 'eem_pid=' + @eem.pid
-      #render :text => res.to_s, :content_type => 'text/plain'
       redirect_to "/view/#{@eem.pid}"
     else
-        # TODO There was no content uploaded, throw an error
+      # We shouldn't get here, so log an error if we
+      Rails.logger.error("!!!!! There was no content uploaded !!!!!!")
     end
     
   end
