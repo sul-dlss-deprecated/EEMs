@@ -38,7 +38,6 @@ class Part < EemModel::Part
     mime_type = MIME::Types.type_for(filename).to_s
     url = Sulair::WORKSPACE_URL + '/' + parent_pid + '/' + filename
     
-    #TODO what if more than one content file? add_content_datastream?
     attrs = {:dsID => 'content', :dsLocation => url, 
       :mimeType => mime_type, :dsLabel => 'Content File: ' + filename, :checksumType => 'MD5', :versionable => 'false' }
     ds = ActiveFedora::Datastream.new(attrs)

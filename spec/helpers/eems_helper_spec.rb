@@ -31,7 +31,7 @@ describe EemsHelper do
   end  
   
   describe "#get_local_file_path" do
-    it "should return a URI with a url-encoded filename" do
+    it "returns a URI with a url-encoded filename" do
       parts = stub('parts')
       eem = stub('eem')
       eem.stub!(:pid).and_return('etd:123')

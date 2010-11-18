@@ -8,13 +8,23 @@ module ContentUpload
   end
   
   # Assumes params[:content_upload], @content_dir, @log, and @eem, and @user are defined
+  # Create a new Part if it doesn't exist already
+  # Otherwise, a previous upload attempt failed, so use the existing Part
   def create_part_from_upload_and_log
     content_file = params[:content_upload]
-    part = Part.from_params()
-    part.add_relationship(:is_part_of, @eem)
-    part.save
     
-    Rails.logger.debug("Part pid: #{part.pid}")
+    if(@eem.parts.size == 0)
+      part = Part.from_params()
+      part.add_relationship(:is_part_of, @eem)
+      part.save
+      Rails.logger.info("Creating new Part: #{part.pid}")
+    else
+      part = @eem.parts.first
+      Rails.logger.info("Using existing Part: #{part.pid}")
+      
+      props_ds = part.datastreams['properties']
+      Rails.logger.warn("!!!!! Replacing existing Part content !!!!!!") if(props_ds.done_values.first =~ /true/i)
+    end
     
     filename = Part.normalize_filename(content_file.original_filename)
     File.open(File.join(@content_dir,filename), "wb") { |f| f.write(content_file.read) }
