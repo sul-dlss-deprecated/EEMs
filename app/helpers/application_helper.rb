@@ -11,7 +11,7 @@ module ApplicationHelper
   end
   
   def eem_title_heading
-    document['title_t'].first
+    @document['title_t'].first
   end
     
   # Get value for a given eem field
