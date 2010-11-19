@@ -1,5 +1,5 @@
-  <h1 class="mainTitle" id="text_title" title="Click to edit"><%= print_eems_field('title') %></h1>      
-  <%= text_field_tag "title", print_eems_field('title'), {:size => 80, :class => "mainTitle", :style => "display: none", :id => 'input_title'} %>      
+  <h1 class="mainTitle" id="text_title" title="Click to edit"><%= print_eems_field('title', @document['title_t'].first) %></h1>      
+  <%= text_field_tag "title", print_eems_field('title', @document['title_t'].first), {:size => 80, :class => "mainTitle", :style => "display: none", :id => 'input_title'} %>      
   
   <dl class="details">
     <dt>Id :</dt><dd><%= @eem.pid %></dd>
