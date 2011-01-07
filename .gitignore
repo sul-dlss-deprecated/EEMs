@@ -6,3 +6,4 @@ coverage.data
 public/workspace/*
 public/workspace
 workspace/*
+.bundle

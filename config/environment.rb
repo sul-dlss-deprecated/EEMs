@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.9' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -20,18 +20,8 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
-  
-  config.gem 'delayed_job', :version => '2.0.3'
-  config.gem 'curb'
-  config.gem "active-fedora", :version => "1.1.13"
-  config.gem "lyber-core", :lib => 'lyber_core', :version => "0.9.3.9"
-  #config.gem 'rspec-rails', :version => '1.3.2'
-  #config.gem 'rspec', :version => '1.3.0'
-  config.gem 'json'
   config.gem 'authlogic', :version=>'2.1.2'
-  config.gem 'eem_model', :version=>'0.0.2.1'
-
-  #config.gem 'lyber_core'
+  config.gem 'delayed_job', :version => '2.0.3'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

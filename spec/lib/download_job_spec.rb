@@ -48,7 +48,12 @@ describe Dor::DownloadJob do
       @part.datastreams['properties'].filename_values.should == ['stanford_title.jpg']
     end
     
-    context "downloaded content file" do
+    it "logs that the download is complete" do
+      @log.entries.size.should == 1
+      @log.entries.first[:action].should == 'File uploaded by Willy Mene'
+    end
+    
+    describe "downloaded content file" do
       before(:each) do
         @filepath = File.join(@cf.filepath, 'stanford_title.jpg')
       end
@@ -63,11 +68,6 @@ describe Dor::DownloadJob do
       
     end
     
-    it "logs that the download is complete" do
-      @log.entries.size.should == 1
-      @log.entries.first[:action].should == 'File uploaded by Willy Mene'
-    end
-      
     after(:each) do
       FileUtils.rm_rf(File.join(Sulair::WORKSPACE_DIR, 'druid:123'))
     end
