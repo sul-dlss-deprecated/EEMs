@@ -6,10 +6,12 @@ describe Part do
   before(:all) do
     ActiveFedora::SolrService.register(SOLR_URL)
     Fedora::Repository.register(FEDORA_URL)
-    Fedora::Repository.stubs(:instance).returns(stub('frepo').as_null_object)
   end
   
   before(:each) do
+    Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
+    Dor::SuriService.stub!(:mint_id).and_return('dr:12345')
+    
     @parts_params = {
       :url => 'http://somesite.com/a.pdf',
       :content_file_id => 12
