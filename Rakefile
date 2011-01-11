@@ -22,9 +22,12 @@ task :clean do
   FileUtils.rm('coverage.data') if(File.exists? 'coverage.data')
 end
 
-#Call this from the command line with: rake verify_rcov
-RCov::VerifyTask.new(:verify_rcov => ['clean','spec:rcov']) do |t|
-  t.threshold = 77.35
-  t.index_html = 'coverage/index.html'
+Spec::Rake::SpecTask.new(:rcov) do |spec|
+  spec.libs << 'lib' << 'spec'
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rcov = true
+  spec.rcov_opts = %w{--exclude spec\/*,gems\/*,ruby\/* --aggregate coverage.data}
 end
+
+task :default => [:clean, :rcov]
 
