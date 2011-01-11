@@ -13,7 +13,7 @@ gem "marc", "0.3.0"
 gem "rails", "2.3.10"
 gem "rsolr", "0.12.1"
 gem "rsolr-ext", "0.12.0"
-gem "sqlite3-ruby"
+gem "sqlite3-ruby", "1.2.5"
 gem "will_paginate", "2.3.11"
 
 group :development do
