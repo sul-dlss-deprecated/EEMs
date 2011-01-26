@@ -18,6 +18,7 @@ gem "will_paginate", "2.3.11"
 
 group :development do
   gem "ruby-debug"
+  gem "awesome_print"
 end
 
 group :test do
