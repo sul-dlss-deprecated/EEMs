@@ -23,6 +23,7 @@ GEM
     activesupport (2.3.10)
     authlogic (2.1.2)
       activesupport
+    awesome_print (0.3.1)
     bagit (0.1.0)
       semver (~> 0.1.0)
     builder (3.0.0)
@@ -102,6 +103,7 @@ PLATFORMS
 DEPENDENCIES
   active-fedora (= 1.2.8)
   authlogic (= 2.1.2)
+  awesome_print
   curb
   delayed_job (= 2.0.3)
   eem_model (= 0.0.2.2)
@@ -118,3 +120,6 @@ DEPENDENCIES
   ruby-debug
   sqlite3-ruby (= 1.2.5)
   will_paginate (= 2.3.11)
+
+METADATA
+  version: 1.0.6
