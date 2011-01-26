@@ -5,7 +5,7 @@ require 'tempfile'
 require 'dor/download_job'
 
 describe Dor::DownloadJob do
-  before(:all) do
+  before(:each) do
     ActiveFedora::SolrService.register(SOLR_URL)
     Fedora::Repository.register(FEDORA_URL)
     Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
@@ -53,7 +53,7 @@ describe Dor::DownloadJob do
       @log.entries.first[:action].should == 'File uploaded by Willy Mene'
     end
     
-    describe "downloaded content file" do
+    context "downloaded content file" do
       before(:each) do
         @filepath = File.join(@cf.filepath, 'stanford_title.jpg')
       end
