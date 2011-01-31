@@ -9,8 +9,6 @@ require 'rake/rdoctask'
 
 require 'tasks/rails'
 
-require 'spec/rake/verify_rcov'
-
 begin
   require 'delayed/tasks'
 rescue LoadError
@@ -26,7 +24,7 @@ Spec::Rake::SpecTask.new(:rcov) do |spec|
   spec.libs << 'lib' << 'spec'
   spec.pattern = 'spec/**/*_spec.rb'
   spec.rcov = true
-  spec.rcov_opts = %w{--exclude spec\/*,gems\/*,ruby\/* --aggregate coverage.data}
+  spec.rcov_opts = %w{--rails --exclude spec\/*,gems\/*,ruby\/* --aggregate coverage.data}
 end
 
 task :default => [:clean, :rcov]
