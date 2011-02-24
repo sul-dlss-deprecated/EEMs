@@ -30,7 +30,7 @@ var EEMsWidget = {
     popup_container.style.height = this.popup_height + 'px';
  
     var popup_content = document.createElement('div');
-    var popup_content_style = 'top: 15px; left: 15px; clear: both; position: absolute; ' +
+    var popup_content_style = 'top: 15px; left: 15px; clear: both; position: absolute; margin: 0;' +
       'border: 1px solid #666; -moz-border-radius: 5px; -webkit-border-radius: 5px; background-color: #f6f2f6;';
     popup_content.id = 'popup_content';
     popup_content.setAttribute('style', popup_content_style);    

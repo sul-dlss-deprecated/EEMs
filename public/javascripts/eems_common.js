@@ -1,5 +1,11 @@
 var dateFormatMask = "yyyy-mm-dd'T'HH:MM:sso";
 
+$(document).ready(function(){
+	$("#searchResultsHeader td").click(function() {
+		$(this).find('form').submit();
+	});	
+});
+
 function addLogEntry(pid, pars, reload) {
 	if (pid == undefined) { pid = window._pid; }
 
@@ -29,7 +35,7 @@ function escapeTags(value) {
   return value;
 }
 
-// Ajax updater
+// Ajax updater for eem
 function eemUpdate(pid, pars) {
 	if (pid == undefined) { pid = window._pid; }
   pars['pid'] = pid;
@@ -45,11 +51,33 @@ function eemUpdate(pid, pars) {
   return false;
 }
 
+// Ajax updater for content file
+function partUpdate(pid, pars) {
+	var partPid = window._part_pid;
+	
+	if (pid == undefined) { pid = window._pid; }
+  pars['pid'] = pid;
+
+  if (pid == undefined || partPid == undefined || partPid == '') {
+	  return;
+  }
+
+  $.ajax({
+    url: '/eems/' + pid + '/parts/' + partPid,
+    type: 'PUT',
+    data: pars,
+    success: function(response) {
+    },
+  });
+
+  return false;	
+}
 
 function stripHTMLTags(strInputCode){
  	strInputCode = strInputCode.replace(/&(lt|gt);/g, function (strMatch, p1){
 	 	return (p1 == "lt")? "<" : ">";
 	});
+	
 	var strTagStrippedText = strInputCode.replace(/<\/?[^>]+(>|$)/g, "");
   return strTagStrippedText;	
 }

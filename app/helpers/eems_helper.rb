@@ -147,7 +147,17 @@ module EemsHelper
     
     return catkey  
   end
+  
+  # get part pid
+  def get_part_pid 
+    if (!@eem.parts.first.nil?)
+      return @eem.parts.first.pid
+    end
     
+    return ''
+  end
+  
+  
   # check if the eem is editable (i.e., eem is not sent to tech services)
   def is_eem_editable(status)    
     if status =~ /Created/i

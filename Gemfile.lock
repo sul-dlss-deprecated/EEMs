@@ -120,6 +120,3 @@ DEPENDENCIES
   ruby-debug
   sqlite3-ruby (= 1.2.5)
   will_paginate (= 2.3.11)
-
-METADATA
-  version: 1.0.6

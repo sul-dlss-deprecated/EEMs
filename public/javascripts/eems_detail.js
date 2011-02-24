@@ -6,7 +6,8 @@ var defaultValues = {
   "title" : "Click to add title", 
   "creatorName" : "Click to add creator name", 
   "note" : "Click to add citations, comments, copyright notes, etc.",
-  "payment_fund" : "(Fund name)"
+  "payment_fund" : "(Fund name)",
+  "linkUrl" : "Click to add link"
 };
 var dateFormatMask = "yyyy-mm-dd'T'HH:MM:sso";
 
@@ -29,6 +30,7 @@ $(document).ready(function() {
 	toggleSendToTechServices();
 
   $('#btn_detail_file_upload').click(function() {
+	  $(this).attr('disabled', 'disabled');
 	  $('#detail_file_upload_loader').show();	
 	  $('#detail_file_upload').submit();
   });
@@ -67,6 +69,37 @@ $(document).ready(function() {
   $('#input_creatorName').blur(function() { 	
 		editTextOnBlur('creatorName');	
 		updateCreator();
+  });
+
+  // Direct link to file - inline edit
+  $('#btn_linkUrl').click(function() {
+    editLinkUrlOnClick();
+  });
+
+  $('#text_linkUrl').click(function() {
+    editLinkUrlOnClick();
+  });
+
+  $('#input_linkUrl').blur(function() {
+		var pars = {'authenticity_token': token };		
+		
+		if ($('#input_linkUrl').attr('value') == '') {
+			$('#text_linkUrl').show();
+			$('#linkUrl').attr('href', '');
+			$('#linkUrl').text('');			
+			$('#linkUrl').hide();
+		} 
+		else {
+		  $('#linkUrl').attr('href', unescapeTags($('#input_linkUrl').attr('value')));		
+		  $('#linkUrl').text(unescapeTags($('#input_linkUrl').attr('value')));		
+		  $('#text_linkUrl').hide();
+			$('#btn_linkUrl').show();
+			$('#linkUrl').show();	
+			pars['part[url]'] = unescapeTags($('#input_linkUrl').attr('value'));
+			partUpdate(pid, pars);	
+		}
+		
+		$('#input_linkUrl').hide();
   });
 
   // Creator Type
@@ -202,6 +235,21 @@ function editTextOnBlur(name) {
 
 	$('#input_' + name).hide();
 	$('#text_' + name).show();
+}
+
+function editLinkUrlOnClick() {
+	if ($('#linkUrl').attr('href').match(new RegExp(defaultValues['linkUrl'], 'i')) != null) {
+	  $('#linkUrl').attr('href', '');	
+	  $('#linkUrl').text('');		
+	} 
+
+	$('#input_linkUrl').attr('value', escapeTags($('#linkUrl').attr('href')));	
+	
+	$('#linkUrl').hide();
+	$('#btn_linkUrl').hide();
+	$('#text_linkUrl').hide();
+	$('#input_linkUrl').show();
+	$('#input_linkUrl').focus();				
 }
 
 function updateCopyrightDate(data) {
