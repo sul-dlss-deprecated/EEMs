@@ -16,7 +16,7 @@
     <dt>Language :</dt>
     <dd><%= render :partial => 'eems/select_options', :locals => {:field => 'language', :id => 'eem_language', :selected => print_eems_field('language')} %></dd>
     
-    <dt>Created by :</dt>
+    <dt>Author :</dt>
     <dd>
       <div id="text_creatorName" title="Click to edit"><%= get_creator_name() %></div>
       <%= text_field_tag "creatorName", get_creator_name(), {:size => 30, :style => "display: none", :id => 'input_creatorName'} %>
@@ -25,7 +25,17 @@
     
     <dt>Direct link to file :</dt>
     <dd>
-      <%= link_to print_url_decoded,  print_parts_field('url'), {:id => 'link_url', :target => '_blank'} %> 
+      <% if (!print_parts_field('url').nil? && !print_parts_field('url').empty?) %>
+        <div id="text_linkUrl" title="Click to add link" style="display: none;"><span class="text_placeholder">Click to add link</span></div>
+        <%= link_to print_url_decoded,  print_parts_field('url'), {:id => 'linkUrl', :target => '_blank'} %> 
+        <%= text_field_tag "linkUrl",  print_parts_field('url'), {:size => 60, :style => "display: none", :id => 'input_linkUrl'} %>
+        <input id="btn_linkUrl" type="button" value="Edit" >
+      <% else %>
+        <div id="text_linkUrl" title="Click to add link"><span class="text_placeholder">Click to add link</span></div>
+        <%= link_to print_url_decoded,  print_parts_field('url'), {:id => 'linkUrl', :target => '_blank', :style => "display: none;"} %> 
+        <%= text_field_tag "linkUrl",  print_parts_field('url'), {:size => 60, :style => "display: none", :id => 'input_linkUrl'} %>
+        <input id="btn_linkUrl" type="button" value="Edit" style="display: none;">
+      <% end %>
     </dd>
     
     <dt>Local copy of file :</dt>

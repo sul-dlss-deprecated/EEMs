@@ -12,7 +12,7 @@
     <dt><%= label_tag 'eem[title]', 'Title of work:' %></dt>
     <dd><%= eems_text_field_tag :title, '', {:size => 41, :id => 'eem_bw_title'} %></dd>
 
-    <dt><%= label_tag 'eem[creatorName]', 'Created by:' %></dt>
+    <dt><%= label_tag 'eem[creatorName]', 'Author:' %></dt>
     <dd>
       <%= eems_text_field_tag :creatorName, '', {:size => 24, :id => 'eem_bw_creatorName'} %> &nbsp; 
       <%= render :partial => 'eems/select_options', :locals => {:field => 'creatorType', :id => 'eem_bw_creatorType',  :selected => ''} %>

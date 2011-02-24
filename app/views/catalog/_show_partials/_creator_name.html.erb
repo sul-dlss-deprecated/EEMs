@@ -1,10 +1,1 @@
-<% creatorPerson = document[:creatorPerson_field].to_s %>
-<% creatorOrg = document[:creatorOrg_field].to_s %>
-
-<% if !creatorPerson.nil? && !creatorPerson.empty? %>
-  <%= creatorPerson %> (person)
-<% end %>    
-
-<% if !creatorOrg.nil? && !creatorOrg.empty? %>
-  <%= creatorOrg %> (organization)
-<% end %>
+<%= get_creator_name() %>

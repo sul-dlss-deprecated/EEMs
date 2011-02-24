@@ -195,7 +195,10 @@
    <!-- Sort fields -->
    <field name="title_sort" type="string" indexed="true" stored="false" multiValued="true"/>
    <field name="requestDatetime_sort" type="string" indexed="true" stored="false" multiValued="true"/>
-   <field name="system_create_date_sort" type="date" indexed="true" stored="false" multiValued="true"/>
+   <field name="system_create_dt_sort" type="date" indexed="true" stored="false" multiValued="true"/>
+   <field name="selectorName_sort" type="string" indexed="true" stored="false" multiValued="true"/>
+   <field name="copyrightStatus_sort" type="string" indexed="true" stored="false" multiValued="true"/>
+   <field name="status_sort" type="string" indexed="true" stored="false" multiValued="true"/>
 
    <!-- Dynamic field definitions.  If a field name is not found, dynamicFields
         will be used if the name matches any of the patterns.
@@ -251,7 +254,10 @@
   <!-- populate the sort fields -->
  <copyField source="title_t" dest="title_sort"/>
  <copyField source="requestDatetime_t" dest="requestDatetime_sort"/>
- <copyField source="system_create_dt" dest="system_create_date_sort"/>
+ <copyField source="system_create_dt" dest="system_create_dt_sort"/>
+ <copyField source="selectorName_t" dest="selectorName_sort"/>
+ <copyField source="copyrightStatus_t" dest="copyrightStatus_sort"/>
+ <copyField source="status_t" dest="status_sort"/>
 
  <!-- Similarity is the scoring routine for each document vs. a query.
       A custom similarity may be specified here, but the default is fine

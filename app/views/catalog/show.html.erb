@@ -90,3 +90,4 @@
 	var selectorName = '<%= @user.display_name %>';
 </script>
 <%= javascript_tag "window._pid = '#{@eem.pid}'" %>    
+<%= javascript_tag "window._part_pid = '" + get_part_pid() + "'" %>    

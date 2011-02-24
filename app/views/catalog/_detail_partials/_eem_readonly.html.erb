@@ -13,7 +13,7 @@
 	<dt>Language :</dt>
 	<dd><%= get_language_name(@document[:language_t].first.to_s) %></dd>
 
-	<dt>Created by :</dt>
+	<dt>Author :</dt>
 	<dd><%= render :partial => 'catalog/_show_partials/creator_name', :locals => {:document => @document} %></dd>
 
 	<dt>Direct link to file :</dt>

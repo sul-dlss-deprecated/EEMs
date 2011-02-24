@@ -83,6 +83,7 @@ table#searchResults {
 table#searchResults td {
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
+  cursor: pointer;
   padding: 4px 6px;
 }
 
@@ -101,6 +102,17 @@ table#searchResults tr.searchResultsRow2 {
 
 .searchResultsDropDown { width: 15px; }
 .searchResultsTitle { width: 200px; }
+
+.searchResultsHdrSortAsc, .searchResultsHdrSortDesc {
+  background: #555 url('/images/icon_dashboard_sort_asc.png') right center no-repeat ;
+  border: 1px solid #555;
+  color: #fff;
+  cursor: pointer;
+}
+
+.searchResultsHdrSortDesc {
+	background-image: url('/images/icon_dashboard_sort_desc.png');
+}
 
 .widget_button {
 	border: 0;
@@ -125,6 +137,15 @@ h1.mainTitle {
 
 input#input_title {
 	width: 500px;
+}
+
+input#input_linkUrl {
+	width: 300px;
+}
+
+#text_linkUrl {
+	cursor: pointer;
+	display: inline;
 }
 
 h3 {

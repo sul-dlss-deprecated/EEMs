@@ -27,5 +27,19 @@ class PartsController < ApplicationController
     
   end
   
+  # Handles PUT to /eems/:eems_id/parts/:id
+  def update
+    @eem = Eem.find(params[:eem_id])
+    part = @eem.parts.first
+    attrs = unescape_keys(params[:part])
+        
+    logger.debug("attributes submitted: #{attrs.inspect}")
+    part.update_attributes(attrs)
+    part.save
+    
+    response = {'part' => attrs}
+    logger.debug("returning #{response.inspect}")
+    render :json => response    
+  end
   
 end
