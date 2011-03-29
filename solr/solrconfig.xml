@@ -419,6 +419,7 @@
 
      <str name="facet.mincount">1</str>
      <str name="facet.limit">30</str>
+	 <str name="facet.sort">false</str>
      <str name="facet.field">language_field</str>
 <str name="facet.field">selectorName_field</str>
 <str name="facet.field">paymentType_field</str>
@@ -470,6 +471,7 @@
 
      <str name="facet.mincount">1</str>
      <str name="facet.limit">30</str>
+	 <str name="facet.sort">false</str>
      <str name="facet.field">language_t</str>
 <str name="facet.field">selectorName_t</str>
 <str name="facet.field">paymentType_t</str>
