@@ -1,4 +1,3 @@
-require 'lyber_core'
 
 class PermissionFilesController < ApplicationController
   include ApplicationHelper

@@ -1,6 +1,5 @@
 
 class PermissionFile < ActiveFedora::Base
-  include DorBase
   
   has_relationship "permission_file_for", :is_dependent_of          # relationship between permission file and parent etd
     
@@ -11,11 +10,7 @@ class PermissionFile < ActiveFedora::Base
 
   has_metadata :name => "DC", :type => ActiveFedora::QualifiedDublinCoreDatastream do |m|
   end
-  
-  def initialize(attrs={})
-    setup(attrs)
-  end
-  
+    
   def parent_pid
     permission_file_for(:response_format => :id_array)[0]
   end

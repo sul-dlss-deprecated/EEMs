@@ -1,5 +1,5 @@
 require "active_fedora"
-require "lyber_core"
+require 'dor/workflow_service'
 require 'dor/action_log_datastream'
 
 # defined in lib directory
@@ -8,7 +8,6 @@ require 'eem_model'
 
 class Eem < EemModel::Eem
   include EemModel::EemAccession
-  include DorBase
   
   has_relationship "permission_files", :is_dependent_of, :inbound => true
       
@@ -16,10 +15,6 @@ class Eem < EemModel::Eem
     #nada
   end
     
-  def initialize(attrs={})
-    setup(attrs)
-  end
-  
   #TODO this differs from Etd, but I'm not sure why we would need to declare Eem.new outside of this method
   def self.from_params(params_hash)
       e = Eem.new

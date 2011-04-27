@@ -22,7 +22,6 @@ describe Dor::DownloadJob do
       @cf.user_display_name = 'Willy Mene'
       @cf.part_pid = 'part:123'
       
-      Dor::SuriService.stub!(:mint_id).and_return('part:123')
       @part = Part.from_params(:url => @cf.url, :content_file_id => 12)
       @part.stub!(:save)
       @part.stub!(:parent_pid).and_return('parent:pid')

@@ -7,7 +7,6 @@ gem 'curb'
 gem 'delayed_job', '2.0.3'
 gem "facets", "2.8.4"
 gem 'json'
-gem "lyber-core", "0.9.6.2"
 gem "marc", "0.3.0"
 gem "rails", "2.3.10"
 gem "rsolr", "0.12.1"

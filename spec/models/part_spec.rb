@@ -10,7 +10,6 @@ describe Part do
   
   before(:each) do
     Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
-    Dor::SuriService.stub!(:mint_id).and_return('dr:12345')
     
     @parts_params = {
       :url => 'http://somesite.com/a.pdf',

@@ -9,17 +9,11 @@
 #   
 #   content Datastream
 #     -points to workspace/eems-druid/content.pdf (we can create this even if the job isn't done)
-require 'lyber_core'
 require 'cgi'
 require 'eem_model'
 
 class Part < EemModel::Part
-  include DorBase
-    
-  def initialize(attrs={})
-    setup(attrs)
-  end
-  
+      
   def self.from_params(params={})
     p = Part.new
     props = p.datastreams['properties']
