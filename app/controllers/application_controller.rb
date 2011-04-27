@@ -11,38 +11,13 @@ class ApplicationController < ActionController::Base
   
   protected
   
-  # Creates an EemsUser and saves the user in the session
-  # The user is created from the following environment variables set by the mod_webauthldap Apache module:
-  # - <b>WEBAUTH_USER</b> - Sunetid id of the user
-  # - <b>WEBAUTH_LDAP_DISPLAYNAME</b> - Display name
-  # - <b>WEBAUTH_LDAPPRIVGROUP</b> - This variable is set if the user is a member of the privgroup specified by the WebauthLdapPrivgroup Apache directive 
-  #
-  # == 'wau' Paramater to simulate WebAuth
-  # When running in development mode without apache or webauth, you can set the necessary environment variables by
-  # appending ?wau=somesunetid to your url string like http://localhost:3000/?wau=wmene
-  #
-  # == Using an Apache instance with WebAuth but no LDAP access
-  # The lyberapps-dev environment uses the plain mod_webauth Apache module, without LDAP access.
-  # When running in the 'ladev' environment, this filter will set the EemsUser.display_name to the sunetid of the authenticated user.
-  # It will also set the EemsUser#privgroup attribute so that the #authorized_user filter will pass
+  # For the purposes of distribution, this method will create an eems_demo_user for logging in.
+  # It will be up to the developer to re-write this method 
   def set_current_user
-    unless Rails.env =~ /production/ 
-      if params[:wau]
-        logger.warn("Setting WEBAUTH_USER in dev mode!")
-        request.env['WEBAUTH_USER']=params[:wau]
-        request.env['WEBAUTH_LDAP_DISPLAYNAME']=params[:wau]
-        request.env['WEBAUTH_LDAPPRIVGROUP'] = Sulair::AUTHORIZED_EEMS_PRIVGROUP
-      end
-    end
-    unless request.env['WEBAUTH_USER'].blank?
-      if(Rails.env =~ /ladev/)
-        user_display_name = request.env['WEBAUTH_USER']
-        privgroup = Sulair::AUTHORIZED_EEMS_PRIVGROUP
-      else
-        user_display_name = request.env['WEBAUTH_LDAP_DISPLAYNAME']
-        privgroup = request.env['WEBAUTH_LDAPPRIVGROUP']
-      end
-      user = EemsUser.new(user_display_name, request.env['WEBAUTH_USER'], privgroup)
+    # !!!!!!!!!!!!!!!!!!!!!!!! Setting a demo user
+    # !!!!!!!!!!!!!!!!!!!!!!!! Replace these lines with institution specific authorization/authentication scheme
+    unless EemsUser.user_authenticated?(session)
+      user = EemsUser.new("Eems Demo User created in ApplicationController", 'eems_demo_user', 'privgroup unused')
       user.save_to_session(session)
     end
   end
@@ -78,28 +53,14 @@ class ApplicationController < ActionController::Base
       h
     end
     
-    # if the EemsUser was not stored in the session by the :set_current_user filter
-    # then redirect to the /login path
+    # !!!!!!!!!!!!!!!!!!!!!!!! These filters should be re-written/removed for institution specfic authentication/authorization
     def user_required
-      unless(EemsUser.user_webauthed?(session))
-        ref = params[:referrer]
-        ref = '/' unless(ref)
-        redirect_to '/login' + '?referrer=' + ref
-        return false
-      end
       true
     end
 
-    # Tests the value the EemsUser#privgroup to see if it contains an authorized privgroup 
+    # 
     def authorized_user
-      user = EemsUser.load_from_session(session)
-      Rails.logger.info("User: #{user.inspect}")
-      if( user.privgroup =~ /#{Sulair::AUTHORIZED_EEMS_PRIVGROUP}/ )
-        return true
-      else
-        render :status => 401, :partial => "eems/_error/not_authorized"        
-        return false
-      end
+      true
     end
   
 end

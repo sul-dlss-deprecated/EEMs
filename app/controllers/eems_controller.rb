@@ -5,6 +5,10 @@ class EemsController < ApplicationController
   
   before_filter :require_fedora
   before_filter :require_solr
+  
+  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+  # These filters are defined in the local ApplicationController
+  # Either they should be re-written for institution specfic authentication/authorization
   before_filter :user_required, :except => :index
   before_filter :authorized_user, :except => :index
   
