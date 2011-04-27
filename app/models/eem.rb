@@ -1,7 +1,9 @@
 require "active_fedora"
 require "lyber_core"
 require 'dor/action_log_datastream'
-require 'eem_model'
+
+# defined in lib directory
+require 'eem_model' 
 
 
 class Eem < EemModel::Eem

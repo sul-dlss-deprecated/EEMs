@@ -32,8 +32,6 @@ GEM
     daemons (1.1.0)
     delayed_job (2.0.3)
       daemons
-    eem_model (0.0.2.2)
-      active-fedora (>= 1.1.13)
     facets (2.8.4)
     json (1.4.6)
     linecache (0.43)
@@ -106,7 +104,6 @@ DEPENDENCIES
   awesome_print
   curb
   delayed_job (= 2.0.3)
-  eem_model (= 0.0.2.2)
   facets (= 2.8.4)
   json
   lyber-core (= 0.9.6.2)

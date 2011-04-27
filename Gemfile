@@ -5,7 +5,6 @@ gem 'active-fedora', '1.2.8'
 gem 'authlogic', '2.1.2'
 gem 'curb'
 gem 'delayed_job', '2.0.3'
-gem 'eem_model', '0.0.2.2'
 gem "facets", "2.8.4"
 gem 'json'
 gem "lyber-core", "0.9.6.2"
