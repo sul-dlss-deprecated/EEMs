@@ -1,0 +1,62 @@
+
+h1. EEMs - Everyday Electronic Materials
+
+A pre-Hydra, ActiveFedora/Blacklight Ruby on Rails application
+
+h2. Installation
+
+h3. Prerequisites
+
+* rvm with MRI 1.8.7
+* bundler
+* packages and header files in order to build the following gems
+** curb - needs curl and curl header files
+** nokogiri - libxml2
+* Fedora
+* Solr
+
+
+h3. Instructions to get development instance running
+
+* source the .rvmrc - It will create an rvm gemset _1.8.7@eems_, you can change this if you want
+** @$ source .rvmrc@
+* Use bundler to install gems - install any missing packages if needed
+** @$ bundle install@
+* Point to your Fedora instance: modify the *FEDORA_URL* constant in @conf/environments/development.rb@
+* Point to your Solr instance: modify @config/solr.yml@ and @config/initializers/fedora_repository.rb@
+* Copy @solr/schema.xml@ and @solr/solrconfig.xml@ to *$SOLR_HOME/conf*
+* Create the development sqlite database
+** @$ rake db:migrate@
+* Create the test sqlite database
+** @$ rake db:test:clone@
+* Make sure all the tests pass
+** @$ rake spec@
+* Start delayed_job
+** @$ startjob.sh development@
+* Start the app
+** @$ script/server@
+
+h2. Typical Use Case
+
+* Login to app by opening http://localhost:3000 in your browser
+* Create bookmark/browser button by dragging the "EEMs-dev Widget" button to your browser's bookmark toolbar
+* Navigate to a web page with a freely downloadable pdf, not behind a password.  e.g. http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm
+* Click the "EEMs Widget" browser button
+* fill in details
+
+
+
+
+
+
+-rvmrc
+
+-solr
+
+-curl
+
+-delayed job
+
+
+
+
