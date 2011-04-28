@@ -48,9 +48,7 @@ class CatalogController < ApplicationController
   end
   
   # get single document from the solr index
-  def show
-    params[:id] = 'druid:' + params[:id] unless params[:id] =~ /^druid:/ 
-    
+  def show    
     @response, @document = get_solr_response_for_doc_id
     @eem = Eem.find(@document[:id].to_s)
     @parts = @eem.parts unless (@eem.parts.nil?)
