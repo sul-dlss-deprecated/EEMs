@@ -27,24 +27,16 @@ config.action_view.cache_template_loading            = true
 # Enable threaded mode
 # config.threadsafe!
 
-FEDORA_URL = 'https://***REMOVED***@dor-prod.stanford.edu/fedora'
-CERT_FILE = File.join(RAILS_ROOT, "config", "certs", "etd-prod.crt")
-KEY_FILE = File.join(RAILS_ROOT, "config", "certs", "etd-prod.key")
-KEY_PASS = ***REMOVED***
+FEDORA_URL = 'https://***REMOVED***@fedora.yourinstitute.edu/fedora'
+
 WIDGET_NAME = 'EEMs Widget'
 WIDGET_SUFFIX = ''
 
 module Sulair
-  WORKSPACE_URL = 'https://eems.stanford.edu/workspace'
+  WORKSPACE_URL = 'https://eems-server.yourinstitute.edu/workspace'
 end
 
 module Dor
-  MINT_SURI_IDS = true
-  SURI_URL = 'http://lyberservices-prod.stanford.edu:8080'
-  ID_NAMESPACE = 'druid'
-  SURI_USER = ***REMOVED***
-  SURI_PASSWORD = ***REMOVED***
-  
   CREATE_WORKFLOW = true
   WF_URI = 'http://lyberservices-prod.stanford.edu/workflow'
 end

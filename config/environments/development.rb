@@ -21,22 +21,6 @@ WIDGET_NAME = 'Dev EEMs Widget'
 WIDGET_SUFFIX = '-dev'
 
 module Sulair
-  WORKSPACE_URL = 'http://localhost:3000/workspace'
+  WORKSPACE_URL = 'http://localhost:8080/workspace'
 end
 
-module Dor
-  MINT_SURI_IDS = true
-  SURI_URL = 'http://lyberservices-dev.stanford.edu:8080'
-  ID_NAMESPACE = 'druid'
-  SURI_USER = ***REMOVED***
-  SURI_PASSWORD = ***REMOVED***
-  
-  CREATE_WORKFLOW = false
-  WF_URI = 'http://lyberservices-dev.stanford.edu/workflow'
-end
-
-# Dor::SuriService::MINT_SURI_IDS = true
-# Dor::SuriService::SURI_URL = 'http://lyberservices-dev.stanford.edu:8080'
-# Dor::SuriService::ID_NAMESPACE = 'druid'
-# Dor::SuriService::SURI_USER = ***REMOVED***
-# Dor::SuriService::SURI_PASSWORD = ***REMOVED***

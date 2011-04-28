@@ -1,3 +1,5 @@
+# Use bundler for depencency management
+
 begin
   require "rubygems"
   require "bundler"
