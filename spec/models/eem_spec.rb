@@ -140,23 +140,10 @@ describe Eem do
       eem = Eem.from_params(@submitted_eem.stringify_keys)
       
       # until we switch to 1.8.7, we have to set our expectation this cheap way
-      eem.generate_initial_identity_metadata_xml.should == "<?xml version=\"1.0\"?>\n<identityMetadata>\n  <objectId>my:pid123</objectId>\n  <objectType>item</objectType>\n  <objectAdminClass>EEMs</objectAdminClass>\n  <agreementId>druid:fn200hb6598</agreementId>\n  <tag>EEM : 1.0</tag>\n</identityMetadata>\n"
+      eem.generate_initial_identity_metadata_xml.should == "<?xml version=\"1.0\"?>\n<identityMetadata>\n  <objectId>my:pid123</objectId>\n  <objectType>item</objectType>\n  <objectAdminClass>EEMs</objectAdminClass>\n  <agreementId>some:objectId</agreementId>\n  <tag>EEM : 1.0</tag>\n</identityMetadata>\n"
       
     end
   end
   
-  describe "#find" do
-    it "should handle an id without 'druid:'" do
-      Eem.should_receive(:original_find).with('druid:xx123abc')
-      
-      Eem.find('xx123abc')
-    end
-    
-    it "should not touch an id that begins with 'druid:'" do
-      Eem.should_receive(:original_find).with('druid:123abc')
-      
-      Eem.find('druid:123abc')
-    end
-  end
   
 end
