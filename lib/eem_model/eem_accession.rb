@@ -71,7 +71,7 @@ module EemModel
             xml.text("EEMs")
           }
           xml.agreementId {
-            xml.text("druid:fn200hb6598")
+            xml.text("some:objectId")
           }
           xml.tag {
             xml.text("EEM : 1.0" )

@@ -78,7 +78,7 @@ describe Eem do
       eem = Eem.from_params(@submitted_eem.stringify_keys)
       id_ds = eem.datastreams['identityMetadata']
       id_ds.stub!(:content).and_return(nil)
-      id_ds.should_receive(:content=).with("<?xml version=\"1.0\"?>\n<identityMetadata>\n  <objectId>my:pid123</objectId>\n  <objectType>item</objectType>\n  <objectLabel>EEMs: Digital Content Title</objectLabel>\n  <objectAdminClass>EEMs</objectAdminClass>\n  <agreementId>druid:fn200hb6598</agreementId>\n  <tag>EEM : 1.0</tag>\n</identityMetadata>\n")
+      id_ds.should_receive(:content=).with("<?xml version=\"1.0\"?>\n<identityMetadata>\n  <objectId>my:pid123</objectId>\n  <objectType>item</objectType>\n  <objectLabel>EEMs: Digital Content Title</objectLabel>\n  <objectAdminClass>EEMs</objectAdminClass>\n  <agreementId>some:objectId</agreementId>\n  <tag>EEM : 1.0</tag>\n</identityMetadata>\n")
       id_ds.stub!(:save)
       
       eem.update_identity_metadata_object_label
