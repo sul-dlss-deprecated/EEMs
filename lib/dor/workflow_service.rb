@@ -3,10 +3,11 @@ require 'nokogiri'
 module Dor
   
   # Methods to create and update workflow
+  # Calls to LyberCore::Connection have been commented out, since it pertains to Stanford's WorkDo service
   #
   # ==== Required Constants
   # - Dor::CREATE_WORKFLOW : true or false.  Can be used to turn of workflow in a particular environment, like development
-  # - Dor::WF_URI : The URI to the workflow service.  An example URI is 'http://lyberservices-dev.stanford.edu/workflow'
+  # - Dor::WF_URI : The URI to the workflow service.
   module WorkflowService
   
   # Creates a workflow for a given object in the repository.  If this particular workflow for this objects exists,
@@ -20,13 +21,13 @@ module Dor
   # - <b>wf_xml</b> - The xml that represents the workflow
   # 
   def WorkflowService.create_workflow(repo, druid, workflow_name, wf_xml)
-    return true unless(Dor::CREATE_WORKFLOW)
-    
-    full_uri = ''
-    full_uri << Dor::WF_URI << '/' << repo << '/objects/' << druid << '/workflows/' << workflow_name
-    
-    # On success, an empty body is sent   
-    LyberCore::Connection.put(full_uri, wf_xml){|response| true}
+    return true # unless(Dor::CREATE_WORKFLOW)
+    #     
+    #     full_uri = ''
+    #     full_uri << Dor::WF_URI << '/' << repo << '/objects/' << druid << '/workflows/' << workflow_name
+    #     
+    #     # On success, an empty body is sent   
+    #     LyberCore::Connection.put(full_uri, wf_xml){|response| true}
   end
   
   # Updates the status of one step in a workflow.      
@@ -47,39 +48,39 @@ module Dor
   #   PUT "/dor/objects/pid:123/workflows/GoogleScannedWF/convert"
   #   <process name=\"convert\" status=\"completed\" />"
   def WorkflowService.update_workflow_status(repo, druid, workflow, process, status, elapsed = 0, lifecycle = nil)
-    return true unless(Dor::CREATE_WORKFLOW)
-    
-    uri = ''
-    uri << Dor::WF_URI << '/' << repo << '/objects/' << druid << '/workflows/' << workflow << '/' << process    
-    
-    attrs = {:process => process, :status => status, :elapsed => elapsed.to_s}
-    attrs[:lifecycle] = lifecycle if(lifecycle)
-    
-    builder = Nokogiri::XML::Builder.new {|xml| xml.process(attrs)}
-    
-    # On success, an empty body is sent 
-    LyberCore::Connection.put(uri, builder.to_xml) {|response| true}
+    return true # unless(Dor::CREATE_WORKFLOW)
+    #     
+    #     uri = ''
+    #     uri << Dor::WF_URI << '/' << repo << '/objects/' << druid << '/workflows/' << workflow << '/' << process    
+    #     
+    #     attrs = {:process => process, :status => status, :elapsed => elapsed.to_s}
+    #     attrs[:lifecycle] = lifecycle if(lifecycle)
+    #     
+    #     builder = Nokogiri::XML::Builder.new {|xml| xml.process(attrs)}
+    #     
+    #     # On success, an empty body is sent 
+    #     LyberCore::Connection.put(uri, builder.to_xml) {|response| true}
   end
   
   #
   # Retrieves the process status of the given workflow for the given object identifier
   #
   def WorkflowService.get_workflow_status(repo, druid, workflow, process)
-      uri = ''
-      uri << Dor::WF_URI << '/' << repo << '/objects/' << druid << '/workflows/' << workflow
-      workflow_md = LyberCore::Connection.get(uri)
-
-      doc = Nokogiri::XML(workflow_md)
-      raise Exception.new("Unable to parse response:\n#{workflow_md}") if(doc.root.nil?)
-      
-      status = doc.root.at_xpath("//process[@name='#{process}']/@status").content
-      return status
+      # uri = ''
+      # uri << Dor::WF_URI << '/' << repo << '/objects/' << druid << '/workflows/' << workflow
+      # workflow_md = LyberCore::Connection.get(uri)
+      # 
+      # doc = Nokogiri::XML(workflow_md)
+      # raise Exception.new("Unable to parse response:\n#{workflow_md}") if(doc.root.nil?)
+      # 
+      # status = doc.root.at_xpath("//process[@name='#{process}']/@status").content
+      # return status
   end
   
   def WorkflowService.get_workflow_xml(repo, druid, workflow)
-    uri = ''
-    uri << Dor::WF_URI << '/' << repo << '/objects/' << druid << '/workflows/' << workflow
-    workflow_md = LyberCore::Connection.get(uri)
+    # uri = ''
+    # uri << Dor::WF_URI << '/' << repo << '/objects/' << druid << '/workflows/' << workflow
+    # workflow_md = LyberCore::Connection.get(uri)
   end    
 
   # Updates the status of one step in a workflow to error.      
@@ -99,14 +100,15 @@ module Dor
   #   PUT "/dor/objects/pid:123/workflows/GoogleScannedWF/convert"
   #   <process name=\"convert\" status=\"error\" />"
   def WorkflowService.update_workflow_error_status(repo, druid, workflow, process, error_msg, error_txt = nil)
-    uri = ''
-    uri << Dor::WF_URI << '/' << repo << '/objects/' << druid << '/workflows/' << workflow << '/' << process
-    process_xml = '<process name="'+ process + '" status="error" errorMessage="' + error_msg + '" ' 
-    process_xml << 'errorText="' + error_txt + '" ' if(error_txt)
-    process_xml << '/>' 
-    
-    # On success, an empty body is sent 
-    LyberCore::Connection.put(uri, process_xml) {|response| true}
+    return true
+    # uri = ''
+    #     uri << Dor::WF_URI << '/' << repo << '/objects/' << druid << '/workflows/' << workflow << '/' << process
+    #     process_xml = '<process name="'+ process + '" status="error" errorMessage="' + error_msg + '" ' 
+    #     process_xml << 'errorText="' + error_txt + '" ' if(error_txt)
+    #     process_xml << '/>' 
+    #     
+    #     # On success, an empty body is sent 
+    #     LyberCore::Connection.put(uri, process_xml) {|response| true}
   end
 
   end
