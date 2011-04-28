@@ -1,6 +1,5 @@
 GEM
   remote: http://rubygems.org/
-  remote: http://sulair-rails-dev.stanford.edu/
   specs:
     actionmailer (2.3.10)
       actionpack (= 2.3.10)
@@ -25,17 +24,25 @@ GEM
       activesupport
     awesome_print (0.3.1)
     builder (3.0.0)
+    cgi_multipart_eof_fix (2.5.0)
     columnize (0.3.2)
     curb (0.7.10)
     daemons (1.1.0)
     delayed_job (2.0.3)
       daemons
     facets (2.8.4)
+    fastthread (1.0.7)
+    gem_plugin (0.2.3)
     json (1.4.6)
     linecache (0.43)
     marc (0.3.0)
     mediashelf-loggable (0.4.0)
     mime-types (1.16)
+    mongrel (1.1.5)
+      cgi_multipart_eof_fix (>= 2.4)
+      daemons (>= 1.0.3)
+      fastthread (>= 1.0.1)
+      gem_plugin (>= 0.2.3)
     multipart-post (1.1.0)
     nokogiri (1.4.3.1)
     om (1.0.2)
@@ -89,6 +96,7 @@ DEPENDENCIES
   facets (= 2.8.4)
   json
   marc (= 0.3.0)
+  mongrel
   rails (= 2.3.10)
   rcov
   rsolr (= 0.12.1)

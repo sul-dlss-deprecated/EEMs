@@ -1,5 +1,4 @@
 source "http://rubygems.org"
-source "http://sulair-rails-dev.stanford.edu"
 
 gem 'active-fedora', '1.2.8'
 gem 'authlogic', '2.1.2'
@@ -15,8 +14,9 @@ gem "sqlite3-ruby", "1.2.5"
 gem "will_paginate", "2.3.11"
 
 group :development do
-  gem "ruby-debug"
   gem "awesome_print"
+  gem "mongrel"
+  gem "ruby-debug"
 end
 
 group :test do
