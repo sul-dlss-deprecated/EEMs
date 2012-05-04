@@ -47,7 +47,7 @@ describe EemsController do
 
         @log = Dor::ActionLogDatastream.new
         Dor::ActionLogDatastream.should_receive(:new).and_return(@log)
-        @eem.should_receive(:add_datastream).with(an_instance_of(Dor::ActionLogDatastream))
+        #@eem.should_receive(:add_datastream).with(an_instance_of(Dor::ActionLogDatastream))
 
         @part = Part.new(:pid => 'part:345')
         @part.stub!(:save)

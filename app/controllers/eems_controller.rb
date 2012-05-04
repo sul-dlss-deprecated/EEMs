@@ -110,6 +110,18 @@ class EemsController < ApplicationController
     @eem.add_datastream(@log)
     @eem.save
     
+    # save our custom RELS-EXT
+    rdf =<<-EOXML
+    <rdf:RDF xmlns:fedora="info:fedora/fedora-system:def/relations-external#" xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:hydra="http://projecthydra.org/ns/relations#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description rdf:about="info:fedora/#{@eem.pid}">
+        <fedora-model:hasModel rdf:resource="info:fedora/afmodel:Eems"/>
+    	  <hydra:isGovernedBy rdf:resource="info:fedora/druid:jj305hm5259"/> 
+      </rdf:Description>
+    </rdf:RDF>
+    EOXML
+    @eem.rels_ext.content = rdf
+    @eem.rels_ext.save
+    
     #Create the workflow datastream
     #It's defined in config/initializers/accession_workflow_config
     Dor::WorkflowService.create_workflow('dor', @eem.pid, 'eemsAccessionWF', ACCESSION_WF_XML)
