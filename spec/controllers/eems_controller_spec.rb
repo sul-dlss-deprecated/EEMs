@@ -16,6 +16,7 @@ describe EemsController do
   
   describe "#create" do
     before(:each) do
+      Fedora::Repository.stub!(:instance).and_return(stub('stub').as_null_object)
       @eems_params = HashWithIndifferentAccess.new(
         {
           :copyrightStatusDate => '1/1/10',
@@ -42,7 +43,8 @@ describe EemsController do
       
       @log = Dor::ActionLogDatastream.new
       Dor::ActionLogDatastream.should_receive(:new).and_return(@log)
-      @eem.should_receive(:add_datastream).with(an_instance_of(Dor::ActionLogDatastream))
+      #@eem.should_receive(:add_datastream).with(an_instance_of(Dor::ActionLogDatastream))
+      #@eem.should_receive(:add_datastream).with(an_instance_of(ActiveFedora::RelsExtDatastream))
       
       @cf = ContentFile.new
       @cf.stub!(:id).and_return(1)
