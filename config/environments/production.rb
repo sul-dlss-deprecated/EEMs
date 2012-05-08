@@ -52,7 +52,7 @@ end
 
 module Dor
   MINT_SURI_IDS = true
-  SURI_URL = 'http://lyberservices-prod.stanford.edu:8080'
+  SURI_URL = 'https://lyberservices-prod.stanford.edu'
   ID_NAMESPACE = 'druid'
   SURI_USER = ***REMOVED***
   SURI_PASSWORD = ***REMOVED***
