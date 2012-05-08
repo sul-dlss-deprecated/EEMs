@@ -36,7 +36,7 @@ module LyberCore
 end
 
 module Fedora
-  module Connection
+  class Connection
     CERT_FILE = LyberCore::CERT_FILE
     KEY_FILE = LyberCore::KEY_FILE
     KEY_PASS = LyberCore::KEY_PASS
