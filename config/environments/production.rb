@@ -28,9 +28,21 @@ config.action_view.cache_template_loading            = true
 # config.threadsafe!
 
 FEDORA_URL = 'https://***REMOVED***@dor-prod.stanford.edu/fedora'
-CERT_FILE = File.join(RAILS_ROOT, "config", "certs", "etd-prod.crt")
-KEY_FILE = File.join(RAILS_ROOT, "config", "certs", "etd-prod.key")
-KEY_PASS = ***REMOVED***
+
+module LyberCore
+  CERT_FILE = File.join(RAILS_ROOT, "config", "certs", "etd-prod.crt")
+  KEY_FILE = File.join(RAILS_ROOT, "config", "certs", "etd-prod.key")
+  KEY_PASS = ***REMOVED***
+end
+
+module Fedora
+  module Connection
+    CERT_FILE = LyberCore::CERT_FILE
+    KEY_FILE = LyberCore::KEY_FILE
+    KEY_PASS = LyberCore::KEY_PASS
+  end
+end
+
 WIDGET_NAME = 'EEMs Widget'
 WIDGET_SUFFIX = ''
 
