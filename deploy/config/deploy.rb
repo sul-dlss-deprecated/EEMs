@@ -18,7 +18,21 @@ task :dev do
   set :rails_env, 'ladev'
 end
 
-set :shared_children, %w(log workspace db/ladev.sqlite3 public/workspace config/environments config/certs config/database.yml config/solr.yml config/users.yml config/initializers/sulair_config.rb config/initializers/fedora_repository.rb )
+task :testing do
+  role :app, "lyberapps-test.stanford.edu"
+  role :db, "lyberapps-test.stanford.edu", :primary => true
+  set :bundle_without, []                         # install all the bundler groups in dev
+  set :rails_env, 'eems-test'
+end
+
+task :production do
+  role :app, "lyberapps-prod.stanford.edu"
+  role :db, "lyberapps-prod.stanford.edu", :primary => true
+  set :bundle_without, []                         # install all the bundler groups in dev
+  set :rails_env, 'production'
+end
+
+set :shared_children, %w(log workspace db/ladev.sqlite3 db/eems-test.sqlite3 db/production.sqlite3 public/workspace config/environments config/certs config/database.yml config/solr.yml config/users.yml config/initializers/sulair_config.rb config/initializers/fedora_repository.rb )
 
 set :destination, "/var/opt/home/lyberadmin"
 set :user, "lyberadmin"
