@@ -6,4 +6,4 @@ if [ -z $1 ]; then
 	exit
 fi
 
-/usr/bin/env RAILS_ENV=$1 /home/lyberadmin/eems/script/delayed_job start
+/usr/bin/env RAILS_ENV=$1 /home/lyberadmin/eems/current/script/delayed_job start
