@@ -10,7 +10,7 @@ gem "facets", "2.8.4"
 gem 'json'
 gem "lyber-core", "0.9.6.2"
 gem "marc", "0.3.0"
-gem "rails", "2.3.10"
+gem "rails", "~> 2.3"
 gem "rsolr", "0.12.1"
 gem "rsolr-ext", "0.12.0"
 gem "sqlite3-ruby", "1.2.5"
