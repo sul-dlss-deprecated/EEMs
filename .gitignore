@@ -7,3 +7,4 @@ public/workspace/*
 public/workspace
 workspace/*
 .bundle
+.rvmrc
