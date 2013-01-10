@@ -5,5 +5,4 @@ group :deployment do
   gem 'capistrano'
   gem 'lyberteam-devel', '>=1.0.0'
   gem 'net-ssh-kerberos'
-  gem 'rvm-capistrano'
 end

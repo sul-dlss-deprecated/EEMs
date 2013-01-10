@@ -2,7 +2,6 @@ require 'net/ssh/kerberos'
 require 'bundler/setup'
 require 'bundler/capistrano'
 require 'dlss/capistrano'
-require 'rvm/capistrano'
 
 set :application, "eems"
 set :repository,  "ssh://corn.stanford.edu/afs/ir/dev/dlss/git/hydra/eems.git"
