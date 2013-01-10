@@ -45,10 +45,47 @@ set :deploy_to, "#{destination}/#{application}"
 
 after "deploy:finalize_update", "deploy:migrate"
 
+# Stop
+before "deploy:update", "eems:stop_delayed_job"
+
+# If anything goes wrong, undo.
+before "deploy:rollback", "eems:stop_delayed_job"
+after "deploy:rollback", "eems:start_delayed_job"
+
+namespace :eems do
+  def run_dj_cmd(script)
+    cmd = "cd #{current_path}; bundle exec ./#{script} #{rails_env}"
+    run cmd
+  end
+
+  task :start_delayed_job do
+    run_dj_cmd "startjob.sh"
+  end
+
+  task :stop_delayed_job do
+    run_dj_cmd "stopjob.sh" if(released)
+  end
+end
+
+# :released is true if there are any deployed releases, false otherwise
+# Prevents capistrano from stopping the robots if the project hasn't been deployed yet
+set(:released) { capture("ls -x #{releases_path}").split.length > 0 }
+
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
+  task :start do
+    eems.start_delayed_job
+  end
+
+  task :stop do
+    eems.stop_delayed_job
+  end
+
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{File.join(current_path,'tmp','restart.txt')}"
+  end
+
+  task :default do
+    update
+    start
   end
 end
