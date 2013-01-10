@@ -7,10 +7,6 @@ require 'rvm/capistrano'
 set :application, "eems"
 set :repository,  "ssh://corn.stanford.edu/afs/ir/dev/dlss/git/hydra/eems.git"
 
-set :rvm_ruby_string, "1.8.7@eems"
-set :rvm_type, :system
-
-
 task :dev do
   role :app, "lyberapps-dev.stanford.edu"
   role :db, "lyberapps-dev.stanford.edu", :primary => true
@@ -48,14 +44,7 @@ set :keep_releases, 2
 
 set :deploy_to, "#{destination}/#{application}"
 
-after "deploy:create_symlink", "rvm:trust_rvmrc"
 after "deploy:finalize_update", "deploy:migrate"
-
-namespace :rvm do
-  task :trust_rvmrc do
-    run "/usr/local/rvm/bin/rvm rvmrc trust #{latest_release}"
-  end
-end
 
 namespace :deploy do
   task :start do ; end
@@ -64,4 +53,3 @@ namespace :deploy do
     run "touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 end
-
