@@ -8,3 +8,6 @@ public/workspace
 workspace/*
 .bundle
 .rvmrc
+.ruby-version
+.ruby-gemset
+
