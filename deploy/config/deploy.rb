@@ -54,7 +54,7 @@ after "deploy:rollback", "eems:start_delayed_job"
 
 namespace :eems do
   def run_dj_cmd(script)
-    cmd = "cd #{current_path}; source /etc/rvmrc; bundle exec ./#{script} #{rails_env}"
+    cmd = "cd #{current_path}; /usr/local/rvm/gems/ruby-1.8.7-p334/bin/bundle exec ./#{script} #{rails_env}"
     run cmd
   end
 
