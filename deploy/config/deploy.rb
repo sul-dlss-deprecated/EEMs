@@ -3,6 +3,8 @@ require 'bundler/setup'
 require 'bundler/capistrano'
 require 'dlss/capistrano'
 
+set :default_shell, '/bin/bash -l'
+
 set :application, "eems"
 set :repository,  "ssh://corn.stanford.edu/afs/ir/dev/dlss/git/hydra/eems.git"
 
