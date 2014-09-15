@@ -30,9 +30,10 @@ module Dor
   ID_NAMESPACE = 'druid'
   SURI_USER = ***REMOVED***
   SURI_PASSWORD = ***REMOVED***
-  
+
   CREATE_WORKFLOW = false
   WF_URI = 'http://lyberservices-dev.stanford.edu/workflow'
+  DOR_SERVICES_URI = 'https://***REMOVED***@sul-lyberservices-dev.stanford.edu/dor'
 end
 
 # Dor::SuriService::MINT_SURI_IDS = true

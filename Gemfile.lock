@@ -1,6 +1,6 @@
 GEM
-  remote: http://rubygems.org/
-  remote: http://sulair-rails-dev.stanford.edu/
+  remote: https://rubygems.org/
+  remote: http://sul-gems.stanford.edu/
   specs:
     actionmailer (2.3.18)
       actionpack (= 2.3.18)
@@ -67,6 +67,8 @@ GEM
       rake (>= 0.8.3)
     rake (10.0.4)
     rcov (0.9.9)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     roxml (3.1.5)
       activesupport (>= 2.3.0)
       nokogiri (>= 1.3.3)
@@ -113,6 +115,7 @@ DEPENDENCIES
   marc (= 0.3.0)
   rails (~> 2.3)
   rcov
+  rest-client
   rsolr (= 0.12.1)
   rsolr-ext (= 0.12.0)
   rspec (< 2.0)

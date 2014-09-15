@@ -55,7 +55,8 @@ module Dor
   ID_NAMESPACE = 'druid'
   SURI_USER = ***REMOVED***
   SURI_PASSWORD = ***REMOVED***
-  
+
   CREATE_WORKFLOW = true
   WF_URI = 'http://lyberservices-test.stanford.edu/workflow'
+  DOR_SERVICES_URI = 'https://***REMOVED***@sul-lyberservices-test.stanford.edu/dor'
 end

@@ -7,7 +7,7 @@ describe EemsController do
     ActiveFedora::SolrService.register(SOLR_URL)
     Fedora::Repository.register(FEDORA_URL)
     Fedora::Repository.stub!(:instance).and_return(stub('frepo').as_null_object)
-    
+
 
     @file = File.new(File.join(RAILS_ROOT, 'tmp', 'pre%20space.pdf'), "w+")
     @file.stub!(:original_filename).and_return(@file.path.split(/\//).last)
@@ -28,21 +28,22 @@ describe EemsController do
       :sourceUrl => 'http://something.org/papers'
     })
   end
-  
+
   after(:each) do
     FileUtils.rm(@file.path)
   end
-    
+
   describe "#create" do
     context "with no existing Part object" do
       before(:each) do
         @eem = Eem.new(:pid => 'pid:123')
         @eem.set_properties(@eems_params.stringify_keys)
         @eem.should_receive(:save)
-  
+
         Eem.should_receive(:from_params).with(@eems_params).and_return(@eem)
-        Dor::WorkflowService.should_receive(:create_workflow).with('dor', 'pid:123', 'eemsAccessionWF', ACCESSION_WF_XML)
-        
+        uri = "#{Dor::DOR_SERVICES_URI}/v1/objects/#{@eem.pid}/apo_workflows/eemsAccessionWF"
+        RestClient.should_receive(:post).with(uri,' ')
+
         @eem.stub!(:parts).and_return([])
 
         @log = Dor::ActionLogDatastream.new
@@ -73,15 +74,15 @@ describe EemsController do
         entry[:action].should == "File uploaded by Willy Mene"
       end
 
-      it "sends an HTTP response with the eems's pid" do    
+      it "sends an HTTP response with the eems's pid" do
         response.body.should == 'eem_pid=pid:123'
       end
 
     end
-    
 
-   
-    
+
+
+
   end
-  
+
 end

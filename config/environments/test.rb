@@ -38,4 +38,5 @@ end
 
 module Dor
   MINT_SURI_IDS = false
+  DOR_SERVICES_URI = 'https://***REMOVED***@sul-lyberservices-test.stanford.edu/dor'
 end

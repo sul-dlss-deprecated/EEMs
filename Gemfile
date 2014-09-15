@@ -1,5 +1,5 @@
-source "http://rubygems.org"
-source "http://sulair-rails-dev.stanford.edu"
+source "https://rubygems.org"
+source "http://sul-gems.stanford.edu"
 
 gem 'active-fedora', '1.2.8'
 gem 'authlogic', '2.1.2'
@@ -15,6 +15,7 @@ gem "rsolr", "0.12.1"
 gem "rsolr-ext", "0.12.0"
 gem "sqlite3-ruby", "1.2.5"
 gem "will_paginate", "2.3.11"
+gem 'rest-client'
 
 group :development do
   gem "ruby-debug"
