@@ -24,14 +24,16 @@ GEM
     authlogic (2.1.2)
       activesupport
     awesome_print (0.3.1)
-    bagit (0.1.0)
-      semver (~> 0.1.0)
+    bagit (0.3.2)
+      docopt (~> 0.5.0)
+      validatable (~> 1.6)
     builder (3.0.0)
     columnize (0.3.2)
     curb (0.7.10)
     daemons (1.1.0)
     delayed_job (2.0.3)
       daemons
+    docopt (0.5.0)
     eem_model (0.0.2.2)
       active-fedora (>= 1.1.13)
     facets (2.8.4)
@@ -85,7 +87,6 @@ GEM
       ruby-debug-base (~> 0.10.4.0)
     ruby-debug-base (0.10.4)
       linecache (>= 0.3)
-    semver (0.1.0)
     solr-ruby (0.0.8)
     solrizer (0.3.2)
       mediashelf-loggable
@@ -94,7 +95,7 @@ GEM
       om
       solr-ruby
     sqlite3-ruby (1.2.5)
-    systemu (1.2.0)
+    systemu (2.6.4)
     validatable (1.6.7)
     will_paginate (2.3.11)
     xml-simple (1.0.13)
@@ -103,7 +104,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active-fedora (= 1.2.8)
+  active-fedora (= 1.2.8)!
   authlogic (= 2.1.2)
   awesome_print
   curb
@@ -111,7 +112,7 @@ DEPENDENCIES
   eem_model (= 0.0.2.2)
   facets (= 2.8.4)
   json
-  lyber-core (= 0.9.6.2)
+  lyber-core (= 0.9.6.2)!
   marc (= 0.3.0)
   rails (~> 2.3)
   rcov
