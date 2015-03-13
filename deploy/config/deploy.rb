@@ -31,9 +31,9 @@ end
 
 set :shared_children, %w(log workspace db/ladev.sqlite3 db/eems-test.sqlite3 db/production.sqlite3 public/workspace config/environments config/certs config/database.yml config/solr.yml config/users.yml config/initializers/sulair_config.rb config/initializers/fedora_repository.rb )
 
-set :destination, "/home/lyberadmin"
-set :user, "lyberadmin"
-set :runner, "lyberadmin"
+set :destination, "/opt/app/eems"
+set :user, "eems"
+set :runner, "eems"
 set :ssh_options, {:auth_methods => %w(gssapi-with-mic publickey hostbased), :forward_agent => true}
 
 set :scm, :git
