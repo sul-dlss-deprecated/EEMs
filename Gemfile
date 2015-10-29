@@ -1,14 +1,13 @@
 source "https://rubygems.org"
-source "http://sul-gems.stanford.edu"
 
-gem 'active-fedora', '1.2.8', :source => 'https://rubygems.org/'
+gem 'active-fedora', '1.2.8'
 gem 'authlogic', '2.1.2'
 gem 'curb'
 gem 'delayed_job', '2.0.3'
 gem 'eem_model', '0.0.2.2'
 gem "facets", "2.8.4"
 gem 'json'
-gem "lyber-core", "0.9.6.2", :source => 'http://sul-gems.stanford.edu/'
+gem "lyber-core", "0.9.6.2"
 gem "marc", "0.3.0"
 gem "rails", "~> 2.3"
 gem "rsolr", "0.12.1"
