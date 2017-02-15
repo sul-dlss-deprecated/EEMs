@@ -103,7 +103,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active-fedora (= 1.2.8)!
+  active-fedora (= 1.2.8)
   authlogic (= 2.1.2)
   awesome_print
   curb
@@ -111,7 +111,7 @@ DEPENDENCIES
   eem_model (= 0.0.2.2)
   facets (= 2.8.4)
   json
-  lyber-core (= 0.9.6.2)!
+  lyber-core (= 0.9.6.2)
   marc (= 0.3.0)
   rails (~> 2.3)
   rcov

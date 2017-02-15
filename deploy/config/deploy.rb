@@ -6,7 +6,7 @@ require 'dlss/capistrano'
 set :default_shell, '/bin/bash -l'
 
 set :application, "eems"
-set :repository,  "ssh://corn.stanford.edu/afs/ir/dev/dlss/git/hydra/eems.git"
+set :repository,  "https://github.com/sul-dlss/EEMs.git"
 
 task :dev do
   role :app, "sul-eems-dev.stanford.edu"
