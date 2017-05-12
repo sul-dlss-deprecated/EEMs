@@ -30,4 +30,3 @@ FEDORA_URL = 'http://***REMOVED***@127.0.0.1:8080/fedora'
 module Sulair
   WORKSPACE_URL = "https://eems-unit.stanford.edu/workspace"
 end
-
